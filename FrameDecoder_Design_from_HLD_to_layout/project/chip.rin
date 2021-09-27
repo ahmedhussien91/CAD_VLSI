@@ -1,0 +1,53 @@
+west( #IOs from bottom to top: 
+ p_scanin
+ p_test
+ p_vdde   
+ p_reset
+ p_word_in0
+ p_word_in1
+ p_word_in2
+ p_word_in3	      )
+north( #IOs from left to right:
+ p_word_in4
+ p_word_in5
+ p_word_in6
+ p_word_in7
+ p_vddi	
+ p_ck
+ p_address0
+ p_address1	     )
+east( #IOs from bottom to top:
+ p_data7
+ p_error_f
+ p_vsse
+ p_address7
+ p_address6
+ p_address5
+ p_address4
+ p_address3
+ p_address2		     )
+south( #IOs from left to right:
+ p_data0
+ p_data1
+ p_data2
+ p_data3
+ p_vssick
+ p_data4
+ p_data5
+ p_data6
+ p_scanout		) 
+
+width( # vdd and vss ring track width: 
+vss 100
+vdd 100)
+
+
+
+
+
+
+
+
+
+
+

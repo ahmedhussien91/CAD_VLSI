@@ -1,0 +1,2207 @@
+-- VHDL data flow description generated from `fda`
+--		date : Wed May 27 19:41:39 2015
+
+
+-- Entity Declaration
+
+ENTITY fda IS
+  PORT (
+  ck : in BIT;	-- ck
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  word_in : in bit_vector(7 DOWNTO 0) ;	-- word_in
+  reset : in BIT;	-- reset
+  error_f : out BIT;	-- error_f
+  data : out bit_vector(7 DOWNTO 0) ;	-- data
+  address : out bit_vector(7 DOWNTO 0) 	-- address
+  );
+END fda;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE VBE OF fda IS
+  SIGNAL fsm_h_h_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_h_h_cs
+  SIGNAL fsm_g_g_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_g_g_cs
+  SIGNAL fsm_f_f_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_f_f_cs
+  SIGNAL fsm_e_e_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_e_e_cs
+  SIGNAL fsm_d_d_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_d_d_cs
+  SIGNAL fsm_c_c_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_c_c_cs
+  SIGNAL fsm_b_b_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_b_b_cs
+  SIGNAL fsm_a_a_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_a_a_cs
+  SIGNAL fsm_h_h_cs_h_error_s : BIT;		-- fsm_h_h_cs_h_error_s
+  SIGNAL fsm_h_h_ns_h_error_s : BIT;		-- fsm_h_h_ns_h_error_s
+  SIGNAL fsm_h_h_cs_h_eof12 : BIT;		-- fsm_h_h_cs_h_eof12
+  SIGNAL fsm_h_h_ns_h_eof12 : BIT;		-- fsm_h_h_ns_h_eof12
+  SIGNAL fsm_h_h_cs_h_eof11 : BIT;		-- fsm_h_h_cs_h_eof11
+  SIGNAL fsm_h_h_ns_h_eof11 : BIT;		-- fsm_h_h_ns_h_eof11
+  SIGNAL fsm_h_h_cs_h_eof10 : BIT;		-- fsm_h_h_cs_h_eof10
+  SIGNAL fsm_h_h_ns_h_eof10 : BIT;		-- fsm_h_h_ns_h_eof10
+  SIGNAL fsm_h_h_cs_h_eof9 : BIT;		-- fsm_h_h_cs_h_eof9
+  SIGNAL fsm_h_h_ns_h_eof9 : BIT;		-- fsm_h_h_ns_h_eof9
+  SIGNAL fsm_h_h_cs_h_eof8 : BIT;		-- fsm_h_h_cs_h_eof8
+  SIGNAL fsm_h_h_ns_h_eof8 : BIT;		-- fsm_h_h_ns_h_eof8
+  SIGNAL fsm_h_h_cs_h_eof7 : BIT;		-- fsm_h_h_cs_h_eof7
+  SIGNAL fsm_h_h_ns_h_eof7 : BIT;		-- fsm_h_h_ns_h_eof7
+  SIGNAL fsm_h_h_cs_h_eof6 : BIT;		-- fsm_h_h_cs_h_eof6
+  SIGNAL fsm_h_h_ns_h_eof6 : BIT;		-- fsm_h_h_ns_h_eof6
+  SIGNAL fsm_h_h_cs_h_eof5 : BIT;		-- fsm_h_h_cs_h_eof5
+  SIGNAL fsm_h_h_ns_h_eof5 : BIT;		-- fsm_h_h_ns_h_eof5
+  SIGNAL fsm_h_h_cs_h_eof4 : BIT;		-- fsm_h_h_cs_h_eof4
+  SIGNAL fsm_h_h_ns_h_eof4 : BIT;		-- fsm_h_h_ns_h_eof4
+  SIGNAL fsm_h_h_cs_h_eof3 : BIT;		-- fsm_h_h_cs_h_eof3
+  SIGNAL fsm_h_h_ns_h_eof3 : BIT;		-- fsm_h_h_ns_h_eof3
+  SIGNAL fsm_h_h_cs_h_eof2 : BIT;		-- fsm_h_h_cs_h_eof2
+  SIGNAL fsm_h_h_ns_h_eof2 : BIT;		-- fsm_h_h_ns_h_eof2
+  SIGNAL fsm_h_h_cs_h_eof1 : BIT;		-- fsm_h_h_cs_h_eof1
+  SIGNAL fsm_h_h_ns_h_eof1 : BIT;		-- fsm_h_h_ns_h_eof1
+  SIGNAL fsm_h_h_cs_h_lsb3_1 : BIT;		-- fsm_h_h_cs_h_lsb3_1
+  SIGNAL fsm_h_h_ns_h_lsb3_1 : BIT;		-- fsm_h_h_ns_h_lsb3_1
+  SIGNAL fsm_h_h_cs_h_lsb3_0 : BIT;		-- fsm_h_h_cs_h_lsb3_0
+  SIGNAL fsm_h_h_ns_h_lsb3_0 : BIT;		-- fsm_h_h_ns_h_lsb3_0
+  SIGNAL fsm_h_h_cs_h_lsb2_1 : BIT;		-- fsm_h_h_cs_h_lsb2_1
+  SIGNAL fsm_h_h_ns_h_lsb2_1 : BIT;		-- fsm_h_h_ns_h_lsb2_1
+  SIGNAL fsm_h_h_cs_h_lsb2_0 : BIT;		-- fsm_h_h_cs_h_lsb2_0
+  SIGNAL fsm_h_h_ns_h_lsb2_0 : BIT;		-- fsm_h_h_ns_h_lsb2_0
+  SIGNAL fsm_h_h_cs_h_msb_1 : BIT;		-- fsm_h_h_cs_h_msb_1
+  SIGNAL fsm_h_h_ns_h_msb_1 : BIT;		-- fsm_h_h_ns_h_msb_1
+  SIGNAL fsm_h_h_cs_h_msb_0 : BIT;		-- fsm_h_h_cs_h_msb_0
+  SIGNAL fsm_h_h_ns_h_msb_0 : BIT;		-- fsm_h_h_ns_h_msb_0
+  SIGNAL fsm_h_h_cs_h_lsb1_1 : BIT;		-- fsm_h_h_cs_h_lsb1_1
+  SIGNAL fsm_h_h_ns_h_lsb1_1 : BIT;		-- fsm_h_h_ns_h_lsb1_1
+  SIGNAL fsm_h_h_cs_h_lsb1_0 : BIT;		-- fsm_h_h_cs_h_lsb1_0
+  SIGNAL fsm_h_h_ns_h_lsb1_0 : BIT;		-- fsm_h_h_ns_h_lsb1_0
+  SIGNAL fsm_h_h_cs_h_add_s2 : BIT;		-- fsm_h_h_cs_h_add_s2
+  SIGNAL fsm_h_h_ns_h_add_s2 : BIT;		-- fsm_h_h_ns_h_add_s2
+  SIGNAL fsm_h_h_cs_h_add_s1 : BIT;		-- fsm_h_h_cs_h_add_s1
+  SIGNAL fsm_h_h_ns_h_add_s1 : BIT;		-- fsm_h_h_ns_h_add_s1
+  SIGNAL fsm_h_h_cs_h_id : BIT;		-- fsm_h_h_cs_h_id
+  SIGNAL fsm_h_h_ns_h_id : BIT;		-- fsm_h_h_ns_h_id
+  SIGNAL fsm_h_h_cs_h_sof : BIT;		-- fsm_h_h_cs_h_sof
+  SIGNAL fsm_h_h_ns_h_sof : BIT;		-- fsm_h_h_ns_h_sof
+  SIGNAL fsm_h_h_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_h_h_ns
+  SIGNAL fsm_g_g_cs_g_error_s : BIT;		-- fsm_g_g_cs_g_error_s
+  SIGNAL fsm_g_g_ns_g_error_s : BIT;		-- fsm_g_g_ns_g_error_s
+  SIGNAL fsm_g_g_cs_g_eof12 : BIT;		-- fsm_g_g_cs_g_eof12
+  SIGNAL fsm_g_g_ns_g_eof12 : BIT;		-- fsm_g_g_ns_g_eof12
+  SIGNAL fsm_g_g_cs_g_eof11 : BIT;		-- fsm_g_g_cs_g_eof11
+  SIGNAL fsm_g_g_ns_g_eof11 : BIT;		-- fsm_g_g_ns_g_eof11
+  SIGNAL fsm_g_g_cs_g_eof10 : BIT;		-- fsm_g_g_cs_g_eof10
+  SIGNAL fsm_g_g_ns_g_eof10 : BIT;		-- fsm_g_g_ns_g_eof10
+  SIGNAL fsm_g_g_cs_g_eof9 : BIT;		-- fsm_g_g_cs_g_eof9
+  SIGNAL fsm_g_g_ns_g_eof9 : BIT;		-- fsm_g_g_ns_g_eof9
+  SIGNAL fsm_g_g_cs_g_eof8 : BIT;		-- fsm_g_g_cs_g_eof8
+  SIGNAL fsm_g_g_ns_g_eof8 : BIT;		-- fsm_g_g_ns_g_eof8
+  SIGNAL fsm_g_g_cs_g_eof7 : BIT;		-- fsm_g_g_cs_g_eof7
+  SIGNAL fsm_g_g_ns_g_eof7 : BIT;		-- fsm_g_g_ns_g_eof7
+  SIGNAL fsm_g_g_cs_g_eof6 : BIT;		-- fsm_g_g_cs_g_eof6
+  SIGNAL fsm_g_g_ns_g_eof6 : BIT;		-- fsm_g_g_ns_g_eof6
+  SIGNAL fsm_g_g_cs_g_eof5 : BIT;		-- fsm_g_g_cs_g_eof5
+  SIGNAL fsm_g_g_ns_g_eof5 : BIT;		-- fsm_g_g_ns_g_eof5
+  SIGNAL fsm_g_g_cs_g_eof4 : BIT;		-- fsm_g_g_cs_g_eof4
+  SIGNAL fsm_g_g_ns_g_eof4 : BIT;		-- fsm_g_g_ns_g_eof4
+  SIGNAL fsm_g_g_cs_g_eof3 : BIT;		-- fsm_g_g_cs_g_eof3
+  SIGNAL fsm_g_g_ns_g_eof3 : BIT;		-- fsm_g_g_ns_g_eof3
+  SIGNAL fsm_g_g_cs_g_eof2 : BIT;		-- fsm_g_g_cs_g_eof2
+  SIGNAL fsm_g_g_ns_g_eof2 : BIT;		-- fsm_g_g_ns_g_eof2
+  SIGNAL fsm_g_g_cs_g_eof1 : BIT;		-- fsm_g_g_cs_g_eof1
+  SIGNAL fsm_g_g_ns_g_eof1 : BIT;		-- fsm_g_g_ns_g_eof1
+  SIGNAL fsm_g_g_cs_g_lsb3_1 : BIT;		-- fsm_g_g_cs_g_lsb3_1
+  SIGNAL fsm_g_g_ns_g_lsb3_1 : BIT;		-- fsm_g_g_ns_g_lsb3_1
+  SIGNAL fsm_g_g_cs_g_lsb3_0 : BIT;		-- fsm_g_g_cs_g_lsb3_0
+  SIGNAL fsm_g_g_ns_g_lsb3_0 : BIT;		-- fsm_g_g_ns_g_lsb3_0
+  SIGNAL fsm_g_g_cs_g_lsb2_1 : BIT;		-- fsm_g_g_cs_g_lsb2_1
+  SIGNAL fsm_g_g_ns_g_lsb2_1 : BIT;		-- fsm_g_g_ns_g_lsb2_1
+  SIGNAL fsm_g_g_cs_g_lsb2_0 : BIT;		-- fsm_g_g_cs_g_lsb2_0
+  SIGNAL fsm_g_g_ns_g_lsb2_0 : BIT;		-- fsm_g_g_ns_g_lsb2_0
+  SIGNAL fsm_g_g_cs_g_msb_1 : BIT;		-- fsm_g_g_cs_g_msb_1
+  SIGNAL fsm_g_g_ns_g_msb_1 : BIT;		-- fsm_g_g_ns_g_msb_1
+  SIGNAL fsm_g_g_cs_g_msb_0 : BIT;		-- fsm_g_g_cs_g_msb_0
+  SIGNAL fsm_g_g_ns_g_msb_0 : BIT;		-- fsm_g_g_ns_g_msb_0
+  SIGNAL fsm_g_g_cs_g_lsb1_1 : BIT;		-- fsm_g_g_cs_g_lsb1_1
+  SIGNAL fsm_g_g_ns_g_lsb1_1 : BIT;		-- fsm_g_g_ns_g_lsb1_1
+  SIGNAL fsm_g_g_cs_g_lsb1_0 : BIT;		-- fsm_g_g_cs_g_lsb1_0
+  SIGNAL fsm_g_g_ns_g_lsb1_0 : BIT;		-- fsm_g_g_ns_g_lsb1_0
+  SIGNAL fsm_g_g_cs_g_add_s2 : BIT;		-- fsm_g_g_cs_g_add_s2
+  SIGNAL fsm_g_g_ns_g_add_s2 : BIT;		-- fsm_g_g_ns_g_add_s2
+  SIGNAL fsm_g_g_cs_g_add_s1 : BIT;		-- fsm_g_g_cs_g_add_s1
+  SIGNAL fsm_g_g_ns_g_add_s1 : BIT;		-- fsm_g_g_ns_g_add_s1
+  SIGNAL fsm_g_g_cs_g_id : BIT;		-- fsm_g_g_cs_g_id
+  SIGNAL fsm_g_g_ns_g_id : BIT;		-- fsm_g_g_ns_g_id
+  SIGNAL fsm_g_g_cs_g_sof : BIT;		-- fsm_g_g_cs_g_sof
+  SIGNAL fsm_g_g_ns_g_sof : BIT;		-- fsm_g_g_ns_g_sof
+  SIGNAL fsm_g_g_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_g_g_ns
+  SIGNAL fsm_f_f_cs_f_error_s : BIT;		-- fsm_f_f_cs_f_error_s
+  SIGNAL fsm_f_f_ns_f_error_s : BIT;		-- fsm_f_f_ns_f_error_s
+  SIGNAL fsm_f_f_cs_f_eof12 : BIT;		-- fsm_f_f_cs_f_eof12
+  SIGNAL fsm_f_f_ns_f_eof12 : BIT;		-- fsm_f_f_ns_f_eof12
+  SIGNAL fsm_f_f_cs_f_eof11 : BIT;		-- fsm_f_f_cs_f_eof11
+  SIGNAL fsm_f_f_ns_f_eof11 : BIT;		-- fsm_f_f_ns_f_eof11
+  SIGNAL fsm_f_f_cs_f_eof10 : BIT;		-- fsm_f_f_cs_f_eof10
+  SIGNAL fsm_f_f_ns_f_eof10 : BIT;		-- fsm_f_f_ns_f_eof10
+  SIGNAL fsm_f_f_cs_f_eof9 : BIT;		-- fsm_f_f_cs_f_eof9
+  SIGNAL fsm_f_f_ns_f_eof9 : BIT;		-- fsm_f_f_ns_f_eof9
+  SIGNAL fsm_f_f_cs_f_eof8 : BIT;		-- fsm_f_f_cs_f_eof8
+  SIGNAL fsm_f_f_ns_f_eof8 : BIT;		-- fsm_f_f_ns_f_eof8
+  SIGNAL fsm_f_f_cs_f_eof7 : BIT;		-- fsm_f_f_cs_f_eof7
+  SIGNAL fsm_f_f_ns_f_eof7 : BIT;		-- fsm_f_f_ns_f_eof7
+  SIGNAL fsm_f_f_cs_f_eof6 : BIT;		-- fsm_f_f_cs_f_eof6
+  SIGNAL fsm_f_f_ns_f_eof6 : BIT;		-- fsm_f_f_ns_f_eof6
+  SIGNAL fsm_f_f_cs_f_eof5 : BIT;		-- fsm_f_f_cs_f_eof5
+  SIGNAL fsm_f_f_ns_f_eof5 : BIT;		-- fsm_f_f_ns_f_eof5
+  SIGNAL fsm_f_f_cs_f_eof4 : BIT;		-- fsm_f_f_cs_f_eof4
+  SIGNAL fsm_f_f_ns_f_eof4 : BIT;		-- fsm_f_f_ns_f_eof4
+  SIGNAL fsm_f_f_cs_f_eof3 : BIT;		-- fsm_f_f_cs_f_eof3
+  SIGNAL fsm_f_f_ns_f_eof3 : BIT;		-- fsm_f_f_ns_f_eof3
+  SIGNAL fsm_f_f_cs_f_eof2 : BIT;		-- fsm_f_f_cs_f_eof2
+  SIGNAL fsm_f_f_ns_f_eof2 : BIT;		-- fsm_f_f_ns_f_eof2
+  SIGNAL fsm_f_f_cs_f_eof1 : BIT;		-- fsm_f_f_cs_f_eof1
+  SIGNAL fsm_f_f_ns_f_eof1 : BIT;		-- fsm_f_f_ns_f_eof1
+  SIGNAL fsm_f_f_cs_f_lsb3_1 : BIT;		-- fsm_f_f_cs_f_lsb3_1
+  SIGNAL fsm_f_f_ns_f_lsb3_1 : BIT;		-- fsm_f_f_ns_f_lsb3_1
+  SIGNAL fsm_f_f_cs_f_lsb3_0 : BIT;		-- fsm_f_f_cs_f_lsb3_0
+  SIGNAL fsm_f_f_ns_f_lsb3_0 : BIT;		-- fsm_f_f_ns_f_lsb3_0
+  SIGNAL fsm_f_f_cs_f_lsb2_1 : BIT;		-- fsm_f_f_cs_f_lsb2_1
+  SIGNAL fsm_f_f_ns_f_lsb2_1 : BIT;		-- fsm_f_f_ns_f_lsb2_1
+  SIGNAL fsm_f_f_cs_f_lsb2_0 : BIT;		-- fsm_f_f_cs_f_lsb2_0
+  SIGNAL fsm_f_f_ns_f_lsb2_0 : BIT;		-- fsm_f_f_ns_f_lsb2_0
+  SIGNAL fsm_f_f_cs_f_msb_1 : BIT;		-- fsm_f_f_cs_f_msb_1
+  SIGNAL fsm_f_f_ns_f_msb_1 : BIT;		-- fsm_f_f_ns_f_msb_1
+  SIGNAL fsm_f_f_cs_f_msb_0 : BIT;		-- fsm_f_f_cs_f_msb_0
+  SIGNAL fsm_f_f_ns_f_msb_0 : BIT;		-- fsm_f_f_ns_f_msb_0
+  SIGNAL fsm_f_f_cs_f_lsb1_1 : BIT;		-- fsm_f_f_cs_f_lsb1_1
+  SIGNAL fsm_f_f_ns_f_lsb1_1 : BIT;		-- fsm_f_f_ns_f_lsb1_1
+  SIGNAL fsm_f_f_cs_f_lsb1_0 : BIT;		-- fsm_f_f_cs_f_lsb1_0
+  SIGNAL fsm_f_f_ns_f_lsb1_0 : BIT;		-- fsm_f_f_ns_f_lsb1_0
+  SIGNAL fsm_f_f_cs_f_add_s2 : BIT;		-- fsm_f_f_cs_f_add_s2
+  SIGNAL fsm_f_f_ns_f_add_s2 : BIT;		-- fsm_f_f_ns_f_add_s2
+  SIGNAL fsm_f_f_cs_f_add_s1 : BIT;		-- fsm_f_f_cs_f_add_s1
+  SIGNAL fsm_f_f_ns_f_add_s1 : BIT;		-- fsm_f_f_ns_f_add_s1
+  SIGNAL fsm_f_f_cs_f_id : BIT;		-- fsm_f_f_cs_f_id
+  SIGNAL fsm_f_f_ns_f_id : BIT;		-- fsm_f_f_ns_f_id
+  SIGNAL fsm_f_f_cs_f_sof : BIT;		-- fsm_f_f_cs_f_sof
+  SIGNAL fsm_f_f_ns_f_sof : BIT;		-- fsm_f_f_ns_f_sof
+  SIGNAL fsm_f_f_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_f_f_ns
+  SIGNAL fsm_e_e_cs_e_error_s : BIT;		-- fsm_e_e_cs_e_error_s
+  SIGNAL fsm_e_e_ns_e_error_s : BIT;		-- fsm_e_e_ns_e_error_s
+  SIGNAL fsm_e_e_cs_e_eof12 : BIT;		-- fsm_e_e_cs_e_eof12
+  SIGNAL fsm_e_e_ns_e_eof12 : BIT;		-- fsm_e_e_ns_e_eof12
+  SIGNAL fsm_e_e_cs_e_eof11 : BIT;		-- fsm_e_e_cs_e_eof11
+  SIGNAL fsm_e_e_ns_e_eof11 : BIT;		-- fsm_e_e_ns_e_eof11
+  SIGNAL fsm_e_e_cs_e_eof10 : BIT;		-- fsm_e_e_cs_e_eof10
+  SIGNAL fsm_e_e_ns_e_eof10 : BIT;		-- fsm_e_e_ns_e_eof10
+  SIGNAL fsm_e_e_cs_e_eof9 : BIT;		-- fsm_e_e_cs_e_eof9
+  SIGNAL fsm_e_e_ns_e_eof9 : BIT;		-- fsm_e_e_ns_e_eof9
+  SIGNAL fsm_e_e_cs_e_eof8 : BIT;		-- fsm_e_e_cs_e_eof8
+  SIGNAL fsm_e_e_ns_e_eof8 : BIT;		-- fsm_e_e_ns_e_eof8
+  SIGNAL fsm_e_e_cs_e_eof7 : BIT;		-- fsm_e_e_cs_e_eof7
+  SIGNAL fsm_e_e_ns_e_eof7 : BIT;		-- fsm_e_e_ns_e_eof7
+  SIGNAL fsm_e_e_cs_e_eof6 : BIT;		-- fsm_e_e_cs_e_eof6
+  SIGNAL fsm_e_e_ns_e_eof6 : BIT;		-- fsm_e_e_ns_e_eof6
+  SIGNAL fsm_e_e_cs_e_eof5 : BIT;		-- fsm_e_e_cs_e_eof5
+  SIGNAL fsm_e_e_ns_e_eof5 : BIT;		-- fsm_e_e_ns_e_eof5
+  SIGNAL fsm_e_e_cs_e_eof4 : BIT;		-- fsm_e_e_cs_e_eof4
+  SIGNAL fsm_e_e_ns_e_eof4 : BIT;		-- fsm_e_e_ns_e_eof4
+  SIGNAL fsm_e_e_cs_e_eof3 : BIT;		-- fsm_e_e_cs_e_eof3
+  SIGNAL fsm_e_e_ns_e_eof3 : BIT;		-- fsm_e_e_ns_e_eof3
+  SIGNAL fsm_e_e_cs_e_eof2 : BIT;		-- fsm_e_e_cs_e_eof2
+  SIGNAL fsm_e_e_ns_e_eof2 : BIT;		-- fsm_e_e_ns_e_eof2
+  SIGNAL fsm_e_e_cs_e_eof1 : BIT;		-- fsm_e_e_cs_e_eof1
+  SIGNAL fsm_e_e_ns_e_eof1 : BIT;		-- fsm_e_e_ns_e_eof1
+  SIGNAL fsm_e_e_cs_e_lsb3_1 : BIT;		-- fsm_e_e_cs_e_lsb3_1
+  SIGNAL fsm_e_e_ns_e_lsb3_1 : BIT;		-- fsm_e_e_ns_e_lsb3_1
+  SIGNAL fsm_e_e_cs_e_lsb3_0 : BIT;		-- fsm_e_e_cs_e_lsb3_0
+  SIGNAL fsm_e_e_ns_e_lsb3_0 : BIT;		-- fsm_e_e_ns_e_lsb3_0
+  SIGNAL fsm_e_e_cs_e_lsb2_1 : BIT;		-- fsm_e_e_cs_e_lsb2_1
+  SIGNAL fsm_e_e_ns_e_lsb2_1 : BIT;		-- fsm_e_e_ns_e_lsb2_1
+  SIGNAL fsm_e_e_cs_e_lsb2_0 : BIT;		-- fsm_e_e_cs_e_lsb2_0
+  SIGNAL fsm_e_e_ns_e_lsb2_0 : BIT;		-- fsm_e_e_ns_e_lsb2_0
+  SIGNAL fsm_e_e_cs_e_msb_1 : BIT;		-- fsm_e_e_cs_e_msb_1
+  SIGNAL fsm_e_e_ns_e_msb_1 : BIT;		-- fsm_e_e_ns_e_msb_1
+  SIGNAL fsm_e_e_cs_e_msb_0 : BIT;		-- fsm_e_e_cs_e_msb_0
+  SIGNAL fsm_e_e_ns_e_msb_0 : BIT;		-- fsm_e_e_ns_e_msb_0
+  SIGNAL fsm_e_e_cs_e_lsb1_1 : BIT;		-- fsm_e_e_cs_e_lsb1_1
+  SIGNAL fsm_e_e_ns_e_lsb1_1 : BIT;		-- fsm_e_e_ns_e_lsb1_1
+  SIGNAL fsm_e_e_cs_e_lsb1_0 : BIT;		-- fsm_e_e_cs_e_lsb1_0
+  SIGNAL fsm_e_e_ns_e_lsb1_0 : BIT;		-- fsm_e_e_ns_e_lsb1_0
+  SIGNAL fsm_e_e_cs_e_add_s2 : BIT;		-- fsm_e_e_cs_e_add_s2
+  SIGNAL fsm_e_e_ns_e_add_s2 : BIT;		-- fsm_e_e_ns_e_add_s2
+  SIGNAL fsm_e_e_cs_e_add_s1 : BIT;		-- fsm_e_e_cs_e_add_s1
+  SIGNAL fsm_e_e_ns_e_add_s1 : BIT;		-- fsm_e_e_ns_e_add_s1
+  SIGNAL fsm_e_e_cs_e_id : BIT;		-- fsm_e_e_cs_e_id
+  SIGNAL fsm_e_e_ns_e_id : BIT;		-- fsm_e_e_ns_e_id
+  SIGNAL fsm_e_e_cs_e_sof : BIT;		-- fsm_e_e_cs_e_sof
+  SIGNAL fsm_e_e_ns_e_sof : BIT;		-- fsm_e_e_ns_e_sof
+  SIGNAL fsm_e_e_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_e_e_ns
+  SIGNAL fsm_d_d_cs_d_error_s : BIT;		-- fsm_d_d_cs_d_error_s
+  SIGNAL fsm_d_d_ns_d_error_s : BIT;		-- fsm_d_d_ns_d_error_s
+  SIGNAL fsm_d_d_cs_d_eof12 : BIT;		-- fsm_d_d_cs_d_eof12
+  SIGNAL fsm_d_d_ns_d_eof12 : BIT;		-- fsm_d_d_ns_d_eof12
+  SIGNAL fsm_d_d_cs_d_eof11 : BIT;		-- fsm_d_d_cs_d_eof11
+  SIGNAL fsm_d_d_ns_d_eof11 : BIT;		-- fsm_d_d_ns_d_eof11
+  SIGNAL fsm_d_d_cs_d_eof10 : BIT;		-- fsm_d_d_cs_d_eof10
+  SIGNAL fsm_d_d_ns_d_eof10 : BIT;		-- fsm_d_d_ns_d_eof10
+  SIGNAL fsm_d_d_cs_d_eof9 : BIT;		-- fsm_d_d_cs_d_eof9
+  SIGNAL fsm_d_d_ns_d_eof9 : BIT;		-- fsm_d_d_ns_d_eof9
+  SIGNAL fsm_d_d_cs_d_eof8 : BIT;		-- fsm_d_d_cs_d_eof8
+  SIGNAL fsm_d_d_ns_d_eof8 : BIT;		-- fsm_d_d_ns_d_eof8
+  SIGNAL fsm_d_d_cs_d_eof7 : BIT;		-- fsm_d_d_cs_d_eof7
+  SIGNAL fsm_d_d_ns_d_eof7 : BIT;		-- fsm_d_d_ns_d_eof7
+  SIGNAL fsm_d_d_cs_d_eof6 : BIT;		-- fsm_d_d_cs_d_eof6
+  SIGNAL fsm_d_d_ns_d_eof6 : BIT;		-- fsm_d_d_ns_d_eof6
+  SIGNAL fsm_d_d_cs_d_eof5 : BIT;		-- fsm_d_d_cs_d_eof5
+  SIGNAL fsm_d_d_ns_d_eof5 : BIT;		-- fsm_d_d_ns_d_eof5
+  SIGNAL fsm_d_d_cs_d_eof4 : BIT;		-- fsm_d_d_cs_d_eof4
+  SIGNAL fsm_d_d_ns_d_eof4 : BIT;		-- fsm_d_d_ns_d_eof4
+  SIGNAL fsm_d_d_cs_d_eof3 : BIT;		-- fsm_d_d_cs_d_eof3
+  SIGNAL fsm_d_d_ns_d_eof3 : BIT;		-- fsm_d_d_ns_d_eof3
+  SIGNAL fsm_d_d_cs_d_eof2 : BIT;		-- fsm_d_d_cs_d_eof2
+  SIGNAL fsm_d_d_ns_d_eof2 : BIT;		-- fsm_d_d_ns_d_eof2
+  SIGNAL fsm_d_d_cs_d_eof1 : BIT;		-- fsm_d_d_cs_d_eof1
+  SIGNAL fsm_d_d_ns_d_eof1 : BIT;		-- fsm_d_d_ns_d_eof1
+  SIGNAL fsm_d_d_cs_d_lsb3_1 : BIT;		-- fsm_d_d_cs_d_lsb3_1
+  SIGNAL fsm_d_d_ns_d_lsb3_1 : BIT;		-- fsm_d_d_ns_d_lsb3_1
+  SIGNAL fsm_d_d_cs_d_lsb3_0 : BIT;		-- fsm_d_d_cs_d_lsb3_0
+  SIGNAL fsm_d_d_ns_d_lsb3_0 : BIT;		-- fsm_d_d_ns_d_lsb3_0
+  SIGNAL fsm_d_d_cs_d_lsb2_1 : BIT;		-- fsm_d_d_cs_d_lsb2_1
+  SIGNAL fsm_d_d_ns_d_lsb2_1 : BIT;		-- fsm_d_d_ns_d_lsb2_1
+  SIGNAL fsm_d_d_cs_d_lsb2_0 : BIT;		-- fsm_d_d_cs_d_lsb2_0
+  SIGNAL fsm_d_d_ns_d_lsb2_0 : BIT;		-- fsm_d_d_ns_d_lsb2_0
+  SIGNAL fsm_d_d_cs_d_msb_1 : BIT;		-- fsm_d_d_cs_d_msb_1
+  SIGNAL fsm_d_d_ns_d_msb_1 : BIT;		-- fsm_d_d_ns_d_msb_1
+  SIGNAL fsm_d_d_cs_d_msb_0 : BIT;		-- fsm_d_d_cs_d_msb_0
+  SIGNAL fsm_d_d_ns_d_msb_0 : BIT;		-- fsm_d_d_ns_d_msb_0
+  SIGNAL fsm_d_d_cs_d_lsb1_1 : BIT;		-- fsm_d_d_cs_d_lsb1_1
+  SIGNAL fsm_d_d_ns_d_lsb1_1 : BIT;		-- fsm_d_d_ns_d_lsb1_1
+  SIGNAL fsm_d_d_cs_d_lsb1_0 : BIT;		-- fsm_d_d_cs_d_lsb1_0
+  SIGNAL fsm_d_d_ns_d_lsb1_0 : BIT;		-- fsm_d_d_ns_d_lsb1_0
+  SIGNAL fsm_d_d_cs_d_add_s2 : BIT;		-- fsm_d_d_cs_d_add_s2
+  SIGNAL fsm_d_d_ns_d_add_s2 : BIT;		-- fsm_d_d_ns_d_add_s2
+  SIGNAL fsm_d_d_cs_d_add_s1 : BIT;		-- fsm_d_d_cs_d_add_s1
+  SIGNAL fsm_d_d_ns_d_add_s1 : BIT;		-- fsm_d_d_ns_d_add_s1
+  SIGNAL fsm_d_d_cs_d_id : BIT;		-- fsm_d_d_cs_d_id
+  SIGNAL fsm_d_d_ns_d_id : BIT;		-- fsm_d_d_ns_d_id
+  SIGNAL fsm_d_d_cs_d_sof : BIT;		-- fsm_d_d_cs_d_sof
+  SIGNAL fsm_d_d_ns_d_sof : BIT;		-- fsm_d_d_ns_d_sof
+  SIGNAL fsm_d_d_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_d_d_ns
+  SIGNAL fsm_c_c_cs_c_error_s : BIT;		-- fsm_c_c_cs_c_error_s
+  SIGNAL fsm_c_c_ns_c_error_s : BIT;		-- fsm_c_c_ns_c_error_s
+  SIGNAL fsm_c_c_cs_c_eof12 : BIT;		-- fsm_c_c_cs_c_eof12
+  SIGNAL fsm_c_c_ns_c_eof12 : BIT;		-- fsm_c_c_ns_c_eof12
+  SIGNAL fsm_c_c_cs_c_eof11 : BIT;		-- fsm_c_c_cs_c_eof11
+  SIGNAL fsm_c_c_ns_c_eof11 : BIT;		-- fsm_c_c_ns_c_eof11
+  SIGNAL fsm_c_c_cs_c_eof10 : BIT;		-- fsm_c_c_cs_c_eof10
+  SIGNAL fsm_c_c_ns_c_eof10 : BIT;		-- fsm_c_c_ns_c_eof10
+  SIGNAL fsm_c_c_cs_c_eof9 : BIT;		-- fsm_c_c_cs_c_eof9
+  SIGNAL fsm_c_c_ns_c_eof9 : BIT;		-- fsm_c_c_ns_c_eof9
+  SIGNAL fsm_c_c_cs_c_eof8 : BIT;		-- fsm_c_c_cs_c_eof8
+  SIGNAL fsm_c_c_ns_c_eof8 : BIT;		-- fsm_c_c_ns_c_eof8
+  SIGNAL fsm_c_c_cs_c_eof7 : BIT;		-- fsm_c_c_cs_c_eof7
+  SIGNAL fsm_c_c_ns_c_eof7 : BIT;		-- fsm_c_c_ns_c_eof7
+  SIGNAL fsm_c_c_cs_c_eof6 : BIT;		-- fsm_c_c_cs_c_eof6
+  SIGNAL fsm_c_c_ns_c_eof6 : BIT;		-- fsm_c_c_ns_c_eof6
+  SIGNAL fsm_c_c_cs_c_eof5 : BIT;		-- fsm_c_c_cs_c_eof5
+  SIGNAL fsm_c_c_ns_c_eof5 : BIT;		-- fsm_c_c_ns_c_eof5
+  SIGNAL fsm_c_c_cs_c_eof4 : BIT;		-- fsm_c_c_cs_c_eof4
+  SIGNAL fsm_c_c_ns_c_eof4 : BIT;		-- fsm_c_c_ns_c_eof4
+  SIGNAL fsm_c_c_cs_c_eof3 : BIT;		-- fsm_c_c_cs_c_eof3
+  SIGNAL fsm_c_c_ns_c_eof3 : BIT;		-- fsm_c_c_ns_c_eof3
+  SIGNAL fsm_c_c_cs_c_eof2 : BIT;		-- fsm_c_c_cs_c_eof2
+  SIGNAL fsm_c_c_ns_c_eof2 : BIT;		-- fsm_c_c_ns_c_eof2
+  SIGNAL fsm_c_c_cs_c_eof1 : BIT;		-- fsm_c_c_cs_c_eof1
+  SIGNAL fsm_c_c_ns_c_eof1 : BIT;		-- fsm_c_c_ns_c_eof1
+  SIGNAL fsm_c_c_cs_c_lsb3_1 : BIT;		-- fsm_c_c_cs_c_lsb3_1
+  SIGNAL fsm_c_c_ns_c_lsb3_1 : BIT;		-- fsm_c_c_ns_c_lsb3_1
+  SIGNAL fsm_c_c_cs_c_lsb3_0 : BIT;		-- fsm_c_c_cs_c_lsb3_0
+  SIGNAL fsm_c_c_ns_c_lsb3_0 : BIT;		-- fsm_c_c_ns_c_lsb3_0
+  SIGNAL fsm_c_c_cs_c_lsb2_1 : BIT;		-- fsm_c_c_cs_c_lsb2_1
+  SIGNAL fsm_c_c_ns_c_lsb2_1 : BIT;		-- fsm_c_c_ns_c_lsb2_1
+  SIGNAL fsm_c_c_cs_c_lsb2_0 : BIT;		-- fsm_c_c_cs_c_lsb2_0
+  SIGNAL fsm_c_c_ns_c_lsb2_0 : BIT;		-- fsm_c_c_ns_c_lsb2_0
+  SIGNAL fsm_c_c_cs_c_msb_1 : BIT;		-- fsm_c_c_cs_c_msb_1
+  SIGNAL fsm_c_c_ns_c_msb_1 : BIT;		-- fsm_c_c_ns_c_msb_1
+  SIGNAL fsm_c_c_cs_c_msb_0 : BIT;		-- fsm_c_c_cs_c_msb_0
+  SIGNAL fsm_c_c_ns_c_msb_0 : BIT;		-- fsm_c_c_ns_c_msb_0
+  SIGNAL fsm_c_c_cs_c_lsb1_1 : BIT;		-- fsm_c_c_cs_c_lsb1_1
+  SIGNAL fsm_c_c_ns_c_lsb1_1 : BIT;		-- fsm_c_c_ns_c_lsb1_1
+  SIGNAL fsm_c_c_cs_c_lsb1_0 : BIT;		-- fsm_c_c_cs_c_lsb1_0
+  SIGNAL fsm_c_c_ns_c_lsb1_0 : BIT;		-- fsm_c_c_ns_c_lsb1_0
+  SIGNAL fsm_c_c_cs_c_add_s2 : BIT;		-- fsm_c_c_cs_c_add_s2
+  SIGNAL fsm_c_c_ns_c_add_s2 : BIT;		-- fsm_c_c_ns_c_add_s2
+  SIGNAL fsm_c_c_cs_c_add_s1 : BIT;		-- fsm_c_c_cs_c_add_s1
+  SIGNAL fsm_c_c_ns_c_add_s1 : BIT;		-- fsm_c_c_ns_c_add_s1
+  SIGNAL fsm_c_c_cs_c_id : BIT;		-- fsm_c_c_cs_c_id
+  SIGNAL fsm_c_c_ns_c_id : BIT;		-- fsm_c_c_ns_c_id
+  SIGNAL fsm_c_c_cs_c_sof : BIT;		-- fsm_c_c_cs_c_sof
+  SIGNAL fsm_c_c_ns_c_sof : BIT;		-- fsm_c_c_ns_c_sof
+  SIGNAL fsm_c_c_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_c_c_ns
+  SIGNAL fsm_b_b_cs_b_error_s : BIT;		-- fsm_b_b_cs_b_error_s
+  SIGNAL fsm_b_b_ns_b_error_s : BIT;		-- fsm_b_b_ns_b_error_s
+  SIGNAL fsm_b_b_cs_b_eof12 : BIT;		-- fsm_b_b_cs_b_eof12
+  SIGNAL fsm_b_b_ns_b_eof12 : BIT;		-- fsm_b_b_ns_b_eof12
+  SIGNAL fsm_b_b_cs_b_eof11 : BIT;		-- fsm_b_b_cs_b_eof11
+  SIGNAL fsm_b_b_ns_b_eof11 : BIT;		-- fsm_b_b_ns_b_eof11
+  SIGNAL fsm_b_b_cs_b_eof10 : BIT;		-- fsm_b_b_cs_b_eof10
+  SIGNAL fsm_b_b_ns_b_eof10 : BIT;		-- fsm_b_b_ns_b_eof10
+  SIGNAL fsm_b_b_cs_b_eof9 : BIT;		-- fsm_b_b_cs_b_eof9
+  SIGNAL fsm_b_b_ns_b_eof9 : BIT;		-- fsm_b_b_ns_b_eof9
+  SIGNAL fsm_b_b_cs_b_eof8 : BIT;		-- fsm_b_b_cs_b_eof8
+  SIGNAL fsm_b_b_ns_b_eof8 : BIT;		-- fsm_b_b_ns_b_eof8
+  SIGNAL fsm_b_b_cs_b_eof7 : BIT;		-- fsm_b_b_cs_b_eof7
+  SIGNAL fsm_b_b_ns_b_eof7 : BIT;		-- fsm_b_b_ns_b_eof7
+  SIGNAL fsm_b_b_cs_b_eof6 : BIT;		-- fsm_b_b_cs_b_eof6
+  SIGNAL fsm_b_b_ns_b_eof6 : BIT;		-- fsm_b_b_ns_b_eof6
+  SIGNAL fsm_b_b_cs_b_eof5 : BIT;		-- fsm_b_b_cs_b_eof5
+  SIGNAL fsm_b_b_ns_b_eof5 : BIT;		-- fsm_b_b_ns_b_eof5
+  SIGNAL fsm_b_b_cs_b_eof4 : BIT;		-- fsm_b_b_cs_b_eof4
+  SIGNAL fsm_b_b_ns_b_eof4 : BIT;		-- fsm_b_b_ns_b_eof4
+  SIGNAL fsm_b_b_cs_b_eof3 : BIT;		-- fsm_b_b_cs_b_eof3
+  SIGNAL fsm_b_b_ns_b_eof3 : BIT;		-- fsm_b_b_ns_b_eof3
+  SIGNAL fsm_b_b_cs_b_eof2 : BIT;		-- fsm_b_b_cs_b_eof2
+  SIGNAL fsm_b_b_ns_b_eof2 : BIT;		-- fsm_b_b_ns_b_eof2
+  SIGNAL fsm_b_b_cs_b_eof1 : BIT;		-- fsm_b_b_cs_b_eof1
+  SIGNAL fsm_b_b_ns_b_eof1 : BIT;		-- fsm_b_b_ns_b_eof1
+  SIGNAL fsm_b_b_cs_b_lsb3_1 : BIT;		-- fsm_b_b_cs_b_lsb3_1
+  SIGNAL fsm_b_b_ns_b_lsb3_1 : BIT;		-- fsm_b_b_ns_b_lsb3_1
+  SIGNAL fsm_b_b_cs_b_lsb3_0 : BIT;		-- fsm_b_b_cs_b_lsb3_0
+  SIGNAL fsm_b_b_ns_b_lsb3_0 : BIT;		-- fsm_b_b_ns_b_lsb3_0
+  SIGNAL fsm_b_b_cs_b_lsb2_1 : BIT;		-- fsm_b_b_cs_b_lsb2_1
+  SIGNAL fsm_b_b_ns_b_lsb2_1 : BIT;		-- fsm_b_b_ns_b_lsb2_1
+  SIGNAL fsm_b_b_cs_b_lsb2_0 : BIT;		-- fsm_b_b_cs_b_lsb2_0
+  SIGNAL fsm_b_b_ns_b_lsb2_0 : BIT;		-- fsm_b_b_ns_b_lsb2_0
+  SIGNAL fsm_b_b_cs_b_msb_1 : BIT;		-- fsm_b_b_cs_b_msb_1
+  SIGNAL fsm_b_b_ns_b_msb_1 : BIT;		-- fsm_b_b_ns_b_msb_1
+  SIGNAL fsm_b_b_cs_b_msb_0 : BIT;		-- fsm_b_b_cs_b_msb_0
+  SIGNAL fsm_b_b_ns_b_msb_0 : BIT;		-- fsm_b_b_ns_b_msb_0
+  SIGNAL fsm_b_b_cs_b_lsb1_1 : BIT;		-- fsm_b_b_cs_b_lsb1_1
+  SIGNAL fsm_b_b_ns_b_lsb1_1 : BIT;		-- fsm_b_b_ns_b_lsb1_1
+  SIGNAL fsm_b_b_cs_b_lsb1_0 : BIT;		-- fsm_b_b_cs_b_lsb1_0
+  SIGNAL fsm_b_b_ns_b_lsb1_0 : BIT;		-- fsm_b_b_ns_b_lsb1_0
+  SIGNAL fsm_b_b_cs_b_add_s2 : BIT;		-- fsm_b_b_cs_b_add_s2
+  SIGNAL fsm_b_b_ns_b_add_s2 : BIT;		-- fsm_b_b_ns_b_add_s2
+  SIGNAL fsm_b_b_cs_b_add_s1 : BIT;		-- fsm_b_b_cs_b_add_s1
+  SIGNAL fsm_b_b_ns_b_add_s1 : BIT;		-- fsm_b_b_ns_b_add_s1
+  SIGNAL fsm_b_b_cs_b_id : BIT;		-- fsm_b_b_cs_b_id
+  SIGNAL fsm_b_b_ns_b_id : BIT;		-- fsm_b_b_ns_b_id
+  SIGNAL fsm_b_b_cs_b_sof : BIT;		-- fsm_b_b_cs_b_sof
+  SIGNAL fsm_b_b_ns_b_sof : BIT;		-- fsm_b_b_ns_b_sof
+  SIGNAL fsm_b_b_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_b_b_ns
+  SIGNAL fsm_a_a_cs_a_error_s : BIT;		-- fsm_a_a_cs_a_error_s
+  SIGNAL fsm_a_a_ns_a_error_s : BIT;		-- fsm_a_a_ns_a_error_s
+  SIGNAL fsm_a_a_cs_a_eof12 : BIT;		-- fsm_a_a_cs_a_eof12
+  SIGNAL fsm_a_a_ns_a_eof12 : BIT;		-- fsm_a_a_ns_a_eof12
+  SIGNAL fsm_a_a_cs_a_eof11 : BIT;		-- fsm_a_a_cs_a_eof11
+  SIGNAL fsm_a_a_ns_a_eof11 : BIT;		-- fsm_a_a_ns_a_eof11
+  SIGNAL fsm_a_a_cs_a_eof10 : BIT;		-- fsm_a_a_cs_a_eof10
+  SIGNAL fsm_a_a_ns_a_eof10 : BIT;		-- fsm_a_a_ns_a_eof10
+  SIGNAL fsm_a_a_cs_a_eof9 : BIT;		-- fsm_a_a_cs_a_eof9
+  SIGNAL fsm_a_a_ns_a_eof9 : BIT;		-- fsm_a_a_ns_a_eof9
+  SIGNAL fsm_a_a_cs_a_eof8 : BIT;		-- fsm_a_a_cs_a_eof8
+  SIGNAL fsm_a_a_ns_a_eof8 : BIT;		-- fsm_a_a_ns_a_eof8
+  SIGNAL fsm_a_a_cs_a_eof7 : BIT;		-- fsm_a_a_cs_a_eof7
+  SIGNAL fsm_a_a_ns_a_eof7 : BIT;		-- fsm_a_a_ns_a_eof7
+  SIGNAL fsm_a_a_cs_a_eof6 : BIT;		-- fsm_a_a_cs_a_eof6
+  SIGNAL fsm_a_a_ns_a_eof6 : BIT;		-- fsm_a_a_ns_a_eof6
+  SIGNAL fsm_a_a_cs_a_eof5 : BIT;		-- fsm_a_a_cs_a_eof5
+  SIGNAL fsm_a_a_ns_a_eof5 : BIT;		-- fsm_a_a_ns_a_eof5
+  SIGNAL fsm_a_a_cs_a_eof4 : BIT;		-- fsm_a_a_cs_a_eof4
+  SIGNAL fsm_a_a_ns_a_eof4 : BIT;		-- fsm_a_a_ns_a_eof4
+  SIGNAL fsm_a_a_cs_a_eof3 : BIT;		-- fsm_a_a_cs_a_eof3
+  SIGNAL fsm_a_a_ns_a_eof3 : BIT;		-- fsm_a_a_ns_a_eof3
+  SIGNAL fsm_a_a_cs_a_eof2 : BIT;		-- fsm_a_a_cs_a_eof2
+  SIGNAL fsm_a_a_ns_a_eof2 : BIT;		-- fsm_a_a_ns_a_eof2
+  SIGNAL fsm_a_a_cs_a_eof1 : BIT;		-- fsm_a_a_cs_a_eof1
+  SIGNAL fsm_a_a_ns_a_eof1 : BIT;		-- fsm_a_a_ns_a_eof1
+  SIGNAL fsm_a_a_cs_a_lsb3_1 : BIT;		-- fsm_a_a_cs_a_lsb3_1
+  SIGNAL fsm_a_a_ns_a_lsb3_1 : BIT;		-- fsm_a_a_ns_a_lsb3_1
+  SIGNAL fsm_a_a_cs_a_lsb3_0 : BIT;		-- fsm_a_a_cs_a_lsb3_0
+  SIGNAL fsm_a_a_ns_a_lsb3_0 : BIT;		-- fsm_a_a_ns_a_lsb3_0
+  SIGNAL fsm_a_a_cs_a_lsb2_1 : BIT;		-- fsm_a_a_cs_a_lsb2_1
+  SIGNAL fsm_a_a_ns_a_lsb2_1 : BIT;		-- fsm_a_a_ns_a_lsb2_1
+  SIGNAL fsm_a_a_cs_a_lsb2_0 : BIT;		-- fsm_a_a_cs_a_lsb2_0
+  SIGNAL fsm_a_a_ns_a_lsb2_0 : BIT;		-- fsm_a_a_ns_a_lsb2_0
+  SIGNAL fsm_a_a_cs_a_msb_1 : BIT;		-- fsm_a_a_cs_a_msb_1
+  SIGNAL fsm_a_a_ns_a_msb_1 : BIT;		-- fsm_a_a_ns_a_msb_1
+  SIGNAL fsm_a_a_cs_a_msb_0 : BIT;		-- fsm_a_a_cs_a_msb_0
+  SIGNAL fsm_a_a_ns_a_msb_0 : BIT;		-- fsm_a_a_ns_a_msb_0
+  SIGNAL fsm_a_a_cs_a_lsb1_1 : BIT;		-- fsm_a_a_cs_a_lsb1_1
+  SIGNAL fsm_a_a_ns_a_lsb1_1 : BIT;		-- fsm_a_a_ns_a_lsb1_1
+  SIGNAL fsm_a_a_cs_a_lsb1_0 : BIT;		-- fsm_a_a_cs_a_lsb1_0
+  SIGNAL fsm_a_a_ns_a_lsb1_0 : BIT;		-- fsm_a_a_ns_a_lsb1_0
+  SIGNAL fsm_a_a_cs_a_add_s2 : BIT;		-- fsm_a_a_cs_a_add_s2
+  SIGNAL fsm_a_a_ns_a_add_s2 : BIT;		-- fsm_a_a_ns_a_add_s2
+  SIGNAL fsm_a_a_cs_a_add_s1 : BIT;		-- fsm_a_a_cs_a_add_s1
+  SIGNAL fsm_a_a_ns_a_add_s1 : BIT;		-- fsm_a_a_ns_a_add_s1
+  SIGNAL fsm_a_a_cs_a_id : BIT;		-- fsm_a_a_cs_a_id
+  SIGNAL fsm_a_a_ns_a_id : BIT;		-- fsm_a_a_ns_a_id
+  SIGNAL fsm_a_a_cs_a_sof : BIT;		-- fsm_a_a_cs_a_sof
+  SIGNAL fsm_a_a_ns_a_sof : BIT;		-- fsm_a_a_ns_a_sof
+  SIGNAL fsm_a_a_ns : BIT_VECTOR(4 DOWNTO 0);	-- fsm_a_a_ns
+
+BEGIN
+  fsm_a_a_ns(0) <= (fsm_a_a_ns_a_add_s1 OR fsm_a_a_ns_a_add_s2 OR 
+fsm_a_a_ns_a_lsb1_0 OR fsm_a_a_ns_a_lsb1_1 OR fsm_a_a_ns_a_msb_0 OR 
+fsm_a_a_ns_a_msb_1 OR fsm_a_a_ns_a_lsb2_0 OR fsm_a_a_ns_a_lsb2_1 OR
+ fsm_a_a_ns_a_lsb3_0);
+  fsm_a_a_ns(1) <= (fsm_a_a_ns_a_msb_0 OR fsm_a_a_ns_a_lsb3_1 OR 
+fsm_a_a_ns_a_eof1 OR fsm_a_a_ns_a_eof2 OR fsm_a_a_ns_a_eof5 OR 
+fsm_a_a_ns_a_eof6 OR fsm_a_a_ns_a_eof9 OR fsm_a_a_ns_a_eof10 OR 
+fsm_a_a_ns_a_eof12);
+  fsm_a_a_ns(2) <= (fsm_a_a_ns_a_add_s1 OR fsm_a_a_ns_a_add_s2 OR 
+fsm_a_a_ns_a_lsb1_0 OR fsm_a_a_ns_a_lsb2_0 OR fsm_a_a_ns_a_lsb3_1 OR
+ fsm_a_a_ns_a_eof3 OR fsm_a_a_ns_a_eof4 OR 
+fsm_a_a_ns_a_eof6 OR fsm_a_a_ns_a_eof8 OR fsm_a_a_ns_a_eof10 OR 
+fsm_a_a_ns_a_eof11 OR fsm_a_a_ns_a_eof12);
+  fsm_a_a_ns(3) <= (fsm_a_a_ns_a_id OR fsm_a_a_ns_a_lsb1_0 OR 
+fsm_a_a_ns_a_lsb1_1 OR fsm_a_a_ns_a_lsb2_0 OR fsm_a_a_ns_a_lsb2_1 OR
+ fsm_a_a_ns_a_lsb3_1 OR fsm_a_a_ns_a_eof3 OR 
+fsm_a_a_ns_a_eof4 OR fsm_a_a_ns_a_eof5 OR fsm_a_a_ns_a_eof7 OR 
+fsm_a_a_ns_a_eof9 OR fsm_a_a_ns_a_eof12);
+  fsm_a_a_ns(4) <= (fsm_a_a_ns_a_sof OR fsm_a_a_ns_a_add_s2 OR 
+fsm_a_a_ns_a_msb_1 OR fsm_a_a_ns_a_lsb2_0 OR fsm_a_a_ns_a_lsb2_1 OR
+ fsm_a_a_ns_a_lsb3_1 OR fsm_a_a_ns_a_eof1 OR 
+fsm_a_a_ns_a_eof4 OR fsm_a_a_ns_a_eof5 OR fsm_a_a_ns_a_eof7 OR 
+fsm_a_a_ns_a_eof10 OR fsm_a_a_ns_a_eof11);
+  fsm_a_a_ns_a_sof <= ((fsm_a_a_cs_a_eof1 AND word_in(1) AND word_in(2)
+ AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof10 AND word_in(1) AND word_in(2)
+ AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof11 AND word_in(1) AND word_in(2)
+ AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof12 AND word_in(1) AND word_in(2)
+ AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof2 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof3 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof4 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof5 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof6 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof7 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof8 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)) OR
+ (fsm_a_a_cs_a_eof9 AND word_in(1) AND word_in(2) 
+AND NOT(word_in(3)) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(0)));
+  fsm_a_a_cs_a_sof <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)) AND NOT(
+fsm_a_a_cs(2)) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_id <= ((fsm_a_a_cs_a_error_s AND word_in(1) AND 
+word_in(2) AND word_in(3) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND NOT(word_in(0)
+)) OR (fsm_a_a_cs_a_sof AND word_in(1) AND 
+word_in(2) AND word_in(3) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND NOT(word_in(0)
+)));
+  fsm_a_a_cs_a_id <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3) AND NOT(
+fsm_a_a_cs(2)) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_add_s1 <= (fsm_a_a_cs_a_id AND NOT(word_in(1)) AND NOT(
+word_in(2)) AND NOT(word_in(3)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(0)));
+  fsm_a_a_cs_a_add_s1 <= (NOT(fsm_a_a_cs(4)) AND NOT(fsm_a_a_cs(3)) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_add_s2 <= (fsm_a_a_cs_a_id AND NOT(word_in(1)) AND NOT(
+word_in(2)) AND NOT(word_in(3)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND word_in(0));
+  fsm_a_a_cs_a_add_s2 <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_lsb1_0 <= (fsm_a_a_cs_a_add_s1 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_lsb1_0 <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_lsb1_1 <= (fsm_a_a_cs_a_add_s1 AND word_in(0));
+  fsm_a_a_cs_a_lsb1_1 <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3) AND NOT(
+fsm_a_a_cs(2)) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_msb_0 <= (fsm_a_a_cs_a_add_s2 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_msb_0 <= (fsm_a_a_cs(1) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_msb_1 <= (fsm_a_a_cs_a_add_s2 AND word_in(0));
+  fsm_a_a_cs_a_msb_1 <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)) AND NOT(
+fsm_a_a_cs(2)) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_lsb2_0 <= (fsm_a_a_cs_a_msb_0 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_lsb2_0 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_lsb2_1 <= (fsm_a_a_cs_a_msb_0 AND word_in(0));
+  fsm_a_a_cs_a_lsb2_1 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3) AND NOT(
+fsm_a_a_cs(2)) AND fsm_a_a_cs(0));
+  fsm_a_a_ns_a_lsb3_0 <= (fsm_a_a_cs_a_msb_1 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_lsb3_0 <= (NOT(fsm_a_a_cs(4)) AND NOT(fsm_a_a_cs(3)) AND 
+NOT(fsm_a_a_cs(2)) AND NOT(fsm_a_a_cs(1)) AND 
+fsm_a_a_cs(0));
+  fsm_a_a_ns_a_lsb3_1 <= (fsm_a_a_cs_a_msb_1 AND word_in(0));
+  fsm_a_a_cs_a_lsb3_1 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_eof1 <= (fsm_a_a_cs_a_lsb1_0 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_eof1 <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)) AND NOT(
+fsm_a_a_cs(2)) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_eof2 <= (fsm_a_a_cs_a_lsb1_0 AND word_in(0));
+  fsm_a_a_cs_a_eof2 <= (NOT(fsm_a_a_cs(4)) AND NOT(fsm_a_a_cs(3)) AND 
+NOT(fsm_a_a_cs(2)) AND fsm_a_a_cs(1) AND NOT(
+fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_eof3 <= (fsm_a_a_cs_a_lsb1_1 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_eof3 <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3) AND 
+fsm_a_a_cs(2) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_eof4 <= (fsm_a_a_cs_a_lsb1_1 AND word_in(0));
+  fsm_a_a_cs_a_eof4 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3) AND 
+fsm_a_a_cs(2) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_eof5 <= (fsm_a_a_cs_a_lsb2_0 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_eof5 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3) AND NOT(
+fsm_a_a_cs(2)) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_eof6 <= (fsm_a_a_cs_a_lsb2_0 AND word_in(0));
+  fsm_a_a_cs_a_eof6 <= (NOT(fsm_a_a_cs(4)) AND NOT(fsm_a_a_cs(3)) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_eof7 <= (fsm_a_a_cs_a_lsb2_1 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_eof7 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3) AND NOT(
+fsm_a_a_cs(2)) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_eof8 <= (fsm_a_a_cs_a_lsb2_1 AND word_in(0));
+  fsm_a_a_cs_a_eof8 <= (NOT(fsm_a_a_cs(4)) AND NOT(fsm_a_a_cs(3)) AND 
+fsm_a_a_cs(2) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_eof9 <= (fsm_a_a_cs_a_lsb3_0 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_eof9 <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3) AND NOT(
+fsm_a_a_cs(2)) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_eof10 <= (fsm_a_a_cs_a_lsb3_0 AND word_in(0));
+  fsm_a_a_cs_a_eof10 <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_eof11 <= (fsm_a_a_cs_a_lsb3_1 AND NOT(word_in(0)));
+  fsm_a_a_cs_a_eof11 <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)) AND 
+fsm_a_a_cs(2) AND NOT(fsm_a_a_cs(1)) AND NOT(fsm_a_a_cs(0)));
+  fsm_a_a_ns_a_eof12 <= (fsm_a_a_cs_a_lsb3_1 AND word_in(0));
+  fsm_a_a_cs_a_eof12 <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3) AND 
+fsm_a_a_cs(2) AND fsm_a_a_cs(1));
+  fsm_a_a_ns_a_error_s <= ((fsm_a_a_cs_a_eof1 AND (NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)) OR NOT(
+word_in(0)))) OR (fsm_a_a_cs_a_eof10 AND (NOT(word_in(1)) 
+OR NOT(word_in(2)) OR word_in(3) OR word_in(4) OR 
+NOT(word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)
+) OR NOT(word_in(0)))) OR (fsm_a_a_cs_a_eof11 AND 
+(NOT(word_in(1)) OR NOT(word_in(2)) OR word_in(3) 
+OR word_in(4) OR NOT(word_in(5)) OR NOT(word_in(6))
+ OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof12 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof2 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof3 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof4 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof5 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof6 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof7 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof8 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_eof9 AND (NOT(word_in(1)) OR NOT(word_in(2)) OR 
+word_in(3) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(0)))) OR (
+fsm_a_a_cs_a_error_s AND (NOT(word_in(1)) OR NOT(word_in(2)) OR NOT(
+word_in(3)) OR NOT(word_in(4)) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR word_in(7) OR word_in(0))) OR (
+fsm_a_a_cs_a_id AND (word_in(1) OR word_in(2) OR word_in(3) OR 
+word_in(4) OR word_in(5) OR word_in(6) OR NOT(word_in(7))))
+ OR (fsm_a_a_cs_a_sof AND (NOT(word_in(1)) OR NOT(
+word_in(2)) OR NOT(word_in(3)) OR NOT(word_in(4)) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR word_in(7) OR word_in(0))
+));
+  fsm_a_a_cs_a_error_s <= (NOT(fsm_a_a_cs(4)) AND NOT(fsm_a_a_cs(3)) AND 
+NOT(fsm_a_a_cs(2)) AND NOT(fsm_a_a_cs(1)) AND NOT(
+fsm_a_a_cs(0)));
+  fsm_b_b_ns(0) <= (fsm_b_b_ns_b_add_s1 OR fsm_b_b_ns_b_add_s2 OR 
+fsm_b_b_ns_b_lsb1_0 OR fsm_b_b_ns_b_lsb1_1 OR fsm_b_b_ns_b_msb_0 OR 
+fsm_b_b_ns_b_msb_1 OR fsm_b_b_ns_b_lsb2_0 OR fsm_b_b_ns_b_lsb2_1 OR
+ fsm_b_b_ns_b_lsb3_0);
+  fsm_b_b_ns(1) <= (fsm_b_b_ns_b_msb_0 OR fsm_b_b_ns_b_lsb3_1 OR 
+fsm_b_b_ns_b_eof1 OR fsm_b_b_ns_b_eof2 OR fsm_b_b_ns_b_eof5 OR 
+fsm_b_b_ns_b_eof6 OR fsm_b_b_ns_b_eof9 OR fsm_b_b_ns_b_eof10 OR 
+fsm_b_b_ns_b_eof12);
+  fsm_b_b_ns(2) <= (fsm_b_b_ns_b_add_s1 OR fsm_b_b_ns_b_add_s2 OR 
+fsm_b_b_ns_b_lsb1_0 OR fsm_b_b_ns_b_lsb2_0 OR fsm_b_b_ns_b_lsb3_1 OR
+ fsm_b_b_ns_b_eof3 OR fsm_b_b_ns_b_eof4 OR 
+fsm_b_b_ns_b_eof6 OR fsm_b_b_ns_b_eof8 OR fsm_b_b_ns_b_eof10 OR 
+fsm_b_b_ns_b_eof11 OR fsm_b_b_ns_b_eof12);
+  fsm_b_b_ns(3) <= (fsm_b_b_ns_b_id OR fsm_b_b_ns_b_lsb1_0 OR 
+fsm_b_b_ns_b_lsb1_1 OR fsm_b_b_ns_b_lsb2_0 OR fsm_b_b_ns_b_lsb2_1 OR
+ fsm_b_b_ns_b_lsb3_1 OR fsm_b_b_ns_b_eof3 OR 
+fsm_b_b_ns_b_eof4 OR fsm_b_b_ns_b_eof5 OR fsm_b_b_ns_b_eof7 OR 
+fsm_b_b_ns_b_eof9 OR fsm_b_b_ns_b_eof12);
+  fsm_b_b_ns(4) <= (fsm_b_b_ns_b_sof OR fsm_b_b_ns_b_add_s2 OR 
+fsm_b_b_ns_b_msb_1 OR fsm_b_b_ns_b_lsb2_0 OR fsm_b_b_ns_b_lsb2_1 OR
+ fsm_b_b_ns_b_lsb3_1 OR fsm_b_b_ns_b_eof1 OR 
+fsm_b_b_ns_b_eof4 OR fsm_b_b_ns_b_eof5 OR fsm_b_b_ns_b_eof7 OR 
+fsm_b_b_ns_b_eof10 OR fsm_b_b_ns_b_eof11);
+  fsm_b_b_ns_b_sof <= ((fsm_b_b_cs_b_eof1 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof10 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof11 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof12 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof2 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof3 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof4 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof5 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof6 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof7 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof8 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)) OR
+ (fsm_b_b_cs_b_eof9 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(1)));
+  fsm_b_b_cs_b_sof <= (fsm_b_b_cs(4) AND NOT(fsm_b_b_cs(3)) AND NOT(
+fsm_b_b_cs(2)) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_id <= ((fsm_b_b_cs_b_error_s AND NOT(word_in(0)) AND 
+word_in(3) AND word_in(2) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(1)) OR
+ (fsm_b_b_cs_b_sof AND NOT(word_in(0)) AND 
+word_in(3) AND word_in(2) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(1)));
+  fsm_b_b_cs_b_id <= (NOT(fsm_b_b_cs(4)) AND fsm_b_b_cs(3) AND NOT(
+fsm_b_b_cs(2)) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_add_s1 <= (fsm_b_b_cs_b_id AND NOT(word_in(0)) AND NOT(
+word_in(3)) AND NOT(word_in(2)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(1)));
+  fsm_b_b_cs_b_add_s1 <= (NOT(fsm_b_b_cs(4)) AND NOT(fsm_b_b_cs(3)) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_add_s2 <= (fsm_b_b_cs_b_id AND word_in(0) AND NOT(
+word_in(3)) AND NOT(word_in(2)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(1)));
+  fsm_b_b_cs_b_add_s2 <= (fsm_b_b_cs(4) AND NOT(fsm_b_b_cs(3)) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_lsb1_0 <= (fsm_b_b_cs_b_add_s1 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_lsb1_0 <= (NOT(fsm_b_b_cs(4)) AND fsm_b_b_cs(3) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_lsb1_1 <= (fsm_b_b_cs_b_add_s1 AND word_in(1));
+  fsm_b_b_cs_b_lsb1_1 <= (NOT(fsm_b_b_cs(4)) AND fsm_b_b_cs(3) AND NOT(
+fsm_b_b_cs(2)) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_msb_0 <= (fsm_b_b_cs_b_add_s2 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_msb_0 <= (fsm_b_b_cs(1) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_msb_1 <= (fsm_b_b_cs_b_add_s2 AND word_in(1));
+  fsm_b_b_cs_b_msb_1 <= (fsm_b_b_cs(4) AND NOT(fsm_b_b_cs(3)) AND NOT(
+fsm_b_b_cs(2)) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_lsb2_0 <= (fsm_b_b_cs_b_msb_0 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_lsb2_0 <= (fsm_b_b_cs(4) AND fsm_b_b_cs(3) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_lsb2_1 <= (fsm_b_b_cs_b_msb_0 AND word_in(1));
+  fsm_b_b_cs_b_lsb2_1 <= (fsm_b_b_cs(4) AND fsm_b_b_cs(3) AND NOT(
+fsm_b_b_cs(2)) AND fsm_b_b_cs(0));
+  fsm_b_b_ns_b_lsb3_0 <= (fsm_b_b_cs_b_msb_1 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_lsb3_0 <= (NOT(fsm_b_b_cs(4)) AND NOT(fsm_b_b_cs(3)) AND 
+NOT(fsm_b_b_cs(2)) AND NOT(fsm_b_b_cs(1)) AND 
+fsm_b_b_cs(0));
+  fsm_b_b_ns_b_lsb3_1 <= (fsm_b_b_cs_b_msb_1 AND word_in(1));
+  fsm_b_b_cs_b_lsb3_1 <= (fsm_b_b_cs(4) AND fsm_b_b_cs(3) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_eof1 <= (fsm_b_b_cs_b_lsb1_0 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_eof1 <= (fsm_b_b_cs(4) AND NOT(fsm_b_b_cs(3)) AND NOT(
+fsm_b_b_cs(2)) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_eof2 <= (fsm_b_b_cs_b_lsb1_0 AND word_in(1));
+  fsm_b_b_cs_b_eof2 <= (NOT(fsm_b_b_cs(4)) AND NOT(fsm_b_b_cs(3)) AND 
+NOT(fsm_b_b_cs(2)) AND fsm_b_b_cs(1) AND NOT(
+fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_eof3 <= (fsm_b_b_cs_b_lsb1_1 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_eof3 <= (NOT(fsm_b_b_cs(4)) AND fsm_b_b_cs(3) AND 
+fsm_b_b_cs(2) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_eof4 <= (fsm_b_b_cs_b_lsb1_1 AND word_in(1));
+  fsm_b_b_cs_b_eof4 <= (fsm_b_b_cs(4) AND fsm_b_b_cs(3) AND 
+fsm_b_b_cs(2) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_eof5 <= (fsm_b_b_cs_b_lsb2_0 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_eof5 <= (fsm_b_b_cs(4) AND fsm_b_b_cs(3) AND NOT(
+fsm_b_b_cs(2)) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_eof6 <= (fsm_b_b_cs_b_lsb2_0 AND word_in(1));
+  fsm_b_b_cs_b_eof6 <= (NOT(fsm_b_b_cs(4)) AND NOT(fsm_b_b_cs(3)) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_eof7 <= (fsm_b_b_cs_b_lsb2_1 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_eof7 <= (fsm_b_b_cs(4) AND fsm_b_b_cs(3) AND NOT(
+fsm_b_b_cs(2)) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_eof8 <= (fsm_b_b_cs_b_lsb2_1 AND word_in(1));
+  fsm_b_b_cs_b_eof8 <= (NOT(fsm_b_b_cs(4)) AND NOT(fsm_b_b_cs(3)) AND 
+fsm_b_b_cs(2) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_eof9 <= (fsm_b_b_cs_b_lsb3_0 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_eof9 <= (NOT(fsm_b_b_cs(4)) AND fsm_b_b_cs(3) AND NOT(
+fsm_b_b_cs(2)) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_eof10 <= (fsm_b_b_cs_b_lsb3_0 AND word_in(1));
+  fsm_b_b_cs_b_eof10 <= (fsm_b_b_cs(4) AND NOT(fsm_b_b_cs(3)) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_eof11 <= (fsm_b_b_cs_b_lsb3_1 AND NOT(word_in(1)));
+  fsm_b_b_cs_b_eof11 <= (fsm_b_b_cs(4) AND NOT(fsm_b_b_cs(3)) AND 
+fsm_b_b_cs(2) AND NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(0)));
+  fsm_b_b_ns_b_eof12 <= (fsm_b_b_cs_b_lsb3_1 AND word_in(1));
+  fsm_b_b_cs_b_eof12 <= (NOT(fsm_b_b_cs(4)) AND fsm_b_b_cs(3) AND 
+fsm_b_b_cs(2) AND fsm_b_b_cs(1));
+  fsm_b_b_ns_b_error_s <= ((fsm_b_b_cs_b_eof1 AND (NOT(word_in(0)) OR 
+word_in(3) OR NOT(word_in(2)) OR word_in(4) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)) OR NOT(
+word_in(1)))) OR (fsm_b_b_cs_b_eof10 AND (NOT(word_in(0)) 
+OR word_in(3) OR NOT(word_in(2)) OR word_in(4) OR 
+NOT(word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)
+) OR NOT(word_in(1)))) OR (fsm_b_b_cs_b_eof11 AND 
+(NOT(word_in(0)) OR word_in(3) OR NOT(word_in(2)) 
+OR word_in(4) OR NOT(word_in(5)) OR NOT(word_in(6))
+ OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof12 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof2 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof3 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof4 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof5 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof6 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof7 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof8 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_eof9 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_error_s AND (word_in(0) OR NOT(word_in(3)) OR NOT(
+word_in(2)) OR NOT(word_in(4)) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR word_in(7) OR NOT(word_in(1)))) OR (
+fsm_b_b_cs_b_id AND (word_in(3) OR word_in(2) OR word_in(4) OR 
+word_in(5) OR word_in(6) OR NOT(word_in(7)) OR word_in(1)))
+ OR (fsm_b_b_cs_b_sof AND (word_in(0) OR NOT(
+word_in(3)) OR NOT(word_in(2)) OR NOT(word_in(4)) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR word_in(7) OR NOT(
+word_in(1)))));
+  fsm_b_b_cs_b_error_s <= (NOT(fsm_b_b_cs(4)) AND NOT(fsm_b_b_cs(3)) AND 
+NOT(fsm_b_b_cs(2)) AND NOT(fsm_b_b_cs(1)) AND NOT(
+fsm_b_b_cs(0)));
+  fsm_c_c_ns(0) <= (fsm_c_c_ns_c_add_s1 OR fsm_c_c_ns_c_add_s2 OR 
+fsm_c_c_ns_c_lsb1_0 OR fsm_c_c_ns_c_lsb1_1 OR fsm_c_c_ns_c_msb_0 OR 
+fsm_c_c_ns_c_msb_1 OR fsm_c_c_ns_c_lsb2_0 OR fsm_c_c_ns_c_lsb2_1 OR
+ fsm_c_c_ns_c_lsb3_0);
+  fsm_c_c_ns(1) <= (fsm_c_c_ns_c_msb_0 OR fsm_c_c_ns_c_lsb3_1 OR 
+fsm_c_c_ns_c_eof1 OR fsm_c_c_ns_c_eof2 OR fsm_c_c_ns_c_eof5 OR 
+fsm_c_c_ns_c_eof6 OR fsm_c_c_ns_c_eof9 OR fsm_c_c_ns_c_eof10 OR 
+fsm_c_c_ns_c_eof12);
+  fsm_c_c_ns(2) <= (fsm_c_c_ns_c_add_s1 OR fsm_c_c_ns_c_add_s2 OR 
+fsm_c_c_ns_c_lsb1_0 OR fsm_c_c_ns_c_lsb2_0 OR fsm_c_c_ns_c_lsb3_1 OR
+ fsm_c_c_ns_c_eof3 OR fsm_c_c_ns_c_eof4 OR 
+fsm_c_c_ns_c_eof6 OR fsm_c_c_ns_c_eof8 OR fsm_c_c_ns_c_eof10 OR 
+fsm_c_c_ns_c_eof11 OR fsm_c_c_ns_c_eof12);
+  fsm_c_c_ns(3) <= (fsm_c_c_ns_c_id OR fsm_c_c_ns_c_lsb1_0 OR 
+fsm_c_c_ns_c_lsb1_1 OR fsm_c_c_ns_c_lsb2_0 OR fsm_c_c_ns_c_lsb2_1 OR
+ fsm_c_c_ns_c_lsb3_1 OR fsm_c_c_ns_c_eof3 OR 
+fsm_c_c_ns_c_eof4 OR fsm_c_c_ns_c_eof5 OR fsm_c_c_ns_c_eof7 OR 
+fsm_c_c_ns_c_eof9 OR fsm_c_c_ns_c_eof12);
+  fsm_c_c_ns(4) <= (fsm_c_c_ns_c_sof OR fsm_c_c_ns_c_add_s2 OR 
+fsm_c_c_ns_c_msb_1 OR fsm_c_c_ns_c_lsb2_0 OR fsm_c_c_ns_c_lsb2_1 OR
+ fsm_c_c_ns_c_lsb3_1 OR fsm_c_c_ns_c_eof1 OR 
+fsm_c_c_ns_c_eof4 OR fsm_c_c_ns_c_eof5 OR fsm_c_c_ns_c_eof7 OR 
+fsm_c_c_ns_c_eof10 OR fsm_c_c_ns_c_eof11);
+  fsm_c_c_ns_c_sof <= ((fsm_c_c_cs_c_eof1 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof10 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof11 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof12 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof2 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof3 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof4 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof5 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof6 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof7 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof8 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)) OR
+ (fsm_c_c_cs_c_eof9 AND word_in(0) AND NOT(
+word_in(3)) AND word_in(1) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND word_in(2)));
+  fsm_c_c_cs_c_sof <= (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(3)) AND NOT(
+fsm_c_c_cs(2)) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_id <= ((fsm_c_c_cs_c_error_s AND NOT(word_in(0)) AND 
+word_in(3) AND word_in(1) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(2)) OR
+ (fsm_c_c_cs_c_sof AND NOT(word_in(0)) AND 
+word_in(3) AND word_in(1) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(2)));
+  fsm_c_c_cs_c_id <= (NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(3) AND NOT(
+fsm_c_c_cs(2)) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_add_s1 <= (fsm_c_c_cs_c_id AND NOT(word_in(0)) AND NOT(
+word_in(3)) AND NOT(word_in(1)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(2)));
+  fsm_c_c_cs_c_add_s1 <= (NOT(fsm_c_c_cs(4)) AND NOT(fsm_c_c_cs(3)) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_add_s2 <= (fsm_c_c_cs_c_id AND word_in(0) AND NOT(
+word_in(3)) AND NOT(word_in(1)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(2)));
+  fsm_c_c_cs_c_add_s2 <= (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(3)) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_lsb1_0 <= (fsm_c_c_cs_c_add_s1 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_lsb1_0 <= (NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(3) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_lsb1_1 <= (fsm_c_c_cs_c_add_s1 AND word_in(2));
+  fsm_c_c_cs_c_lsb1_1 <= (NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(3) AND NOT(
+fsm_c_c_cs(2)) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_msb_0 <= (fsm_c_c_cs_c_add_s2 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_msb_0 <= (fsm_c_c_cs(1) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_msb_1 <= (fsm_c_c_cs_c_add_s2 AND word_in(2));
+  fsm_c_c_cs_c_msb_1 <= (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(3)) AND NOT(
+fsm_c_c_cs(2)) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_lsb2_0 <= (fsm_c_c_cs_c_msb_0 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_lsb2_0 <= (fsm_c_c_cs(4) AND fsm_c_c_cs(3) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_lsb2_1 <= (fsm_c_c_cs_c_msb_0 AND word_in(2));
+  fsm_c_c_cs_c_lsb2_1 <= (fsm_c_c_cs(4) AND fsm_c_c_cs(3) AND NOT(
+fsm_c_c_cs(2)) AND fsm_c_c_cs(0));
+  fsm_c_c_ns_c_lsb3_0 <= (fsm_c_c_cs_c_msb_1 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_lsb3_0 <= (NOT(fsm_c_c_cs(4)) AND NOT(fsm_c_c_cs(3)) AND 
+NOT(fsm_c_c_cs(2)) AND NOT(fsm_c_c_cs(1)) AND 
+fsm_c_c_cs(0));
+  fsm_c_c_ns_c_lsb3_1 <= (fsm_c_c_cs_c_msb_1 AND word_in(2));
+  fsm_c_c_cs_c_lsb3_1 <= (fsm_c_c_cs(4) AND fsm_c_c_cs(3) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_eof1 <= (fsm_c_c_cs_c_lsb1_0 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_eof1 <= (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(3)) AND NOT(
+fsm_c_c_cs(2)) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_eof2 <= (fsm_c_c_cs_c_lsb1_0 AND word_in(2));
+  fsm_c_c_cs_c_eof2 <= (NOT(fsm_c_c_cs(4)) AND NOT(fsm_c_c_cs(3)) AND 
+NOT(fsm_c_c_cs(2)) AND fsm_c_c_cs(1) AND NOT(
+fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_eof3 <= (fsm_c_c_cs_c_lsb1_1 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_eof3 <= (NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(3) AND 
+fsm_c_c_cs(2) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_eof4 <= (fsm_c_c_cs_c_lsb1_1 AND word_in(2));
+  fsm_c_c_cs_c_eof4 <= (fsm_c_c_cs(4) AND fsm_c_c_cs(3) AND 
+fsm_c_c_cs(2) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_eof5 <= (fsm_c_c_cs_c_lsb2_0 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_eof5 <= (fsm_c_c_cs(4) AND fsm_c_c_cs(3) AND NOT(
+fsm_c_c_cs(2)) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_eof6 <= (fsm_c_c_cs_c_lsb2_0 AND word_in(2));
+  fsm_c_c_cs_c_eof6 <= (NOT(fsm_c_c_cs(4)) AND NOT(fsm_c_c_cs(3)) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_eof7 <= (fsm_c_c_cs_c_lsb2_1 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_eof7 <= (fsm_c_c_cs(4) AND fsm_c_c_cs(3) AND NOT(
+fsm_c_c_cs(2)) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_eof8 <= (fsm_c_c_cs_c_lsb2_1 AND word_in(2));
+  fsm_c_c_cs_c_eof8 <= (NOT(fsm_c_c_cs(4)) AND NOT(fsm_c_c_cs(3)) AND 
+fsm_c_c_cs(2) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_eof9 <= (fsm_c_c_cs_c_lsb3_0 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_eof9 <= (NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(3) AND NOT(
+fsm_c_c_cs(2)) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_eof10 <= (fsm_c_c_cs_c_lsb3_0 AND word_in(2));
+  fsm_c_c_cs_c_eof10 <= (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(3)) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_eof11 <= (fsm_c_c_cs_c_lsb3_1 AND NOT(word_in(2)));
+  fsm_c_c_cs_c_eof11 <= (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(3)) AND 
+fsm_c_c_cs(2) AND NOT(fsm_c_c_cs(1)) AND NOT(fsm_c_c_cs(0)));
+  fsm_c_c_ns_c_eof12 <= (fsm_c_c_cs_c_lsb3_1 AND word_in(2));
+  fsm_c_c_cs_c_eof12 <= (NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(3) AND 
+fsm_c_c_cs(2) AND fsm_c_c_cs(1));
+  fsm_c_c_ns_c_error_s <= ((fsm_c_c_cs_c_eof1 AND (NOT(word_in(0)) OR 
+word_in(3) OR NOT(word_in(1)) OR word_in(4) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)) OR NOT(
+word_in(2)))) OR (fsm_c_c_cs_c_eof10 AND (NOT(word_in(0)) 
+OR word_in(3) OR NOT(word_in(1)) OR word_in(4) OR 
+NOT(word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)
+) OR NOT(word_in(2)))) OR (fsm_c_c_cs_c_eof11 AND 
+(NOT(word_in(0)) OR word_in(3) OR NOT(word_in(1)) 
+OR word_in(4) OR NOT(word_in(5)) OR NOT(word_in(6))
+ OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof12 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof2 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof3 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof4 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof5 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof6 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof7 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof8 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_eof9 AND (NOT(word_in(0)) OR word_in(3) OR NOT(
+word_in(1)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_error_s AND (word_in(0) OR NOT(word_in(3)) OR NOT(
+word_in(1)) OR NOT(word_in(4)) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR word_in(7) OR NOT(word_in(2)))) OR (
+fsm_c_c_cs_c_id AND (word_in(3) OR word_in(1) OR word_in(4) OR 
+word_in(5) OR word_in(6) OR NOT(word_in(7)) OR word_in(2)))
+ OR (fsm_c_c_cs_c_sof AND (word_in(0) OR NOT(
+word_in(3)) OR NOT(word_in(1)) OR NOT(word_in(4)) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR word_in(7) OR NOT(
+word_in(2)))));
+  fsm_c_c_cs_c_error_s <= (NOT(fsm_c_c_cs(4)) AND NOT(fsm_c_c_cs(3)) AND 
+NOT(fsm_c_c_cs(2)) AND NOT(fsm_c_c_cs(1)) AND NOT(
+fsm_c_c_cs(0)));
+  fsm_d_d_ns(0) <= (fsm_d_d_ns_d_add_s1 OR fsm_d_d_ns_d_add_s2 OR 
+fsm_d_d_ns_d_lsb1_0 OR fsm_d_d_ns_d_lsb1_1 OR fsm_d_d_ns_d_msb_0 OR 
+fsm_d_d_ns_d_msb_1 OR fsm_d_d_ns_d_lsb2_0 OR fsm_d_d_ns_d_lsb2_1 OR
+ fsm_d_d_ns_d_lsb3_0);
+  fsm_d_d_ns(1) <= (fsm_d_d_ns_d_msb_0 OR fsm_d_d_ns_d_lsb3_1 OR 
+fsm_d_d_ns_d_eof1 OR fsm_d_d_ns_d_eof2 OR fsm_d_d_ns_d_eof5 OR 
+fsm_d_d_ns_d_eof6 OR fsm_d_d_ns_d_eof9 OR fsm_d_d_ns_d_eof10 OR 
+fsm_d_d_ns_d_eof12);
+  fsm_d_d_ns(2) <= (fsm_d_d_ns_d_add_s1 OR fsm_d_d_ns_d_add_s2 OR 
+fsm_d_d_ns_d_lsb1_0 OR fsm_d_d_ns_d_lsb2_0 OR fsm_d_d_ns_d_lsb3_1 OR
+ fsm_d_d_ns_d_eof3 OR fsm_d_d_ns_d_eof4 OR 
+fsm_d_d_ns_d_eof6 OR fsm_d_d_ns_d_eof8 OR fsm_d_d_ns_d_eof10 OR 
+fsm_d_d_ns_d_eof11 OR fsm_d_d_ns_d_eof12);
+  fsm_d_d_ns(3) <= (fsm_d_d_ns_d_id OR fsm_d_d_ns_d_lsb1_0 OR 
+fsm_d_d_ns_d_lsb1_1 OR fsm_d_d_ns_d_lsb2_0 OR fsm_d_d_ns_d_lsb2_1 OR
+ fsm_d_d_ns_d_lsb3_1 OR fsm_d_d_ns_d_eof3 OR 
+fsm_d_d_ns_d_eof4 OR fsm_d_d_ns_d_eof5 OR fsm_d_d_ns_d_eof7 OR 
+fsm_d_d_ns_d_eof9 OR fsm_d_d_ns_d_eof12);
+  fsm_d_d_ns(4) <= (fsm_d_d_ns_d_sof OR fsm_d_d_ns_d_add_s2 OR 
+fsm_d_d_ns_d_msb_1 OR fsm_d_d_ns_d_lsb2_0 OR fsm_d_d_ns_d_lsb2_1 OR
+ fsm_d_d_ns_d_lsb3_1 OR fsm_d_d_ns_d_eof1 OR 
+fsm_d_d_ns_d_eof4 OR fsm_d_d_ns_d_eof5 OR fsm_d_d_ns_d_eof7 OR 
+fsm_d_d_ns_d_eof10 OR fsm_d_d_ns_d_eof11);
+  fsm_d_d_ns_d_sof <= ((fsm_d_d_cs_d_eof1 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(4)) AND word_in(5)
+ AND word_in(6) AND word_in(7) AND NOT(word_in(3))
+) OR (fsm_d_d_cs_d_eof10 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof11 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof12 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof2 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof3 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof4 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof5 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof6 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof7 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof8 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)) OR (fsm_d_d_cs_d_eof9 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(4)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(3)
+)));
+  fsm_d_d_cs_d_sof <= (fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)) AND NOT(
+fsm_d_d_cs(2)) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_id <= ((fsm_d_d_cs_d_error_s AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(3)) OR
+ (fsm_d_d_cs_d_sof AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(4) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(3)));
+  fsm_d_d_cs_d_id <= (NOT(fsm_d_d_cs(4)) AND fsm_d_d_cs(3) AND NOT(
+fsm_d_d_cs(2)) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_add_s1 <= (fsm_d_d_cs_d_id AND NOT(word_in(0)) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(3)));
+  fsm_d_d_cs_d_add_s1 <= (NOT(fsm_d_d_cs(4)) AND NOT(fsm_d_d_cs(3)) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_add_s2 <= (fsm_d_d_cs_d_id AND word_in(0) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(4)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(3)));
+  fsm_d_d_cs_d_add_s2 <= (fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_lsb1_0 <= (fsm_d_d_cs_d_add_s1 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_lsb1_0 <= (NOT(fsm_d_d_cs(4)) AND fsm_d_d_cs(3) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_lsb1_1 <= (fsm_d_d_cs_d_add_s1 AND word_in(3));
+  fsm_d_d_cs_d_lsb1_1 <= (NOT(fsm_d_d_cs(4)) AND fsm_d_d_cs(3) AND NOT(
+fsm_d_d_cs(2)) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_msb_0 <= (fsm_d_d_cs_d_add_s2 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_msb_0 <= (fsm_d_d_cs(1) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_msb_1 <= (fsm_d_d_cs_d_add_s2 AND word_in(3));
+  fsm_d_d_cs_d_msb_1 <= (fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)) AND NOT(
+fsm_d_d_cs(2)) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_lsb2_0 <= (fsm_d_d_cs_d_msb_0 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_lsb2_0 <= (fsm_d_d_cs(4) AND fsm_d_d_cs(3) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_lsb2_1 <= (fsm_d_d_cs_d_msb_0 AND word_in(3));
+  fsm_d_d_cs_d_lsb2_1 <= (fsm_d_d_cs(4) AND fsm_d_d_cs(3) AND NOT(
+fsm_d_d_cs(2)) AND fsm_d_d_cs(0));
+  fsm_d_d_ns_d_lsb3_0 <= (fsm_d_d_cs_d_msb_1 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_lsb3_0 <= (NOT(fsm_d_d_cs(4)) AND NOT(fsm_d_d_cs(3)) AND 
+NOT(fsm_d_d_cs(2)) AND NOT(fsm_d_d_cs(1)) AND 
+fsm_d_d_cs(0));
+  fsm_d_d_ns_d_lsb3_1 <= (fsm_d_d_cs_d_msb_1 AND word_in(3));
+  fsm_d_d_cs_d_lsb3_1 <= (fsm_d_d_cs(4) AND fsm_d_d_cs(3) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_eof1 <= (fsm_d_d_cs_d_lsb1_0 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_eof1 <= (fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)) AND NOT(
+fsm_d_d_cs(2)) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_eof2 <= (fsm_d_d_cs_d_lsb1_0 AND word_in(3));
+  fsm_d_d_cs_d_eof2 <= (NOT(fsm_d_d_cs(4)) AND NOT(fsm_d_d_cs(3)) AND 
+NOT(fsm_d_d_cs(2)) AND fsm_d_d_cs(1) AND NOT(
+fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_eof3 <= (fsm_d_d_cs_d_lsb1_1 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_eof3 <= (NOT(fsm_d_d_cs(4)) AND fsm_d_d_cs(3) AND 
+fsm_d_d_cs(2) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_eof4 <= (fsm_d_d_cs_d_lsb1_1 AND word_in(3));
+  fsm_d_d_cs_d_eof4 <= (fsm_d_d_cs(4) AND fsm_d_d_cs(3) AND 
+fsm_d_d_cs(2) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_eof5 <= (fsm_d_d_cs_d_lsb2_0 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_eof5 <= (fsm_d_d_cs(4) AND fsm_d_d_cs(3) AND NOT(
+fsm_d_d_cs(2)) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_eof6 <= (fsm_d_d_cs_d_lsb2_0 AND word_in(3));
+  fsm_d_d_cs_d_eof6 <= (NOT(fsm_d_d_cs(4)) AND NOT(fsm_d_d_cs(3)) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_eof7 <= (fsm_d_d_cs_d_lsb2_1 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_eof7 <= (fsm_d_d_cs(4) AND fsm_d_d_cs(3) AND NOT(
+fsm_d_d_cs(2)) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_eof8 <= (fsm_d_d_cs_d_lsb2_1 AND word_in(3));
+  fsm_d_d_cs_d_eof8 <= (NOT(fsm_d_d_cs(4)) AND NOT(fsm_d_d_cs(3)) AND 
+fsm_d_d_cs(2) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_eof9 <= (fsm_d_d_cs_d_lsb3_0 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_eof9 <= (NOT(fsm_d_d_cs(4)) AND fsm_d_d_cs(3) AND NOT(
+fsm_d_d_cs(2)) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_eof10 <= (fsm_d_d_cs_d_lsb3_0 AND word_in(3));
+  fsm_d_d_cs_d_eof10 <= (fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_eof11 <= (fsm_d_d_cs_d_lsb3_1 AND NOT(word_in(3)));
+  fsm_d_d_cs_d_eof11 <= (fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)) AND 
+fsm_d_d_cs(2) AND NOT(fsm_d_d_cs(1)) AND NOT(fsm_d_d_cs(0)));
+  fsm_d_d_ns_d_eof12 <= (fsm_d_d_cs_d_lsb3_1 AND word_in(3));
+  fsm_d_d_cs_d_eof12 <= (NOT(fsm_d_d_cs(4)) AND fsm_d_d_cs(3) AND 
+fsm_d_d_cs(2) AND fsm_d_d_cs(1));
+  fsm_d_d_ns_d_error_s <= ((fsm_d_d_cs_d_eof1 AND (NOT(word_in(0)) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR word_in(4) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)) OR 
+word_in(3))) OR (fsm_d_d_cs_d_eof10 AND (NOT(word_in(0)) OR
+ NOT(word_in(1)) OR NOT(word_in(2)) OR word_in(4) 
+OR NOT(word_in(5)) OR NOT(word_in(6)) OR NOT(
+word_in(7)) OR word_in(3))) OR (fsm_d_d_cs_d_eof11 AND (NOT
+(word_in(0)) OR NOT(word_in(1)) OR NOT(word_in(2))
+ OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof12 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof2 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof3 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof4 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof5 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof6 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof7 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof8 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_eof9 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(3))) OR (
+fsm_d_d_cs_d_error_s AND (word_in(0) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR NOT(word_in(4)) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR word_in(7) OR NOT(word_in(3)))) OR (
+fsm_d_d_cs_d_id AND (word_in(1) OR word_in(2) OR word_in(4) OR 
+word_in(5) OR word_in(6) OR NOT(word_in(7)) OR word_in(3)))
+ OR (fsm_d_d_cs_d_sof AND (word_in(0) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR NOT(word_in(4)) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR word_in(7) OR NOT(
+word_in(3)))));
+  fsm_d_d_cs_d_error_s <= (NOT(fsm_d_d_cs(4)) AND NOT(fsm_d_d_cs(3)) AND 
+NOT(fsm_d_d_cs(2)) AND NOT(fsm_d_d_cs(1)) AND NOT(
+fsm_d_d_cs(0)));
+  fsm_e_e_ns(0) <= (fsm_e_e_ns_e_add_s1 OR fsm_e_e_ns_e_add_s2 OR 
+fsm_e_e_ns_e_lsb1_0 OR fsm_e_e_ns_e_lsb1_1 OR fsm_e_e_ns_e_msb_0 OR 
+fsm_e_e_ns_e_msb_1 OR fsm_e_e_ns_e_lsb2_0 OR fsm_e_e_ns_e_lsb2_1 OR
+ fsm_e_e_ns_e_lsb3_0);
+  fsm_e_e_ns(1) <= (fsm_e_e_ns_e_msb_0 OR fsm_e_e_ns_e_lsb3_1 OR 
+fsm_e_e_ns_e_eof1 OR fsm_e_e_ns_e_eof2 OR fsm_e_e_ns_e_eof5 OR 
+fsm_e_e_ns_e_eof6 OR fsm_e_e_ns_e_eof9 OR fsm_e_e_ns_e_eof10 OR 
+fsm_e_e_ns_e_eof12);
+  fsm_e_e_ns(2) <= (fsm_e_e_ns_e_add_s1 OR fsm_e_e_ns_e_add_s2 OR 
+fsm_e_e_ns_e_lsb1_0 OR fsm_e_e_ns_e_lsb2_0 OR fsm_e_e_ns_e_lsb3_1 OR
+ fsm_e_e_ns_e_eof3 OR fsm_e_e_ns_e_eof4 OR 
+fsm_e_e_ns_e_eof6 OR fsm_e_e_ns_e_eof8 OR fsm_e_e_ns_e_eof10 OR 
+fsm_e_e_ns_e_eof11 OR fsm_e_e_ns_e_eof12);
+  fsm_e_e_ns(3) <= (fsm_e_e_ns_e_id OR fsm_e_e_ns_e_lsb1_0 OR 
+fsm_e_e_ns_e_lsb1_1 OR fsm_e_e_ns_e_lsb2_0 OR fsm_e_e_ns_e_lsb2_1 OR
+ fsm_e_e_ns_e_lsb3_1 OR fsm_e_e_ns_e_eof3 OR 
+fsm_e_e_ns_e_eof4 OR fsm_e_e_ns_e_eof5 OR fsm_e_e_ns_e_eof7 OR 
+fsm_e_e_ns_e_eof9 OR fsm_e_e_ns_e_eof12);
+  fsm_e_e_ns(4) <= (fsm_e_e_ns_e_sof OR fsm_e_e_ns_e_add_s2 OR 
+fsm_e_e_ns_e_msb_1 OR fsm_e_e_ns_e_lsb2_0 OR fsm_e_e_ns_e_lsb2_1 OR
+ fsm_e_e_ns_e_lsb3_1 OR fsm_e_e_ns_e_eof1 OR 
+fsm_e_e_ns_e_eof4 OR fsm_e_e_ns_e_eof5 OR fsm_e_e_ns_e_eof7 OR 
+fsm_e_e_ns_e_eof10 OR fsm_e_e_ns_e_eof11);
+  fsm_e_e_ns_e_sof <= ((fsm_e_e_cs_e_eof1 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND word_in(5)
+ AND word_in(6) AND word_in(7) AND NOT(word_in(4))
+) OR (fsm_e_e_cs_e_eof10 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof11 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof12 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof2 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof3 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof4 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof5 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof6 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof7 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof8 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)) OR (fsm_e_e_cs_e_eof9 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND 
+word_in(5) AND word_in(6) AND word_in(7) AND NOT(word_in(4)
+)));
+  fsm_e_e_cs_e_sof <= (fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(3)) AND NOT(
+fsm_e_e_cs(2)) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_id <= ((fsm_e_e_cs_e_error_s AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(4)) OR
+ (fsm_e_e_cs_e_sof AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(5) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(4)));
+  fsm_e_e_cs_e_id <= (NOT(fsm_e_e_cs(4)) AND fsm_e_e_cs(3) AND NOT(
+fsm_e_e_cs(2)) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_add_s1 <= (fsm_e_e_cs_e_id AND NOT(word_in(0)) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(4)));
+  fsm_e_e_cs_e_add_s1 <= (NOT(fsm_e_e_cs(4)) AND NOT(fsm_e_e_cs(3)) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_add_s2 <= (fsm_e_e_cs_e_id AND word_in(0) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(5)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(4)));
+  fsm_e_e_cs_e_add_s2 <= (fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(3)) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_lsb1_0 <= (fsm_e_e_cs_e_add_s1 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_lsb1_0 <= (NOT(fsm_e_e_cs(4)) AND fsm_e_e_cs(3) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_lsb1_1 <= (fsm_e_e_cs_e_add_s1 AND word_in(4));
+  fsm_e_e_cs_e_lsb1_1 <= (NOT(fsm_e_e_cs(4)) AND fsm_e_e_cs(3) AND NOT(
+fsm_e_e_cs(2)) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_msb_0 <= (fsm_e_e_cs_e_add_s2 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_msb_0 <= (fsm_e_e_cs(1) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_msb_1 <= (fsm_e_e_cs_e_add_s2 AND word_in(4));
+  fsm_e_e_cs_e_msb_1 <= (fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(3)) AND NOT(
+fsm_e_e_cs(2)) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_lsb2_0 <= (fsm_e_e_cs_e_msb_0 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_lsb2_0 <= (fsm_e_e_cs(4) AND fsm_e_e_cs(3) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_lsb2_1 <= (fsm_e_e_cs_e_msb_0 AND word_in(4));
+  fsm_e_e_cs_e_lsb2_1 <= (fsm_e_e_cs(4) AND fsm_e_e_cs(3) AND NOT(
+fsm_e_e_cs(2)) AND fsm_e_e_cs(0));
+  fsm_e_e_ns_e_lsb3_0 <= (fsm_e_e_cs_e_msb_1 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_lsb3_0 <= (NOT(fsm_e_e_cs(4)) AND NOT(fsm_e_e_cs(3)) AND 
+NOT(fsm_e_e_cs(2)) AND NOT(fsm_e_e_cs(1)) AND 
+fsm_e_e_cs(0));
+  fsm_e_e_ns_e_lsb3_1 <= (fsm_e_e_cs_e_msb_1 AND word_in(4));
+  fsm_e_e_cs_e_lsb3_1 <= (fsm_e_e_cs(4) AND fsm_e_e_cs(3) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_eof1 <= (fsm_e_e_cs_e_lsb1_0 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_eof1 <= (fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(3)) AND NOT(
+fsm_e_e_cs(2)) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_eof2 <= (fsm_e_e_cs_e_lsb1_0 AND word_in(4));
+  fsm_e_e_cs_e_eof2 <= (NOT(fsm_e_e_cs(4)) AND NOT(fsm_e_e_cs(3)) AND 
+NOT(fsm_e_e_cs(2)) AND fsm_e_e_cs(1) AND NOT(
+fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_eof3 <= (fsm_e_e_cs_e_lsb1_1 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_eof3 <= (NOT(fsm_e_e_cs(4)) AND fsm_e_e_cs(3) AND 
+fsm_e_e_cs(2) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_eof4 <= (fsm_e_e_cs_e_lsb1_1 AND word_in(4));
+  fsm_e_e_cs_e_eof4 <= (fsm_e_e_cs(4) AND fsm_e_e_cs(3) AND 
+fsm_e_e_cs(2) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_eof5 <= (fsm_e_e_cs_e_lsb2_0 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_eof5 <= (fsm_e_e_cs(4) AND fsm_e_e_cs(3) AND NOT(
+fsm_e_e_cs(2)) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_eof6 <= (fsm_e_e_cs_e_lsb2_0 AND word_in(4));
+  fsm_e_e_cs_e_eof6 <= (NOT(fsm_e_e_cs(4)) AND NOT(fsm_e_e_cs(3)) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_eof7 <= (fsm_e_e_cs_e_lsb2_1 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_eof7 <= (fsm_e_e_cs(4) AND fsm_e_e_cs(3) AND NOT(
+fsm_e_e_cs(2)) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_eof8 <= (fsm_e_e_cs_e_lsb2_1 AND word_in(4));
+  fsm_e_e_cs_e_eof8 <= (NOT(fsm_e_e_cs(4)) AND NOT(fsm_e_e_cs(3)) AND 
+fsm_e_e_cs(2) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_eof9 <= (fsm_e_e_cs_e_lsb3_0 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_eof9 <= (NOT(fsm_e_e_cs(4)) AND fsm_e_e_cs(3) AND NOT(
+fsm_e_e_cs(2)) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_eof10 <= (fsm_e_e_cs_e_lsb3_0 AND word_in(4));
+  fsm_e_e_cs_e_eof10 <= (fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(3)) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_eof11 <= (fsm_e_e_cs_e_lsb3_1 AND NOT(word_in(4)));
+  fsm_e_e_cs_e_eof11 <= (fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(3)) AND 
+fsm_e_e_cs(2) AND NOT(fsm_e_e_cs(1)) AND NOT(fsm_e_e_cs(0)));
+  fsm_e_e_ns_e_eof12 <= (fsm_e_e_cs_e_lsb3_1 AND word_in(4));
+  fsm_e_e_cs_e_eof12 <= (NOT(fsm_e_e_cs(4)) AND fsm_e_e_cs(3) AND 
+fsm_e_e_cs(2) AND fsm_e_e_cs(1));
+  fsm_e_e_ns_e_error_s <= ((fsm_e_e_cs_e_eof1 AND (NOT(word_in(0)) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR word_in(3) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR NOT(word_in(7)) OR 
+word_in(4))) OR (fsm_e_e_cs_e_eof10 AND (NOT(word_in(0)) OR
+ NOT(word_in(1)) OR NOT(word_in(2)) OR word_in(3) 
+OR NOT(word_in(5)) OR NOT(word_in(6)) OR NOT(
+word_in(7)) OR word_in(4))) OR (fsm_e_e_cs_e_eof11 AND (NOT
+(word_in(0)) OR NOT(word_in(1)) OR NOT(word_in(2))
+ OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof12 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof2 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof3 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof4 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof5 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof6 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof7 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof8 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_eof9 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)) OR word_in(4))) OR (
+fsm_e_e_cs_e_error_s AND (word_in(0) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR NOT(word_in(3)) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR word_in(7) OR NOT(word_in(4)))) OR (
+fsm_e_e_cs_e_id AND (word_in(1) OR word_in(2) OR word_in(3) OR 
+word_in(5) OR word_in(6) OR NOT(word_in(7)) OR word_in(4)))
+ OR (fsm_e_e_cs_e_sof AND (word_in(0) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR NOT(word_in(3)) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR word_in(7) OR NOT(
+word_in(4)))));
+  fsm_e_e_cs_e_error_s <= (NOT(fsm_e_e_cs(4)) AND NOT(fsm_e_e_cs(3)) AND 
+NOT(fsm_e_e_cs(2)) AND NOT(fsm_e_e_cs(1)) AND NOT(
+fsm_e_e_cs(0)));
+  fsm_f_f_ns(0) <= (fsm_f_f_ns_f_add_s1 OR fsm_f_f_ns_f_add_s2 OR 
+fsm_f_f_ns_f_lsb1_0 OR fsm_f_f_ns_f_lsb1_1 OR fsm_f_f_ns_f_msb_0 OR 
+fsm_f_f_ns_f_msb_1 OR fsm_f_f_ns_f_lsb2_0 OR fsm_f_f_ns_f_lsb2_1 OR
+ fsm_f_f_ns_f_lsb3_0);
+  fsm_f_f_ns(1) <= (fsm_f_f_ns_f_msb_0 OR fsm_f_f_ns_f_lsb3_1 OR 
+fsm_f_f_ns_f_eof1 OR fsm_f_f_ns_f_eof2 OR fsm_f_f_ns_f_eof5 OR 
+fsm_f_f_ns_f_eof6 OR fsm_f_f_ns_f_eof9 OR fsm_f_f_ns_f_eof10 OR 
+fsm_f_f_ns_f_eof12);
+  fsm_f_f_ns(2) <= (fsm_f_f_ns_f_add_s1 OR fsm_f_f_ns_f_add_s2 OR 
+fsm_f_f_ns_f_lsb1_0 OR fsm_f_f_ns_f_lsb2_0 OR fsm_f_f_ns_f_lsb3_1 OR
+ fsm_f_f_ns_f_eof3 OR fsm_f_f_ns_f_eof4 OR 
+fsm_f_f_ns_f_eof6 OR fsm_f_f_ns_f_eof8 OR fsm_f_f_ns_f_eof10 OR 
+fsm_f_f_ns_f_eof11 OR fsm_f_f_ns_f_eof12);
+  fsm_f_f_ns(3) <= (fsm_f_f_ns_f_id OR fsm_f_f_ns_f_lsb1_0 OR 
+fsm_f_f_ns_f_lsb1_1 OR fsm_f_f_ns_f_lsb2_0 OR fsm_f_f_ns_f_lsb2_1 OR
+ fsm_f_f_ns_f_lsb3_1 OR fsm_f_f_ns_f_eof3 OR 
+fsm_f_f_ns_f_eof4 OR fsm_f_f_ns_f_eof5 OR fsm_f_f_ns_f_eof7 OR 
+fsm_f_f_ns_f_eof9 OR fsm_f_f_ns_f_eof12);
+  fsm_f_f_ns(4) <= (fsm_f_f_ns_f_sof OR fsm_f_f_ns_f_add_s2 OR 
+fsm_f_f_ns_f_msb_1 OR fsm_f_f_ns_f_lsb2_0 OR fsm_f_f_ns_f_lsb2_1 OR
+ fsm_f_f_ns_f_lsb3_1 OR fsm_f_f_ns_f_eof1 OR 
+fsm_f_f_ns_f_eof4 OR fsm_f_f_ns_f_eof5 OR fsm_f_f_ns_f_eof7 OR 
+fsm_f_f_ns_f_eof10 OR fsm_f_f_ns_f_eof11);
+  fsm_f_f_ns_f_sof <= ((fsm_f_f_cs_f_eof1 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof10 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof11 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof12 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof2 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof3 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof4 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof5 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof6 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof7 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof8 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)) 
+OR (fsm_f_f_cs_f_eof9 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(6) AND word_in(7) AND word_in(5)));
+  fsm_f_f_cs_f_sof <= (fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3)) AND NOT(
+fsm_f_f_cs(2)) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_id <= ((fsm_f_f_cs_f_error_s AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(4) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(5)) OR
+ (fsm_f_f_cs_f_sof AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(4) AND
+ word_in(6) AND NOT(word_in(7)) AND word_in(5)));
+  fsm_f_f_cs_f_id <= (NOT(fsm_f_f_cs(4)) AND fsm_f_f_cs(3) AND NOT(
+fsm_f_f_cs(2)) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_add_s1 <= (fsm_f_f_cs_f_id AND NOT(word_in(0)) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(4)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(5)));
+  fsm_f_f_cs_f_add_s1 <= (NOT(fsm_f_f_cs(4)) AND NOT(fsm_f_f_cs(3)) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_add_s2 <= (fsm_f_f_cs_f_id AND word_in(0) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(4)) AND NOT(word_in(6)) AND word_in(7) 
+AND NOT(word_in(5)));
+  fsm_f_f_cs_f_add_s2 <= (fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3)) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_lsb1_0 <= (fsm_f_f_cs_f_add_s1 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_lsb1_0 <= (NOT(fsm_f_f_cs(4)) AND fsm_f_f_cs(3) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_lsb1_1 <= (fsm_f_f_cs_f_add_s1 AND word_in(5));
+  fsm_f_f_cs_f_lsb1_1 <= (NOT(fsm_f_f_cs(4)) AND fsm_f_f_cs(3) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_msb_0 <= (fsm_f_f_cs_f_add_s2 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_msb_0 <= (fsm_f_f_cs(1) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_msb_1 <= (fsm_f_f_cs_f_add_s2 AND word_in(5));
+  fsm_f_f_cs_f_msb_1 <= (fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3)) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_lsb2_0 <= (fsm_f_f_cs_f_msb_0 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_lsb2_0 <= (fsm_f_f_cs(4) AND fsm_f_f_cs(3) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_lsb2_1 <= (fsm_f_f_cs_f_msb_0 AND word_in(5));
+  fsm_f_f_cs_f_lsb2_1 <= (fsm_f_f_cs(4) AND fsm_f_f_cs(3) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(0));
+  fsm_f_f_ns_f_lsb3_0 <= (fsm_f_f_cs_f_msb_1 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_lsb3_0 <= (NOT(fsm_f_f_cs(4)) AND NOT(fsm_f_f_cs(3)) AND 
+NOT(fsm_f_f_cs(2)) AND NOT(fsm_f_f_cs(1)) AND 
+fsm_f_f_cs(0));
+  fsm_f_f_ns_f_lsb3_1 <= (fsm_f_f_cs_f_msb_1 AND word_in(5));
+  fsm_f_f_cs_f_lsb3_1 <= (fsm_f_f_cs(4) AND fsm_f_f_cs(3) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_eof1 <= (fsm_f_f_cs_f_lsb1_0 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_eof1 <= (fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3)) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_eof2 <= (fsm_f_f_cs_f_lsb1_0 AND word_in(5));
+  fsm_f_f_cs_f_eof2 <= (NOT(fsm_f_f_cs(4)) AND NOT(fsm_f_f_cs(3)) AND 
+NOT(fsm_f_f_cs(2)) AND fsm_f_f_cs(1) AND NOT(
+fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_eof3 <= (fsm_f_f_cs_f_lsb1_1 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_eof3 <= (NOT(fsm_f_f_cs(4)) AND fsm_f_f_cs(3) AND 
+fsm_f_f_cs(2) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_eof4 <= (fsm_f_f_cs_f_lsb1_1 AND word_in(5));
+  fsm_f_f_cs_f_eof4 <= (fsm_f_f_cs(4) AND fsm_f_f_cs(3) AND 
+fsm_f_f_cs(2) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_eof5 <= (fsm_f_f_cs_f_lsb2_0 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_eof5 <= (fsm_f_f_cs(4) AND fsm_f_f_cs(3) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_eof6 <= (fsm_f_f_cs_f_lsb2_0 AND word_in(5));
+  fsm_f_f_cs_f_eof6 <= (NOT(fsm_f_f_cs(4)) AND NOT(fsm_f_f_cs(3)) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_eof7 <= (fsm_f_f_cs_f_lsb2_1 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_eof7 <= (fsm_f_f_cs(4) AND fsm_f_f_cs(3) AND NOT(
+fsm_f_f_cs(2)) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_eof8 <= (fsm_f_f_cs_f_lsb2_1 AND word_in(5));
+  fsm_f_f_cs_f_eof8 <= (NOT(fsm_f_f_cs(4)) AND NOT(fsm_f_f_cs(3)) AND 
+fsm_f_f_cs(2) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_eof9 <= (fsm_f_f_cs_f_lsb3_0 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_eof9 <= (NOT(fsm_f_f_cs(4)) AND fsm_f_f_cs(3) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_eof10 <= (fsm_f_f_cs_f_lsb3_0 AND word_in(5));
+  fsm_f_f_cs_f_eof10 <= (fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3)) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_eof11 <= (fsm_f_f_cs_f_lsb3_1 AND NOT(word_in(5)));
+  fsm_f_f_cs_f_eof11 <= (fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3)) AND 
+fsm_f_f_cs(2) AND NOT(fsm_f_f_cs(1)) AND NOT(fsm_f_f_cs(0)));
+  fsm_f_f_ns_f_eof12 <= (fsm_f_f_cs_f_lsb3_1 AND word_in(5));
+  fsm_f_f_cs_f_eof12 <= (NOT(fsm_f_f_cs(4)) AND fsm_f_f_cs(3) AND 
+fsm_f_f_cs(2) AND fsm_f_f_cs(1));
+  fsm_f_f_ns_f_error_s <= ((fsm_f_f_cs_f_eof1 AND (NOT(word_in(0)) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR word_in(3) OR word_in(4) 
+OR NOT(word_in(6)) OR NOT(word_in(7)) OR NOT(
+word_in(5)))) OR (fsm_f_f_cs_f_eof10 AND (NOT(word_in(0)) 
+OR NOT(word_in(1)) OR NOT(word_in(2)) OR word_in(3)
+ OR word_in(4) OR NOT(word_in(6)) OR NOT(
+word_in(7)) OR NOT(word_in(5)))) OR (fsm_f_f_cs_f_eof11 AND
+ (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof12 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof2 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof3 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof4 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof5 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof6 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof7 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof8 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_eof9 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(6)) 
+OR NOT(word_in(7)) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_error_s AND (word_in(0) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR NOT(word_in(3)) OR NOT(word_in(4)) OR NOT(
+word_in(6)) OR word_in(7) OR NOT(word_in(5)))) OR (
+fsm_f_f_cs_f_id AND (word_in(1) OR word_in(2) OR word_in(3) OR 
+word_in(4) OR word_in(6) OR NOT(word_in(7)) OR word_in(5)))
+ OR (fsm_f_f_cs_f_sof AND (word_in(0) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR NOT(word_in(3)) OR NOT(
+word_in(4)) OR NOT(word_in(6)) OR word_in(7) OR NOT(
+word_in(5)))));
+  fsm_f_f_cs_f_error_s <= (NOT(fsm_f_f_cs(4)) AND NOT(fsm_f_f_cs(3)) AND 
+NOT(fsm_f_f_cs(2)) AND NOT(fsm_f_f_cs(1)) AND NOT(
+fsm_f_f_cs(0)));
+  fsm_g_g_ns(0) <= (fsm_g_g_ns_g_add_s1 OR fsm_g_g_ns_g_add_s2 OR 
+fsm_g_g_ns_g_lsb1_0 OR fsm_g_g_ns_g_lsb1_1 OR fsm_g_g_ns_g_msb_0 OR 
+fsm_g_g_ns_g_msb_1 OR fsm_g_g_ns_g_lsb2_0 OR fsm_g_g_ns_g_lsb2_1 OR
+ fsm_g_g_ns_g_lsb3_0);
+  fsm_g_g_ns(1) <= (fsm_g_g_ns_g_msb_0 OR fsm_g_g_ns_g_lsb3_1 OR 
+fsm_g_g_ns_g_eof1 OR fsm_g_g_ns_g_eof2 OR fsm_g_g_ns_g_eof5 OR 
+fsm_g_g_ns_g_eof6 OR fsm_g_g_ns_g_eof9 OR fsm_g_g_ns_g_eof10 OR 
+fsm_g_g_ns_g_eof12);
+  fsm_g_g_ns(2) <= (fsm_g_g_ns_g_add_s1 OR fsm_g_g_ns_g_add_s2 OR 
+fsm_g_g_ns_g_lsb1_0 OR fsm_g_g_ns_g_lsb2_0 OR fsm_g_g_ns_g_lsb3_1 OR
+ fsm_g_g_ns_g_eof3 OR fsm_g_g_ns_g_eof4 OR 
+fsm_g_g_ns_g_eof6 OR fsm_g_g_ns_g_eof8 OR fsm_g_g_ns_g_eof10 OR 
+fsm_g_g_ns_g_eof11 OR fsm_g_g_ns_g_eof12);
+  fsm_g_g_ns(3) <= (fsm_g_g_ns_g_id OR fsm_g_g_ns_g_lsb1_0 OR 
+fsm_g_g_ns_g_lsb1_1 OR fsm_g_g_ns_g_lsb2_0 OR fsm_g_g_ns_g_lsb2_1 OR
+ fsm_g_g_ns_g_lsb3_1 OR fsm_g_g_ns_g_eof3 OR 
+fsm_g_g_ns_g_eof4 OR fsm_g_g_ns_g_eof5 OR fsm_g_g_ns_g_eof7 OR 
+fsm_g_g_ns_g_eof9 OR fsm_g_g_ns_g_eof12);
+  fsm_g_g_ns(4) <= (fsm_g_g_ns_g_sof OR fsm_g_g_ns_g_add_s2 OR 
+fsm_g_g_ns_g_msb_1 OR fsm_g_g_ns_g_lsb2_0 OR fsm_g_g_ns_g_lsb2_1 OR
+ fsm_g_g_ns_g_lsb3_1 OR fsm_g_g_ns_g_eof1 OR 
+fsm_g_g_ns_g_eof4 OR fsm_g_g_ns_g_eof5 OR fsm_g_g_ns_g_eof7 OR 
+fsm_g_g_ns_g_eof10 OR fsm_g_g_ns_g_eof11);
+  fsm_g_g_ns_g_sof <= ((fsm_g_g_cs_g_eof1 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof10 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof11 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof12 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof2 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof3 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof4 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof5 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof6 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof7 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof8 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)) 
+OR (fsm_g_g_cs_g_eof9 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(7) AND word_in(6)));
+  fsm_g_g_cs_g_sof <= (fsm_g_g_cs(4) AND NOT(fsm_g_g_cs(3)) AND NOT(
+fsm_g_g_cs(2)) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_id <= ((fsm_g_g_cs_g_error_s AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(4) AND
+ word_in(5) AND NOT(word_in(7)) AND word_in(6)) OR
+ (fsm_g_g_cs_g_sof AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(4) AND
+ word_in(5) AND NOT(word_in(7)) AND word_in(6)));
+  fsm_g_g_cs_g_id <= (NOT(fsm_g_g_cs(4)) AND fsm_g_g_cs(3) AND NOT(
+fsm_g_g_cs(2)) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_add_s1 <= (fsm_g_g_cs_g_id AND NOT(word_in(0)) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(4)) AND NOT(word_in(5)) AND word_in(7) 
+AND NOT(word_in(6)));
+  fsm_g_g_cs_g_add_s1 <= (NOT(fsm_g_g_cs(4)) AND NOT(fsm_g_g_cs(3)) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_add_s2 <= (fsm_g_g_cs_g_id AND word_in(0) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(4)) AND NOT(word_in(5)) AND word_in(7) 
+AND NOT(word_in(6)));
+  fsm_g_g_cs_g_add_s2 <= (fsm_g_g_cs(4) AND NOT(fsm_g_g_cs(3)) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_lsb1_0 <= (fsm_g_g_cs_g_add_s1 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_lsb1_0 <= (NOT(fsm_g_g_cs(4)) AND fsm_g_g_cs(3) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_lsb1_1 <= (fsm_g_g_cs_g_add_s1 AND word_in(6));
+  fsm_g_g_cs_g_lsb1_1 <= (NOT(fsm_g_g_cs(4)) AND fsm_g_g_cs(3) AND NOT(
+fsm_g_g_cs(2)) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_msb_0 <= (fsm_g_g_cs_g_add_s2 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_msb_0 <= (fsm_g_g_cs(1) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_msb_1 <= (fsm_g_g_cs_g_add_s2 AND word_in(6));
+  fsm_g_g_cs_g_msb_1 <= (fsm_g_g_cs(4) AND NOT(fsm_g_g_cs(3)) AND NOT(
+fsm_g_g_cs(2)) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_lsb2_0 <= (fsm_g_g_cs_g_msb_0 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_lsb2_0 <= (fsm_g_g_cs(4) AND fsm_g_g_cs(3) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_lsb2_1 <= (fsm_g_g_cs_g_msb_0 AND word_in(6));
+  fsm_g_g_cs_g_lsb2_1 <= (fsm_g_g_cs(4) AND fsm_g_g_cs(3) AND NOT(
+fsm_g_g_cs(2)) AND fsm_g_g_cs(0));
+  fsm_g_g_ns_g_lsb3_0 <= (fsm_g_g_cs_g_msb_1 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_lsb3_0 <= (NOT(fsm_g_g_cs(4)) AND NOT(fsm_g_g_cs(3)) AND 
+NOT(fsm_g_g_cs(2)) AND NOT(fsm_g_g_cs(1)) AND 
+fsm_g_g_cs(0));
+  fsm_g_g_ns_g_lsb3_1 <= (fsm_g_g_cs_g_msb_1 AND word_in(6));
+  fsm_g_g_cs_g_lsb3_1 <= (fsm_g_g_cs(4) AND fsm_g_g_cs(3) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_eof1 <= (fsm_g_g_cs_g_lsb1_0 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_eof1 <= (fsm_g_g_cs(4) AND NOT(fsm_g_g_cs(3)) AND NOT(
+fsm_g_g_cs(2)) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_eof2 <= (fsm_g_g_cs_g_lsb1_0 AND word_in(6));
+  fsm_g_g_cs_g_eof2 <= (NOT(fsm_g_g_cs(4)) AND NOT(fsm_g_g_cs(3)) AND 
+NOT(fsm_g_g_cs(2)) AND fsm_g_g_cs(1) AND NOT(
+fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_eof3 <= (fsm_g_g_cs_g_lsb1_1 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_eof3 <= (NOT(fsm_g_g_cs(4)) AND fsm_g_g_cs(3) AND 
+fsm_g_g_cs(2) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_eof4 <= (fsm_g_g_cs_g_lsb1_1 AND word_in(6));
+  fsm_g_g_cs_g_eof4 <= (fsm_g_g_cs(4) AND fsm_g_g_cs(3) AND 
+fsm_g_g_cs(2) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_eof5 <= (fsm_g_g_cs_g_lsb2_0 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_eof5 <= (fsm_g_g_cs(4) AND fsm_g_g_cs(3) AND NOT(
+fsm_g_g_cs(2)) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_eof6 <= (fsm_g_g_cs_g_lsb2_0 AND word_in(6));
+  fsm_g_g_cs_g_eof6 <= (NOT(fsm_g_g_cs(4)) AND NOT(fsm_g_g_cs(3)) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_eof7 <= (fsm_g_g_cs_g_lsb2_1 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_eof7 <= (fsm_g_g_cs(4) AND fsm_g_g_cs(3) AND NOT(
+fsm_g_g_cs(2)) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_eof8 <= (fsm_g_g_cs_g_lsb2_1 AND word_in(6));
+  fsm_g_g_cs_g_eof8 <= (NOT(fsm_g_g_cs(4)) AND NOT(fsm_g_g_cs(3)) AND 
+fsm_g_g_cs(2) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_eof9 <= (fsm_g_g_cs_g_lsb3_0 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_eof9 <= (NOT(fsm_g_g_cs(4)) AND fsm_g_g_cs(3) AND NOT(
+fsm_g_g_cs(2)) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_eof10 <= (fsm_g_g_cs_g_lsb3_0 AND word_in(6));
+  fsm_g_g_cs_g_eof10 <= (fsm_g_g_cs(4) AND NOT(fsm_g_g_cs(3)) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_eof11 <= (fsm_g_g_cs_g_lsb3_1 AND NOT(word_in(6)));
+  fsm_g_g_cs_g_eof11 <= (fsm_g_g_cs(4) AND NOT(fsm_g_g_cs(3)) AND 
+fsm_g_g_cs(2) AND NOT(fsm_g_g_cs(1)) AND NOT(fsm_g_g_cs(0)));
+  fsm_g_g_ns_g_eof12 <= (fsm_g_g_cs_g_lsb3_1 AND word_in(6));
+  fsm_g_g_cs_g_eof12 <= (NOT(fsm_g_g_cs(4)) AND fsm_g_g_cs(3) AND 
+fsm_g_g_cs(2) AND fsm_g_g_cs(1));
+  fsm_g_g_ns_g_error_s <= ((fsm_g_g_cs_g_eof1 AND (NOT(word_in(0)) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR word_in(3) OR word_in(4) 
+OR NOT(word_in(5)) OR NOT(word_in(7)) OR NOT(
+word_in(6)))) OR (fsm_g_g_cs_g_eof10 AND (NOT(word_in(0)) 
+OR NOT(word_in(1)) OR NOT(word_in(2)) OR word_in(3)
+ OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(7)) OR NOT(word_in(6)))) OR (fsm_g_g_cs_g_eof11 AND
+ (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof12 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof2 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof3 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof4 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof5 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof6 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof7 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof8 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_eof9 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(7)) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_error_s AND (word_in(0) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR NOT(word_in(3)) OR NOT(word_in(4)) OR NOT(
+word_in(5)) OR word_in(7) OR NOT(word_in(6)))) OR (
+fsm_g_g_cs_g_id AND (word_in(1) OR word_in(2) OR word_in(3) OR 
+word_in(4) OR word_in(5) OR NOT(word_in(7)) OR word_in(6)))
+ OR (fsm_g_g_cs_g_sof AND (word_in(0) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR NOT(word_in(3)) OR NOT(
+word_in(4)) OR NOT(word_in(5)) OR word_in(7) OR NOT(
+word_in(6)))));
+  fsm_g_g_cs_g_error_s <= (NOT(fsm_g_g_cs(4)) AND NOT(fsm_g_g_cs(3)) AND 
+NOT(fsm_g_g_cs(2)) AND NOT(fsm_g_g_cs(1)) AND NOT(
+fsm_g_g_cs(0)));
+  fsm_h_h_ns(0) <= (fsm_h_h_ns_h_add_s1 OR fsm_h_h_ns_h_add_s2 OR 
+fsm_h_h_ns_h_lsb1_0 OR fsm_h_h_ns_h_lsb1_1 OR fsm_h_h_ns_h_msb_0 OR 
+fsm_h_h_ns_h_msb_1 OR fsm_h_h_ns_h_lsb2_0 OR fsm_h_h_ns_h_lsb2_1 OR
+ fsm_h_h_ns_h_lsb3_0);
+  fsm_h_h_ns(1) <= (fsm_h_h_ns_h_msb_0 OR fsm_h_h_ns_h_lsb3_1 OR 
+fsm_h_h_ns_h_eof1 OR fsm_h_h_ns_h_eof2 OR fsm_h_h_ns_h_eof5 OR 
+fsm_h_h_ns_h_eof6 OR fsm_h_h_ns_h_eof9 OR fsm_h_h_ns_h_eof10 OR 
+fsm_h_h_ns_h_eof12);
+  fsm_h_h_ns(2) <= (fsm_h_h_ns_h_add_s1 OR fsm_h_h_ns_h_add_s2 OR 
+fsm_h_h_ns_h_lsb1_0 OR fsm_h_h_ns_h_lsb2_0 OR fsm_h_h_ns_h_lsb3_1 OR
+ fsm_h_h_ns_h_eof3 OR fsm_h_h_ns_h_eof4 OR 
+fsm_h_h_ns_h_eof6 OR fsm_h_h_ns_h_eof8 OR fsm_h_h_ns_h_eof10 OR 
+fsm_h_h_ns_h_eof11 OR fsm_h_h_ns_h_eof12);
+  fsm_h_h_ns(3) <= (fsm_h_h_ns_h_id OR fsm_h_h_ns_h_lsb1_0 OR 
+fsm_h_h_ns_h_lsb1_1 OR fsm_h_h_ns_h_lsb2_0 OR fsm_h_h_ns_h_lsb2_1 OR
+ fsm_h_h_ns_h_lsb3_1 OR fsm_h_h_ns_h_eof3 OR 
+fsm_h_h_ns_h_eof4 OR fsm_h_h_ns_h_eof5 OR fsm_h_h_ns_h_eof7 OR 
+fsm_h_h_ns_h_eof9 OR fsm_h_h_ns_h_eof12);
+  fsm_h_h_ns(4) <= (fsm_h_h_ns_h_sof OR fsm_h_h_ns_h_add_s2 OR 
+fsm_h_h_ns_h_msb_1 OR fsm_h_h_ns_h_lsb2_0 OR fsm_h_h_ns_h_lsb2_1 OR
+ fsm_h_h_ns_h_lsb3_1 OR fsm_h_h_ns_h_eof1 OR 
+fsm_h_h_ns_h_eof4 OR fsm_h_h_ns_h_eof5 OR fsm_h_h_ns_h_eof7 OR 
+fsm_h_h_ns_h_eof10 OR fsm_h_h_ns_h_eof11);
+  fsm_h_h_ns_h_sof <= ((fsm_h_h_cs_h_eof1 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof10 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof11 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof12 AND word_in(0) AND 
+word_in(1) AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof2 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof3 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof4 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof5 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof6 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof7 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof8 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)) 
+OR (fsm_h_h_cs_h_eof9 AND word_in(0) AND word_in(1)
+ AND word_in(2) AND NOT(word_in(3)) AND NOT(
+word_in(4)) AND word_in(5) AND word_in(6) AND word_in(7)));
+  fsm_h_h_cs_h_sof <= (fsm_h_h_cs(4) AND NOT(fsm_h_h_cs(3)) AND NOT(
+fsm_h_h_cs(2)) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_id <= ((fsm_h_h_cs_h_error_s AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(4) AND
+ word_in(5) AND word_in(6) AND NOT(word_in(7))) OR
+ (fsm_h_h_cs_h_sof AND NOT(word_in(0)) AND 
+word_in(1) AND word_in(2) AND word_in(3) AND word_in(4) AND
+ word_in(5) AND word_in(6) AND NOT(word_in(7))));
+  fsm_h_h_cs_h_id <= (NOT(fsm_h_h_cs(4)) AND fsm_h_h_cs(3) AND NOT(
+fsm_h_h_cs(2)) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_add_s1 <= (fsm_h_h_cs_h_id AND NOT(word_in(0)) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(4)) AND NOT(word_in(5)) AND NOT(
+word_in(6)) AND word_in(7));
+  fsm_h_h_cs_h_add_s1 <= (NOT(fsm_h_h_cs(4)) AND NOT(fsm_h_h_cs(3)) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_add_s2 <= (fsm_h_h_cs_h_id AND word_in(0) AND NOT(
+word_in(1)) AND NOT(word_in(2)) AND NOT(word_in(3)) AND NOT
+(word_in(4)) AND NOT(word_in(5)) AND NOT(
+word_in(6)) AND word_in(7));
+  fsm_h_h_cs_h_add_s2 <= (fsm_h_h_cs(4) AND NOT(fsm_h_h_cs(3)) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_lsb1_0 <= (fsm_h_h_cs_h_add_s1 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_lsb1_0 <= (NOT(fsm_h_h_cs(4)) AND fsm_h_h_cs(3) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_lsb1_1 <= (fsm_h_h_cs_h_add_s1 AND word_in(7));
+  fsm_h_h_cs_h_lsb1_1 <= (NOT(fsm_h_h_cs(4)) AND fsm_h_h_cs(3) AND NOT(
+fsm_h_h_cs(2)) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_msb_0 <= (fsm_h_h_cs_h_add_s2 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_msb_0 <= (fsm_h_h_cs(1) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_msb_1 <= (fsm_h_h_cs_h_add_s2 AND word_in(7));
+  fsm_h_h_cs_h_msb_1 <= (fsm_h_h_cs(4) AND NOT(fsm_h_h_cs(3)) AND NOT(
+fsm_h_h_cs(2)) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_lsb2_0 <= (fsm_h_h_cs_h_msb_0 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_lsb2_0 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(3) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_lsb2_1 <= (fsm_h_h_cs_h_msb_0 AND word_in(7));
+  fsm_h_h_cs_h_lsb2_1 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(3) AND NOT(
+fsm_h_h_cs(2)) AND fsm_h_h_cs(0));
+  fsm_h_h_ns_h_lsb3_0 <= (fsm_h_h_cs_h_msb_1 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_lsb3_0 <= (NOT(fsm_h_h_cs(4)) AND NOT(fsm_h_h_cs(3)) AND 
+NOT(fsm_h_h_cs(2)) AND NOT(fsm_h_h_cs(1)) AND 
+fsm_h_h_cs(0));
+  fsm_h_h_ns_h_lsb3_1 <= (fsm_h_h_cs_h_msb_1 AND word_in(7));
+  fsm_h_h_cs_h_lsb3_1 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(3) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_eof1 <= (fsm_h_h_cs_h_lsb1_0 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_eof1 <= (fsm_h_h_cs(4) AND NOT(fsm_h_h_cs(3)) AND NOT(
+fsm_h_h_cs(2)) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_eof2 <= (fsm_h_h_cs_h_lsb1_0 AND word_in(7));
+  fsm_h_h_cs_h_eof2 <= (NOT(fsm_h_h_cs(4)) AND NOT(fsm_h_h_cs(3)) AND 
+NOT(fsm_h_h_cs(2)) AND fsm_h_h_cs(1) AND NOT(
+fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_eof3 <= (fsm_h_h_cs_h_lsb1_1 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_eof3 <= (NOT(fsm_h_h_cs(4)) AND fsm_h_h_cs(3) AND 
+fsm_h_h_cs(2) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_eof4 <= (fsm_h_h_cs_h_lsb1_1 AND word_in(7));
+  fsm_h_h_cs_h_eof4 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(3) AND 
+fsm_h_h_cs(2) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_eof5 <= (fsm_h_h_cs_h_lsb2_0 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_eof5 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(3) AND NOT(
+fsm_h_h_cs(2)) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_eof6 <= (fsm_h_h_cs_h_lsb2_0 AND word_in(7));
+  fsm_h_h_cs_h_eof6 <= (NOT(fsm_h_h_cs(4)) AND NOT(fsm_h_h_cs(3)) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_eof7 <= (fsm_h_h_cs_h_lsb2_1 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_eof7 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(3) AND NOT(
+fsm_h_h_cs(2)) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_eof8 <= (fsm_h_h_cs_h_lsb2_1 AND word_in(7));
+  fsm_h_h_cs_h_eof8 <= (NOT(fsm_h_h_cs(4)) AND NOT(fsm_h_h_cs(3)) AND 
+fsm_h_h_cs(2) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_eof9 <= (fsm_h_h_cs_h_lsb3_0 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_eof9 <= (NOT(fsm_h_h_cs(4)) AND fsm_h_h_cs(3) AND NOT(
+fsm_h_h_cs(2)) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_eof10 <= (fsm_h_h_cs_h_lsb3_0 AND word_in(7));
+  fsm_h_h_cs_h_eof10 <= (fsm_h_h_cs(4) AND NOT(fsm_h_h_cs(3)) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_eof11 <= (fsm_h_h_cs_h_lsb3_1 AND NOT(word_in(7)));
+  fsm_h_h_cs_h_eof11 <= (fsm_h_h_cs(4) AND NOT(fsm_h_h_cs(3)) AND 
+fsm_h_h_cs(2) AND NOT(fsm_h_h_cs(1)) AND NOT(fsm_h_h_cs(0)));
+  fsm_h_h_ns_h_eof12 <= (fsm_h_h_cs_h_lsb3_1 AND word_in(7));
+  fsm_h_h_cs_h_eof12 <= (NOT(fsm_h_h_cs(4)) AND fsm_h_h_cs(3) AND 
+fsm_h_h_cs(2) AND fsm_h_h_cs(1));
+  fsm_h_h_ns_h_error_s <= ((fsm_h_h_cs_h_eof1 AND (NOT(word_in(0)) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR word_in(3) OR word_in(4) 
+OR NOT(word_in(5)) OR NOT(word_in(6)) OR NOT(
+word_in(7)))) OR (fsm_h_h_cs_h_eof10 AND (NOT(word_in(0)) 
+OR NOT(word_in(1)) OR NOT(word_in(2)) OR word_in(3)
+ OR word_in(4) OR NOT(word_in(5)) OR NOT(
+word_in(6)) OR NOT(word_in(7)))) OR (fsm_h_h_cs_h_eof11 AND
+ (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof12 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof2 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof3 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof4 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof5 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof6 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof7 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof8 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_eof9 AND (NOT(word_in(0)) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR word_in(3) OR word_in(4) OR NOT(word_in(5)) 
+OR NOT(word_in(6)) OR NOT(word_in(7)))) OR (
+fsm_h_h_cs_h_error_s AND (word_in(0) OR NOT(word_in(1)) OR NOT(
+word_in(2)) OR NOT(word_in(3)) OR NOT(word_in(4)) OR NOT(
+word_in(5)) OR NOT(word_in(6)) OR word_in(7))) OR (
+fsm_h_h_cs_h_id AND (word_in(1) OR word_in(2) OR word_in(3) OR 
+word_in(4) OR word_in(5) OR word_in(6) OR NOT(word_in(7))))
+ OR (fsm_h_h_cs_h_sof AND (word_in(0) OR NOT(
+word_in(1)) OR NOT(word_in(2)) OR NOT(word_in(3)) OR NOT(
+word_in(4)) OR NOT(word_in(5)) OR NOT(word_in(6)) OR 
+word_in(7))));
+  fsm_h_h_cs_h_error_s <= (NOT(fsm_h_h_cs(4)) AND NOT(fsm_h_h_cs(3)) AND 
+NOT(fsm_h_h_cs(2)) AND NOT(fsm_h_h_cs(1)) AND NOT(
+fsm_h_h_cs(0)));
+  label0 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs(0) <= GUARDED (fsm_a_a_ns(0) AND NOT(reset));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs(1) <= GUARDED (fsm_a_a_ns(1) AND NOT(reset));
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs(2) <= GUARDED (fsm_a_a_ns(2) AND NOT(reset));
+  END BLOCK label2;
+  label3 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs(3) <= GUARDED (fsm_a_a_ns(3) AND NOT(reset));
+  END BLOCK label3;
+  label4 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs(4) <= GUARDED (fsm_a_a_ns(4) OR reset);
+  END BLOCK label4;
+  label5 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs(0) <= GUARDED (fsm_b_b_ns(0) AND NOT(reset));
+  END BLOCK label5;
+  label6 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs(1) <= GUARDED (fsm_b_b_ns(1) AND NOT(reset));
+  END BLOCK label6;
+  label7 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs(2) <= GUARDED (fsm_b_b_ns(2) AND NOT(reset));
+  END BLOCK label7;
+  label8 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs(3) <= GUARDED (fsm_b_b_ns(3) AND NOT(reset));
+  END BLOCK label8;
+  label9 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs(4) <= GUARDED (fsm_b_b_ns(4) OR reset);
+  END BLOCK label9;
+  label10 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs(0) <= GUARDED (fsm_c_c_ns(0) AND NOT(reset));
+  END BLOCK label10;
+  label11 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs(1) <= GUARDED (fsm_c_c_ns(1) AND NOT(reset));
+  END BLOCK label11;
+  label12 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs(2) <= GUARDED (fsm_c_c_ns(2) AND NOT(reset));
+  END BLOCK label12;
+  label13 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs(3) <= GUARDED (fsm_c_c_ns(3) AND NOT(reset));
+  END BLOCK label13;
+  label14 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs(4) <= GUARDED (fsm_c_c_ns(4) OR reset);
+  END BLOCK label14;
+  label15 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs(0) <= GUARDED (fsm_d_d_ns(0) AND NOT(reset));
+  END BLOCK label15;
+  label16 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs(1) <= GUARDED (fsm_d_d_ns(1) AND NOT(reset));
+  END BLOCK label16;
+  label17 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs(2) <= GUARDED (fsm_d_d_ns(2) AND NOT(reset));
+  END BLOCK label17;
+  label18 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs(3) <= GUARDED (fsm_d_d_ns(3) AND NOT(reset));
+  END BLOCK label18;
+  label19 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs(4) <= GUARDED (fsm_d_d_ns(4) OR reset);
+  END BLOCK label19;
+  label20 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs(0) <= GUARDED (fsm_e_e_ns(0) AND NOT(reset));
+  END BLOCK label20;
+  label21 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs(1) <= GUARDED (fsm_e_e_ns(1) AND NOT(reset));
+  END BLOCK label21;
+  label22 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs(2) <= GUARDED (fsm_e_e_ns(2) AND NOT(reset));
+  END BLOCK label22;
+  label23 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs(3) <= GUARDED (fsm_e_e_ns(3) AND NOT(reset));
+  END BLOCK label23;
+  label24 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs(4) <= GUARDED (fsm_e_e_ns(4) OR reset);
+  END BLOCK label24;
+  label25 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs(0) <= GUARDED (fsm_f_f_ns(0) AND NOT(reset));
+  END BLOCK label25;
+  label26 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs(1) <= GUARDED (fsm_f_f_ns(1) AND NOT(reset));
+  END BLOCK label26;
+  label27 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs(2) <= GUARDED (fsm_f_f_ns(2) AND NOT(reset));
+  END BLOCK label27;
+  label28 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs(3) <= GUARDED (fsm_f_f_ns(3) AND NOT(reset));
+  END BLOCK label28;
+  label29 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs(4) <= GUARDED (fsm_f_f_ns(4) OR reset);
+  END BLOCK label29;
+  label30 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs(0) <= GUARDED (fsm_g_g_ns(0) AND NOT(reset));
+  END BLOCK label30;
+  label31 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs(1) <= GUARDED (fsm_g_g_ns(1) AND NOT(reset));
+  END BLOCK label31;
+  label32 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs(2) <= GUARDED (fsm_g_g_ns(2) AND NOT(reset));
+  END BLOCK label32;
+  label33 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs(3) <= GUARDED (fsm_g_g_ns(3) AND NOT(reset));
+  END BLOCK label33;
+  label34 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs(4) <= GUARDED (fsm_g_g_ns(4) OR reset);
+  END BLOCK label34;
+  label35 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs(0) <= GUARDED (fsm_h_h_ns(0) AND NOT(reset));
+  END BLOCK label35;
+  label36 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs(1) <= GUARDED (fsm_h_h_ns(1) AND NOT(reset));
+  END BLOCK label36;
+  label37 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs(2) <= GUARDED (fsm_h_h_ns(2) AND NOT(reset));
+  END BLOCK label37;
+  label38 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs(3) <= GUARDED (fsm_h_h_ns(3) AND NOT(reset));
+  END BLOCK label38;
+  label39 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs(4) <= GUARDED (fsm_h_h_ns(4) OR reset);
+  END BLOCK label39;
+
+error_f <= fsm_a_a_cs_a_error_s;
+
+address(0) <= (fsm_a_a_cs_a_lsb1_1 OR fsm_a_a_cs_a_msb_1 OR 
+fsm_a_a_cs_a_lsb3_0 OR fsm_a_a_cs_a_lsb3_1 OR fsm_a_a_cs_a_eof3 OR 
+fsm_a_a_cs_a_eof4 OR fsm_a_a_cs_a_eof9 OR fsm_a_a_cs_a_eof10 OR 
+fsm_a_a_cs_a_eof11 OR fsm_a_a_cs_a_eof12);
+
+data(0) <= (fsm_a_a_cs_a_lsb2_1 OR fsm_a_a_cs_a_lsb3_1 OR 
+fsm_a_a_cs_a_eof2 OR fsm_a_a_cs_a_eof4 OR fsm_a_a_cs_a_eof6 OR 
+fsm_a_a_cs_a_eof8 OR fsm_a_a_cs_a_eof10 OR fsm_a_a_cs_a_eof12);
+
+address(1) <= (fsm_b_b_cs_b_lsb1_1 OR fsm_b_b_cs_b_msb_1 OR 
+fsm_b_b_cs_b_lsb3_0 OR fsm_b_b_cs_b_lsb3_1 OR fsm_b_b_cs_b_eof3 OR 
+fsm_b_b_cs_b_eof4 OR fsm_b_b_cs_b_eof9 OR fsm_b_b_cs_b_eof10 OR 
+fsm_b_b_cs_b_eof11 OR fsm_b_b_cs_b_eof12);
+
+data(1) <= (fsm_b_b_cs_b_lsb2_1 OR fsm_b_b_cs_b_lsb3_1 OR 
+fsm_b_b_cs_b_eof2 OR fsm_b_b_cs_b_eof4 OR fsm_b_b_cs_b_eof6 OR 
+fsm_b_b_cs_b_eof8 OR fsm_b_b_cs_b_eof10 OR fsm_b_b_cs_b_eof12);
+
+address(2) <= (fsm_c_c_cs_c_lsb1_1 OR fsm_c_c_cs_c_msb_1 OR 
+fsm_c_c_cs_c_lsb3_0 OR fsm_c_c_cs_c_lsb3_1 OR fsm_c_c_cs_c_eof3 OR 
+fsm_c_c_cs_c_eof4 OR fsm_c_c_cs_c_eof9 OR fsm_c_c_cs_c_eof10 OR 
+fsm_c_c_cs_c_eof11 OR fsm_c_c_cs_c_eof12);
+
+data(2) <= (fsm_c_c_cs_c_lsb2_1 OR fsm_c_c_cs_c_lsb3_1 OR 
+fsm_c_c_cs_c_eof2 OR fsm_c_c_cs_c_eof4 OR fsm_c_c_cs_c_eof6 OR 
+fsm_c_c_cs_c_eof8 OR fsm_c_c_cs_c_eof10 OR fsm_c_c_cs_c_eof12);
+
+address(3) <= (fsm_d_d_cs_d_lsb1_1 OR fsm_d_d_cs_d_msb_1 OR 
+fsm_d_d_cs_d_lsb3_0 OR fsm_d_d_cs_d_lsb3_1 OR fsm_d_d_cs_d_eof3 OR 
+fsm_d_d_cs_d_eof4 OR fsm_d_d_cs_d_eof9 OR fsm_d_d_cs_d_eof10 OR 
+fsm_d_d_cs_d_eof11 OR fsm_d_d_cs_d_eof12);
+
+data(3) <= (fsm_d_d_cs_d_lsb2_1 OR fsm_d_d_cs_d_lsb3_1 OR 
+fsm_d_d_cs_d_eof2 OR fsm_d_d_cs_d_eof4 OR fsm_d_d_cs_d_eof6 OR 
+fsm_d_d_cs_d_eof8 OR fsm_d_d_cs_d_eof10 OR fsm_d_d_cs_d_eof12);
+
+address(4) <= (fsm_e_e_cs_e_lsb1_1 OR fsm_e_e_cs_e_msb_1 OR 
+fsm_e_e_cs_e_lsb3_0 OR fsm_e_e_cs_e_lsb3_1 OR fsm_e_e_cs_e_eof3 OR 
+fsm_e_e_cs_e_eof4 OR fsm_e_e_cs_e_eof9 OR fsm_e_e_cs_e_eof10 OR 
+fsm_e_e_cs_e_eof11 OR fsm_e_e_cs_e_eof12);
+
+data(4) <= (fsm_e_e_cs_e_lsb2_1 OR fsm_e_e_cs_e_lsb3_1 OR 
+fsm_e_e_cs_e_eof2 OR fsm_e_e_cs_e_eof4 OR fsm_e_e_cs_e_eof6 OR 
+fsm_e_e_cs_e_eof8 OR fsm_e_e_cs_e_eof10 OR fsm_e_e_cs_e_eof12);
+
+address(5) <= (fsm_f_f_cs_f_lsb1_1 OR fsm_f_f_cs_f_msb_1 OR 
+fsm_f_f_cs_f_lsb3_0 OR fsm_f_f_cs_f_lsb3_1 OR fsm_f_f_cs_f_eof3 OR 
+fsm_f_f_cs_f_eof4 OR fsm_f_f_cs_f_eof9 OR fsm_f_f_cs_f_eof10 OR 
+fsm_f_f_cs_f_eof11 OR fsm_f_f_cs_f_eof12);
+
+data(5) <= (fsm_f_f_cs_f_lsb2_1 OR fsm_f_f_cs_f_lsb3_1 OR 
+fsm_f_f_cs_f_eof2 OR fsm_f_f_cs_f_eof4 OR fsm_f_f_cs_f_eof6 OR 
+fsm_f_f_cs_f_eof8 OR fsm_f_f_cs_f_eof10 OR fsm_f_f_cs_f_eof12);
+
+address(6) <= (fsm_g_g_cs_g_lsb1_1 OR fsm_g_g_cs_g_msb_1 OR 
+fsm_g_g_cs_g_lsb3_0 OR fsm_g_g_cs_g_lsb3_1 OR fsm_g_g_cs_g_eof3 OR 
+fsm_g_g_cs_g_eof4 OR fsm_g_g_cs_g_eof9 OR fsm_g_g_cs_g_eof10 OR 
+fsm_g_g_cs_g_eof11 OR fsm_g_g_cs_g_eof12);
+
+data(6) <= (fsm_g_g_cs_g_lsb2_1 OR fsm_g_g_cs_g_lsb3_1 OR 
+fsm_g_g_cs_g_eof2 OR fsm_g_g_cs_g_eof4 OR fsm_g_g_cs_g_eof6 OR 
+fsm_g_g_cs_g_eof8 OR fsm_g_g_cs_g_eof10 OR fsm_g_g_cs_g_eof12);
+
+address(7) <= (fsm_h_h_cs_h_lsb1_1 OR fsm_h_h_cs_h_msb_1 OR 
+fsm_h_h_cs_h_lsb3_0 OR fsm_h_h_cs_h_lsb3_1 OR fsm_h_h_cs_h_eof3 OR 
+fsm_h_h_cs_h_eof4 OR fsm_h_h_cs_h_eof9 OR fsm_h_h_cs_h_eof10 OR 
+fsm_h_h_cs_h_eof11 OR fsm_h_h_cs_h_eof12);
+
+data(7) <= (fsm_h_h_cs_h_lsb2_1 OR fsm_h_h_cs_h_lsb3_1 OR 
+fsm_h_h_cs_h_eof2 OR fsm_h_h_cs_h_eof4 OR fsm_h_h_cs_h_eof6 OR 
+fsm_h_h_cs_h_eof8 OR fsm_h_h_cs_h_eof10 OR fsm_h_h_cs_h_eof12);
+END;

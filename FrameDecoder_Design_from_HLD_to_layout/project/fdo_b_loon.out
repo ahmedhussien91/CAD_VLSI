@@ -1,0 +1,92 @@
+
+                   @@@@@@                          @@@    @@@
+                     @@                             @@     @ 
+                     @@                             @@@    @ 
+                     @@           @@@       @@@     @ @@   @ 
+                     @@         @@   @@   @@   @@   @ @@   @ 
+                     @@        @@     @@ @@     @@  @  @@  @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@      @ @@     @@ @@     @@  @    @@@ 
+                     @@     @   @@   @@   @@   @@   @     @@ 
+                   @@@@@@@@@@     @@@       @@@    @@@    @@ 
+
+                           Local optimization on Nets
+
+                 Alliance CAD System 5.0, loon 5.0 [2003/12/07]
+                 Copyright (c) 2000-2015,        ASIM/LIP6/UPMC
+                 Author(s):                     François Donnet
+                 E-mail        :    alliance-users@asim.lip6.fr
+
+	MBK_IN_LO	: vst
+	MBK_OUT_LO	: vst
+	MBK_TARGET_LIB	: /usr/share/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'fdo_b.vst'...
+Controlling file 'paramfile.lax'...
+Reading lib '/usr/share/alliance/cells/sxlib'...
+Capacitances on file 'fdo_b.vst'...
+Delays on file 'fdo_b.vst'...2948 ps
+Area on file 'fdo_b.vst'...1485750 lamda² (with over-cell routing)
+Details...
+	no2_x1: 207 (13%)
+	sff1_x4: 200 (60%)
+	inv_x2: 132 (6%)
+	no3_x1: 38 (3%)
+	na3_x1: 26 (2%)
+	no4_x1: 25 (2%)
+	o2_x2: 19 (1%)
+	a2_x2: 15 (1%)
+	on12_x1: 15 (1%)
+	na4_x1: 12 (1%)
+	ao22_x2: 11 (1%)
+	nao22_x1: 7 (0%)
+	o4_x2: 6 (0%)
+	a4_x2: 6 (0%)
+	o3_x2: 5 (0%)
+	a3_x2: 5 (0%)
+	an12_x1: 5 (0%)
+	na2_x1: 5 (0%)
+	noa22_x1: 3 (0%)
+	buf_x2: 1 (0%)
+	noa2a22_x1: 1 (0%)
+	oa22_x2: 1 (0%)
+	Total: 745
+Worst RC on file 'fdo_b.vst'...394 ps
+Inserting buffers on critical path for file 'fdo_b_l.vst'...4 buffers inserted -> 2825 ps
+Improving RC on critical path for file 'fdo_b_l.vst'...2777 ps
+Improving all RC for file 'fdo_b_l.vst'...
+Worst RC on file 'fdo_b_l.vst'...394 ps
+Area on file 'fdo_b_l.vst'...1490000 lamda² (with over-cell routing)
+Details...
+	no2_x1: 207 (13%)
+	sff1_x4: 200 (60%)
+	inv_x2: 131 (6%)
+	no3_x1: 38 (3%)
+	na3_x1: 26 (2%)
+	no4_x1: 25 (2%)
+	o2_x2: 19 (1%)
+	a2_x2: 15 (1%)
+	on12_x1: 15 (1%)
+	na4_x1: 12 (1%)
+	ao22_x2: 11 (1%)
+	nao22_x1: 7 (0%)
+	o4_x2: 6 (0%)
+	a4_x2: 6 (0%)
+	buf_x2: 5 (0%)
+	o3_x2: 5 (0%)
+	a3_x2: 5 (0%)
+	an12_x1: 5 (0%)
+	na2_x1: 5 (0%)
+	noa22_x1: 3 (0%)
+	noa2a22_x1: 1 (0%)
+	oa22_x2: 1 (0%)
+	inv_x4: 1 (0%)
+	Total: 749
+Critical path (no warranty)...2777 ps from 'word_in 6' to 'fsm_d_d_cs_0_ins'
+Saving file 'fdo_b_l.vst'...
+Saving critical path in xsch color file 'fdo_b_l.xsc'...
+End of loon...
+

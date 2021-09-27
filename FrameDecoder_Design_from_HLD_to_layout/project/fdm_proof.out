@@ -1,0 +1,52 @@
+
+                @@@@@@@                                     @@@ 
+                  @@   @@                                  @  @@
+                  @@    @@                                @@  @@
+                  @@    @@ @@@ @@@     @@@       @@@      @@    
+                  @@   @@   @@@  @@  @@   @@   @@   @@  @@@@@@@@
+                  @@@@@     @@   @@ @@     @@ @@     @@   @@    
+                  @@        @@      @@     @@ @@     @@   @@    
+                  @@        @@      @@     @@ @@     @@   @@    
+                  @@        @@      @@     @@ @@     @@   @@    
+                  @@        @@       @@   @@   @@   @@    @@    
+                @@@@@@     @@@@        @@@       @@@    @@@@@@  
+
+                                  Formal Proof
+
+                   Alliance CAD System 5.0,          proof 5.0
+                   Copyright (c) 1990-2015,     ASIM/LIP6/UPMC
+                   E-mail        : alliance-users@asim.lip6.fr
+
+================================  Environment  ================================
+MBK_WORK_LIB		= .
+MBK_CATA_LIB		= /usr/share/alliance/cells/sxlib:/usr/share/alliance/cells/romlib:/usr/share/alliance/cells/ramlib:/usr/share/alliance/cells/rflib:/usr/share/alliance/cells/rf2lib:/usr/share/alliance/cells/pxlib:/usr/share/alliance/cells/padlib:/usr/share/alliance/cells/dp_sxlib
+=======================  Files, Options and Parameters  =======================
+First VHDL file		= fdm.vbe
+Second VHDL file	= fdm_b_l_net.vbe
+The auxiliary signals are erased
+Errors are displayed
+===============================================================================
+
+Compiling 'fdm' ...
+Compiling 'fdm_b_l_net' ...
+---> final number of nodes = 8593(2561)
+
+Running Abl2Bdd on `fdm_b_l_net`
+--------------------------------------------------------------------------------
+             Formal proof with Ordered Binary Decision Diagrams between   
+
+             './fdm'  and  './fdm_b_l_net'
+--------------------------------------------------------------------------------
+==============================  PRIMARY OUTPUT  ===============================
+=============================  AUXILIARY SIGNAL  ==============================
+==============================  REGISTER SIGNAL  ==============================
+===============================  EXTERNAL BUS =================================
+================================ INTERNAL BUS =================================
+
+                            Formal Proof : OK
+
+pppppppppppppppppppppppprrrrrrrrrrrrooooooooooooooooooooooooooooofffffffffffffff
+--------------------------------------------------------------------------------
+
+
+

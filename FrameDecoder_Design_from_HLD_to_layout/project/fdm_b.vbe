@@ -1,0 +1,887 @@
+-- VHDL data flow description generated from `fdm_b`
+--		date : Wed May 27 19:41:44 2015
+
+
+-- Entity Declaration
+
+ENTITY fdm_b IS
+  PORT (
+  ck : in BIT;	-- ck
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  word_in : in bit_vector(7 DOWNTO 0) ;	-- word_in
+  reset : in BIT;	-- reset
+  error_f : out BIT;	-- error_f
+  data : out bit_vector(7 DOWNTO 0) ;	-- data
+  address : out bit_vector(7 DOWNTO 0) 	-- address
+  );
+END fdm_b;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF fdm_b IS
+  SIGNAL fsm_h_h_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_h_h_cs
+  SIGNAL fsm_g_g_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_g_g_cs
+  SIGNAL fsm_f_f_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_f_f_cs
+  SIGNAL fsm_e_e_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_e_e_cs
+  SIGNAL fsm_d_d_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_d_d_cs
+  SIGNAL fsm_c_c_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_c_c_cs
+  SIGNAL fsm_b_b_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_b_b_cs
+  SIGNAL fsm_a_a_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_a_a_cs
+  SIGNAL aux0 : BIT;		-- aux0
+  SIGNAL aux1 : BIT;		-- aux1
+  SIGNAL aux2 : BIT;		-- aux2
+  SIGNAL aux3 : BIT;		-- aux3
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL aux6 : BIT;		-- aux6
+  SIGNAL aux8 : BIT;		-- aux8
+  SIGNAL aux9 : BIT;		-- aux9
+  SIGNAL aux10 : BIT;		-- aux10
+  SIGNAL aux11 : BIT;		-- aux11
+  SIGNAL aux12 : BIT;		-- aux12
+  SIGNAL aux13 : BIT;		-- aux13
+  SIGNAL aux14 : BIT;		-- aux14
+  SIGNAL aux15 : BIT;		-- aux15
+  SIGNAL aux16 : BIT;		-- aux16
+  SIGNAL aux17 : BIT;		-- aux17
+  SIGNAL aux18 : BIT;		-- aux18
+  SIGNAL aux19 : BIT;		-- aux19
+  SIGNAL aux20 : BIT;		-- aux20
+  SIGNAL aux21 : BIT;		-- aux21
+  SIGNAL aux22 : BIT;		-- aux22
+  SIGNAL aux23 : BIT;		-- aux23
+  SIGNAL aux24 : BIT;		-- aux24
+  SIGNAL aux25 : BIT;		-- aux25
+  SIGNAL aux26 : BIT;		-- aux26
+  SIGNAL aux27 : BIT;		-- aux27
+  SIGNAL aux28 : BIT;		-- aux28
+  SIGNAL aux29 : BIT;		-- aux29
+  SIGNAL aux30 : BIT;		-- aux30
+  SIGNAL aux31 : BIT;		-- aux31
+  SIGNAL aux32 : BIT;		-- aux32
+  SIGNAL aux33 : BIT;		-- aux33
+  SIGNAL aux34 : BIT;		-- aux34
+  SIGNAL aux35 : BIT;		-- aux35
+  SIGNAL aux36 : BIT;		-- aux36
+  SIGNAL aux37 : BIT;		-- aux37
+  SIGNAL aux38 : BIT;		-- aux38
+  SIGNAL aux39 : BIT;		-- aux39
+  SIGNAL aux40 : BIT;		-- aux40
+  SIGNAL aux41 : BIT;		-- aux41
+  SIGNAL aux42 : BIT;		-- aux42
+  SIGNAL aux43 : BIT;		-- aux43
+  SIGNAL aux44 : BIT;		-- aux44
+  SIGNAL aux45 : BIT;		-- aux45
+  SIGNAL aux49 : BIT;		-- aux49
+  SIGNAL aux51 : BIT;		-- aux51
+  SIGNAL aux52 : BIT;		-- aux52
+  SIGNAL aux53 : BIT;		-- aux53
+  SIGNAL aux55 : BIT;		-- aux55
+  SIGNAL aux57 : BIT;		-- aux57
+  SIGNAL aux58 : BIT;		-- aux58
+  SIGNAL aux59 : BIT;		-- aux59
+  SIGNAL aux60 : BIT;		-- aux60
+  SIGNAL aux61 : BIT;		-- aux61
+  SIGNAL aux62 : BIT;		-- aux62
+  SIGNAL aux64 : BIT;		-- aux64
+  SIGNAL aux65 : BIT;		-- aux65
+  SIGNAL aux66 : BIT;		-- aux66
+  SIGNAL aux67 : BIT;		-- aux67
+  SIGNAL aux68 : BIT;		-- aux68
+  SIGNAL aux69 : BIT;		-- aux69
+  SIGNAL aux70 : BIT;		-- aux70
+  SIGNAL aux71 : BIT;		-- aux71
+  SIGNAL aux73 : BIT;		-- aux73
+  SIGNAL aux75 : BIT;		-- aux75
+  SIGNAL aux76 : BIT;		-- aux76
+  SIGNAL aux77 : BIT;		-- aux77
+  SIGNAL aux78 : BIT;		-- aux78
+  SIGNAL aux79 : BIT;		-- aux79
+  SIGNAL aux82 : BIT;		-- aux82
+  SIGNAL aux83 : BIT;		-- aux83
+  SIGNAL aux85 : BIT;		-- aux85
+  SIGNAL aux86 : BIT;		-- aux86
+  SIGNAL aux88 : BIT;		-- aux88
+  SIGNAL aux90 : BIT;		-- aux90
+  SIGNAL aux92 : BIT;		-- aux92
+  SIGNAL aux93 : BIT;		-- aux93
+  SIGNAL aux94 : BIT;		-- aux94
+  SIGNAL aux95 : BIT;		-- aux95
+  SIGNAL aux96 : BIT;		-- aux96
+  SIGNAL aux97 : BIT;		-- aux97
+  SIGNAL aux98 : BIT;		-- aux98
+  SIGNAL aux99 : BIT;		-- aux99
+  SIGNAL aux100 : BIT;		-- aux100
+  SIGNAL aux101 : BIT;		-- aux101
+  SIGNAL aux102 : BIT;		-- aux102
+  SIGNAL aux106 : BIT;		-- aux106
+  SIGNAL aux107 : BIT;		-- aux107
+  SIGNAL aux108 : BIT;		-- aux108
+  SIGNAL aux110 : BIT;		-- aux110
+  SIGNAL aux111 : BIT;		-- aux111
+  SIGNAL aux112 : BIT;		-- aux112
+  SIGNAL aux113 : BIT;		-- aux113
+  SIGNAL aux114 : BIT;		-- aux114
+  SIGNAL aux115 : BIT;		-- aux115
+  SIGNAL aux116 : BIT;		-- aux116
+  SIGNAL aux117 : BIT;		-- aux117
+  SIGNAL aux118 : BIT;		-- aux118
+  SIGNAL aux119 : BIT;		-- aux119
+  SIGNAL aux120 : BIT;		-- aux120
+  SIGNAL aux121 : BIT;		-- aux121
+  SIGNAL aux122 : BIT;		-- aux122
+  SIGNAL aux123 : BIT;		-- aux123
+  SIGNAL aux125 : BIT;		-- aux125
+  SIGNAL aux128 : BIT;		-- aux128
+  SIGNAL aux129 : BIT;		-- aux129
+  SIGNAL aux130 : BIT;		-- aux130
+  SIGNAL aux131 : BIT;		-- aux131
+  SIGNAL aux133 : BIT;		-- aux133
+  SIGNAL aux134 : BIT;		-- aux134
+  SIGNAL aux135 : BIT;		-- aux135
+  SIGNAL aux136 : BIT;		-- aux136
+  SIGNAL aux137 : BIT;		-- aux137
+  SIGNAL aux138 : BIT;		-- aux138
+  SIGNAL aux139 : BIT;		-- aux139
+  SIGNAL aux140 : BIT;		-- aux140
+  SIGNAL aux142 : BIT;		-- aux142
+  SIGNAL aux143 : BIT;		-- aux143
+  SIGNAL aux144 : BIT;		-- aux144
+  SIGNAL aux145 : BIT;		-- aux145
+  SIGNAL aux146 : BIT;		-- aux146
+  SIGNAL aux147 : BIT;		-- aux147
+  SIGNAL aux148 : BIT;		-- aux148
+  SIGNAL aux149 : BIT;		-- aux149
+  SIGNAL aux150 : BIT;		-- aux150
+  SIGNAL aux153 : BIT;		-- aux153
+  SIGNAL aux154 : BIT;		-- aux154
+  SIGNAL aux156 : BIT;		-- aux156
+  SIGNAL aux157 : BIT;		-- aux157
+  SIGNAL aux158 : BIT;		-- aux158
+  SIGNAL aux159 : BIT;		-- aux159
+  SIGNAL aux160 : BIT;		-- aux160
+  SIGNAL aux161 : BIT;		-- aux161
+  SIGNAL aux162 : BIT;		-- aux162
+  SIGNAL aux163 : BIT;		-- aux163
+  SIGNAL aux164 : BIT;		-- aux164
+  SIGNAL aux165 : BIT;		-- aux165
+  SIGNAL aux166 : BIT;		-- aux166
+  SIGNAL aux167 : BIT;		-- aux167
+  SIGNAL aux168 : BIT;		-- aux168
+  SIGNAL aux169 : BIT;		-- aux169
+  SIGNAL aux170 : BIT;		-- aux170
+  SIGNAL aux171 : BIT;		-- aux171
+  SIGNAL aux175 : BIT;		-- aux175
+  SIGNAL aux176 : BIT;		-- aux176
+  SIGNAL aux178 : BIT;		-- aux178
+  SIGNAL aux179 : BIT;		-- aux179
+  SIGNAL aux180 : BIT;		-- aux180
+  SIGNAL aux181 : BIT;		-- aux181
+  SIGNAL aux183 : BIT;		-- aux183
+  SIGNAL aux184 : BIT;		-- aux184
+  SIGNAL aux185 : BIT;		-- aux185
+  SIGNAL aux186 : BIT;		-- aux186
+  SIGNAL aux187 : BIT;		-- aux187
+  SIGNAL aux188 : BIT;		-- aux188
+  SIGNAL aux190 : BIT;		-- aux190
+  SIGNAL aux192 : BIT;		-- aux192
+  SIGNAL aux193 : BIT;		-- aux193
+  SIGNAL aux194 : BIT;		-- aux194
+  SIGNAL aux195 : BIT;		-- aux195
+  SIGNAL aux196 : BIT;		-- aux196
+  SIGNAL aux197 : BIT;		-- aux197
+  SIGNAL aux198 : BIT;		-- aux198
+  SIGNAL aux199 : BIT;		-- aux199
+  SIGNAL aux200 : BIT;		-- aux200
+  SIGNAL aux201 : BIT;		-- aux201
+  SIGNAL aux202 : BIT;		-- aux202
+  SIGNAL aux203 : BIT;		-- aux203
+  SIGNAL aux204 : BIT;		-- aux204
+  SIGNAL aux205 : BIT;		-- aux205
+  SIGNAL aux206 : BIT;		-- aux206
+  SIGNAL aux207 : BIT;		-- aux207
+  SIGNAL aux208 : BIT;		-- aux208
+  SIGNAL aux209 : BIT;		-- aux209
+  SIGNAL aux212 : BIT;		-- aux212
+  SIGNAL aux216 : BIT;		-- aux216
+  SIGNAL aux217 : BIT;		-- aux217
+  SIGNAL aux218 : BIT;		-- aux218
+  SIGNAL aux219 : BIT;		-- aux219
+  SIGNAL aux220 : BIT;		-- aux220
+  SIGNAL aux221 : BIT;		-- aux221
+
+BEGIN
+  aux221 <= (aux30 OR NOT(aux114));
+  aux220 <= ((fsm_c_c_cs(1) OR fsm_c_c_cs(0)) AND 
+fsm_c_c_cs(4));
+  aux219 <= (fsm_h_h_cs(1) AND NOT(fsm_h_h_cs(4)));
+  aux218 <= NOT(NOT(fsm_h_h_cs(0)) AND word_in(7));
+  aux217 <= NOT(NOT(fsm_h_h_cs(0)) AND NOT(word_in(7)));
+  aux216 <= (NOT(word_in(6)) AND (NOT(word_in(2)) AND (NOT(
+fsm_g_g_cs(2)) AND (NOT(fsm_g_g_cs(4)) AND word_in(7)))));
+  aux212 <= (fsm_f_f_cs(1) AND (NOT(word_in(6)) AND (NOT(
+word_in(2)) AND aux206)));
+  aux209 <= (NOT(reset) AND NOT(fsm_f_f_cs(3)));
+  aux208 <= (fsm_f_f_cs(2) AND NOT(fsm_f_f_cs(4)));
+  aux207 <= (NOT(reset) AND fsm_f_f_cs(3));
+  aux206 <= (NOT(fsm_f_f_cs(4)) AND word_in(7));
+  aux205 <= (word_in(6) AND word_in(2) AND word_in(7));
+  aux204 <= (NOT(reset) AND NOT(fsm_e_e_cs(0)));
+  aux203 <= (NOT(reset) AND fsm_e_e_cs(2));
+  aux202 <= (NOT(reset) AND NOT(fsm_e_e_cs(2)));
+  aux201 <= (word_in(6) AND aux187);
+  aux200 <= (NOT(fsm_e_e_cs(4)) AND aux199);
+  aux199 <= (NOT(reset) AND aux198);
+  aux198 <= (NOT(fsm_e_e_cs(0)) AND fsm_e_e_cs(2));
+  aux197 <= (NOT(fsm_e_e_cs(2)) AND NOT(fsm_e_e_cs(1)));
+  aux196 <= (word_in(7) AND NOT(fsm_e_e_cs(4)));
+  aux195 <= NOT(NOT(fsm_d_d_cs(2)) AND NOT(word_in(7)));
+  aux194 <= (NOT(fsm_d_d_cs(2)) AND fsm_d_d_cs(4));
+  aux193 <= (fsm_d_d_cs(2) AND NOT(fsm_d_d_cs(4)));
+  aux192 <= ((NOT(fsm_c_c_cs(1)) OR word_in(2)) AND (NOT(
+reset) AND NOT(fsm_c_c_cs(0))));
+  aux190 <= (fsm_c_c_cs(1) AND ((NOT(word_in(2)) AND NOT(
+fsm_c_c_cs(4))) AND word_in(7)));
+  aux188 <= (NOT(reset) AND NOT(fsm_c_c_cs(2)));
+  aux187 <= (word_in(2) AND NOT(word_in(7)));
+  aux186 <= (NOT(reset) AND fsm_c_c_cs(2));
+  aux185 <= (NOT(reset) AND aux184);
+  aux184 <= (NOT(fsm_c_c_cs(2)) AND fsm_c_c_cs(0));
+  aux183 <= (fsm_b_b_cs(3) AND (NOT(reset) AND NOT(
+fsm_b_b_cs(4))));
+  aux181 <= (NOT(reset) AND NOT(fsm_b_b_cs(2)));
+  aux180 <= (NOT(reset) AND fsm_b_b_cs(2));
+  aux179 <= (NOT(reset) AND fsm_b_b_cs(4));
+  aux178 <= (NOT(reset) AND (NOT(fsm_b_b_cs(2)) AND 
+fsm_b_b_cs(4)));
+  aux176 <= (NOT(fsm_b_b_cs(3)) AND word_in(7));
+  aux175 <= (NOT(fsm_a_a_cs(4)) AND (NOT(word_in(6)) AND (NOT
+(word_in(2)) AND (NOT(fsm_a_a_cs(3)) AND 
+word_in(7)))));
+  aux171 <= (NOT(fsm_a_a_cs(0)) AND NOT(reset));
+  aux170 <= (NOT(reset) AND NOT(fsm_a_a_cs(2)));
+  aux169 <= (NOT(fsm_a_a_cs(3)) AND NOT(word_in(7)));
+  aux168 <= (NOT(fsm_a_a_cs(3)) AND aux167);
+  aux167 <= (NOT(fsm_a_a_cs(0)) AND aux166);
+  aux166 <= (NOT(reset) AND fsm_a_a_cs(2));
+  aux165 <= (NOT(fsm_a_a_cs(2)) AND NOT(fsm_a_a_cs(1)));
+  aux164 <= (fsm_f_f_cs(1) AND fsm_f_f_cs(4));
+  aux163 <= NOT(NOT(aux162) AND NOT(fsm_h_h_cs(4)));
+  aux162 <= NOT(fsm_h_h_cs(1) OR fsm_h_h_cs(2));
+  aux161 <= (NOT(word_in(6)) AND NOT(word_in(2)));
+  aux160 <= (NOT(fsm_h_h_cs(2)) AND fsm_h_h_cs(4));
+  aux159 <= (NOT(fsm_h_h_cs(1)) OR NOT(fsm_h_h_cs(0)));
+  aux158 <= (NOT(fsm_h_h_cs(1)) OR fsm_h_h_cs(0));
+  aux157 <= NOT(NOT(aux40) OR fsm_h_h_cs(0));
+  aux156 <= (fsm_h_h_cs(4) OR NOT(fsm_h_h_cs(0)));
+  aux154 <= (NOT(aux41) OR NOT(fsm_h_h_cs(0)));
+  aux153 <= ((fsm_g_g_cs(3) AND (NOT(fsm_g_g_cs(1)) OR aux150
+)) AND NOT(fsm_g_g_cs(2)));
+  aux150 <= (NOT(fsm_g_g_cs(0)) AND word_in(6));
+  aux149 <= NOT(aux15 AND NOT(word_in(6)));
+  aux148 <= (fsm_g_g_cs(3) OR fsm_g_g_cs(1));
+  aux147 <= (NOT(fsm_g_g_cs(1)) OR NOT(fsm_g_g_cs(0)));
+  aux146 <= (aux16 OR NOT(fsm_g_g_cs(2)));
+  aux145 <= (aux144 OR aux37);
+  aux144 <= (NOT(fsm_g_g_cs(3)) AND NOT(fsm_g_g_cs(0)));
+  aux143 <= (NOT(fsm_g_g_cs(3)) OR NOT(fsm_g_g_cs(0)));
+  aux142 <= ((aux140 AND NOT(fsm_f_f_cs(2))) AND 
+fsm_f_f_cs(1));
+  aux140 <= NOT(NOT(word_in(5)) AND NOT(fsm_f_f_cs(0)));
+  aux139 <= (aux134 AND NOT(fsm_f_f_cs(1)));
+  aux138 <= (word_in(5) AND NOT(fsm_f_f_cs(0)));
+  aux137 <= NOT(fsm_f_f_cs(0) AND fsm_f_f_cs(2));
+  aux136 <= NOT(NOT(aux14) OR fsm_f_f_cs(1));
+  aux135 <= (aux14 AND fsm_f_f_cs(1));
+  aux134 <= (word_in(5) AND NOT(fsm_f_f_cs(2)));
+  aux133 <= ((aux34 OR aux131) AND fsm_f_f_cs(4));
+  aux131 <= (NOT(fsm_f_f_cs(2)) AND NOT(fsm_f_f_cs(1)));
+  aux130 <= (aux13 AND NOT(fsm_f_f_cs(4)));
+  aux129 <= NOT(fsm_e_e_cs(3) AND NOT(word_in(4)));
+  aux128 <= (((aux116 AND NOT(word_in(4))) AND NOT(word_in(3)
+)) AND NOT(word_in(5)));
+  aux125 <= ((aux32 AND NOT(reset)) AND fsm_e_e_cs(0));
+  aux123 <= (aux122 AND NOT(reset));
+  aux122 <= (fsm_e_e_cs(3) AND NOT(fsm_e_e_cs(4)));
+  aux121 <= (fsm_e_e_cs(3) OR word_in(4));
+  aux120 <= (aux31 AND NOT(reset));
+  aux119 <= (NOT(fsm_e_e_cs(3)) AND word_in(4));
+  aux118 <= (NOT(aux32) OR NOT(fsm_e_e_cs(0)));
+  aux117 <= NOT(NOT(fsm_e_e_cs(3)) OR NOT(word_in(4)));
+  aux116 <= NOT(fsm_e_e_cs(3) OR word_in(1));
+  aux115 <= (NOT(fsm_e_e_cs(3)) AND word_in(1));
+  aux114 <= NOT(NOT(fsm_e_e_cs(0)) AND NOT(fsm_e_e_cs(4)));
+  aux113 <= (word_in(3) AND fsm_d_d_cs(1));
+  aux112 <= NOT(NOT(word_in(3)) AND NOT(fsm_d_d_cs(0)));
+  aux111 <= (word_in(3) AND NOT(fsm_d_d_cs(0)));
+  aux110 <= NOT(NOT(fsm_d_d_cs(1)) AND fsm_d_d_cs(0));
+  aux108 <= (NOT(fsm_d_d_cs(1)) OR NOT(fsm_d_d_cs(0)));
+  aux107 <= (aux51 AND fsm_d_d_cs(0));
+  aux106 <= (((aux25 AND NOT(reset)) AND NOT(fsm_c_c_cs(2))) 
+AND fsm_c_c_cs(0));
+  aux102 <= (aux94 AND NOT(reset));
+  aux101 <= (aux67 AND NOT(word_in(6)));
+  aux100 <= (aux66 AND NOT(word_in(6)));
+  aux99 <= (fsm_c_c_cs(1) AND fsm_c_c_cs(4));
+  aux98 <= (word_in(2) AND NOT(fsm_c_c_cs(4)));
+  aux97 <= (fsm_c_c_cs(4) OR fsm_c_c_cs(2));
+  aux96 <= (fsm_c_c_cs(1) AND word_in(2));
+  aux95 <= (aux94 AND fsm_c_c_cs(2));
+  aux94 <= (fsm_c_c_cs(1) AND NOT(fsm_c_c_cs(4)));
+  aux93 <= (NOT(fsm_c_c_cs(1)) AND fsm_c_c_cs(4));
+  aux92 <= NOT(fsm_c_c_cs(1) AND (fsm_c_c_cs(4) OR NOT(
+word_in(7))));
+  aux90 <= ((aux2 AND NOT(reset)) AND fsm_b_b_cs(2));
+  aux88 <= ((aux79 AND NOT(reset)) AND NOT(fsm_b_b_cs(2)));
+  aux86 <= NOT(NOT(word_in(1)) AND fsm_b_b_cs(1));
+  aux85 <= ((aux64 AND fsm_b_b_cs(1)) AND NOT(word_in(5)));
+  aux83 <= (aux82 AND fsm_b_b_cs(0));
+  aux82 <= (((aux24 AND NOT(reset)) AND NOT(fsm_b_b_cs(2))) 
+AND fsm_b_b_cs(4));
+  aux79 <= (NOT(fsm_b_b_cs(1)) AND fsm_b_b_cs(3));
+  aux78 <= NOT(NOT(aux77) OR NOT(fsm_b_b_cs(3)));
+  aux77 <= NOT(NOT(word_in(1)) OR fsm_b_b_cs(1));
+  aux76 <= (word_in(1) AND NOT(fsm_b_b_cs(3)));
+  aux75 <= ((aux73 AND fsm_b_b_cs(3)) OR (NOT(fsm_b_b_cs(1))
+ AND NOT(fsm_b_b_cs(3))));
+  aux73 <= (word_in(1) AND fsm_b_b_cs(1));
+  aux71 <= NOT(NOT(fsm_b_b_cs(1)) AND NOT(fsm_b_b_cs(2)));
+  aux70 <= (NOT(fsm_b_b_cs(3)) OR NOT(fsm_b_b_cs(2)));
+  aux69 <= (fsm_b_b_cs(3) OR fsm_b_b_cs(2));
+  aux68 <= (word_in(0) AND fsm_a_a_cs(3));
+  aux67 <= (aux65 AND word_in(0));
+  aux66 <= (aux65 AND NOT(word_in(0)));
+  aux65 <= (aux64 AND NOT(word_in(5)));
+  aux64 <= ((NOT(word_in(1)) AND NOT(word_in(4))) AND NOT(
+word_in(3)));
+  aux62 <= (aux22 AND fsm_a_a_cs(0));
+  aux61 <= (NOT(fsm_a_a_cs(4)) AND fsm_a_a_cs(3));
+  aux60 <= NOT(word_in(0) OR NOT(fsm_a_a_cs(3)));
+  aux59 <= (aux58 AND word_in(2));
+  aux58 <= (aux57 AND word_in(6));
+  aux57 <= ((aux55 AND word_in(5)) AND NOT(word_in(0)));
+  aux55 <= ((word_in(1) AND word_in(4)) AND word_in(3));
+  aux53 <= NOT(fsm_a_a_cs(4) OR fsm_a_a_cs(0));
+  aux52 <= (aux51 AND word_in(7));
+  aux51 <= ((aux49 AND word_in(6)) AND word_in(2));
+  aux49 <= ((((word_in(1) AND NOT(word_in(4))) AND NOT(
+word_in(3))) AND word_in(5)) AND word_in(0));
+  aux45 <= (NOT(fsm_a_a_cs(0)) OR NOT(fsm_a_a_cs(3)));
+  aux44 <= (word_in(0) AND fsm_a_a_cs(4));
+  aux43 <= (fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(3)));
+  aux42 <= NOT(NOT(fsm_h_h_cs(1)) AND fsm_h_h_cs(2));
+  aux41 <= (fsm_h_h_cs(1) AND fsm_h_h_cs(4));
+  aux40 <= NOT(fsm_h_h_cs(2) AND fsm_h_h_cs(4));
+  aux39 <= (aux38 OR fsm_g_g_cs(2));
+  aux38 <= (fsm_g_g_cs(3) AND fsm_g_g_cs(1));
+  aux37 <= NOT(fsm_g_g_cs(3) XOR fsm_g_g_cs(1));
+  aux36 <= NOT(NOT(fsm_g_g_cs(1)) AND fsm_g_g_cs(0));
+  aux35 <= (NOT(fsm_g_g_cs(1)) OR fsm_g_g_cs(0));
+  aux34 <= NOT(fsm_f_f_cs(0) OR NOT(fsm_f_f_cs(1)));
+  aux33 <= NOT(fsm_f_f_cs(0) AND NOT(fsm_f_f_cs(1)));
+  aux32 <= (fsm_e_e_cs(3) AND fsm_e_e_cs(4));
+  aux31 <= (fsm_e_e_cs(3) OR fsm_e_e_cs(4));
+  aux30 <= NOT(fsm_e_e_cs(3) OR NOT(aux11));
+  aux29 <= NOT(NOT(aux28) AND NOT(aux27));
+  aux28 <= NOT(fsm_d_d_cs(1) OR fsm_d_d_cs(2));
+  aux27 <= NOT(NOT(fsm_d_d_cs(1)) OR fsm_d_d_cs(0));
+  aux26 <= NOT(aux8 AND fsm_d_d_cs(2));
+  aux25 <= NOT(fsm_c_c_cs(1) XOR fsm_c_c_cs(4));
+  aux24 <= (fsm_b_b_cs(1) AND fsm_b_b_cs(3));
+  aux23 <= NOT(fsm_b_b_cs(1) XOR fsm_b_b_cs(3));
+  aux22 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(3));
+  aux21 <= (fsm_a_a_cs(4) OR fsm_a_a_cs(3));
+  aux20 <= NOT(NOT(aux1) OR fsm_a_a_cs(3));
+  aux19 <= NOT(NOT(fsm_h_h_cs(2)) OR fsm_h_h_cs(4));
+  aux18 <= (fsm_h_h_cs(4) AND fsm_h_h_cs(0));
+  aux17 <= (fsm_h_h_cs(2) OR fsm_h_h_cs(4));
+  aux16 <= (NOT(fsm_g_g_cs(3)) AND fsm_g_g_cs(1));
+  aux15 <= (fsm_g_g_cs(3) AND NOT(fsm_g_g_cs(0)));
+  aux14 <= (NOT(fsm_f_f_cs(0)) AND NOT(fsm_f_f_cs(2)));
+  aux13 <= (fsm_f_f_cs(2) AND fsm_f_f_cs(1));
+  aux12 <= (fsm_f_f_cs(0) OR fsm_f_f_cs(1));
+  aux11 <= NOT(fsm_e_e_cs(4) AND fsm_e_e_cs(0));
+  aux10 <= NOT(fsm_e_e_cs(3) AND NOT(fsm_e_e_cs(0)));
+  aux9 <= NOT(NOT(fsm_d_d_cs(0)) AND NOT(fsm_d_d_cs(2)));
+  aux8 <= (fsm_d_d_cs(1) OR fsm_d_d_cs(0));
+  aux6 <= ((fsm_c_c_cs(1) AND NOT(fsm_c_c_cs(2))) AND NOT(
+fsm_c_c_cs(0)));
+  aux4 <= NOT(fsm_c_c_cs(1) AND fsm_c_c_cs(2));
+  aux3 <= (aux2 AND fsm_b_b_cs(2));
+  aux2 <= (fsm_b_b_cs(1) AND NOT(fsm_b_b_cs(3)));
+  aux1 <= NOT(fsm_a_a_cs(4) AND fsm_a_a_cs(0));
+  aux0 <= NOT(fsm_a_a_cs(3) AND NOT(fsm_a_a_cs(0)));
+  label0 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs (0) <= GUARDED ((aux21 AND aux51 AND word_in(7) AND 
+fsm_a_a_cs(0)) OR reset OR (NOT(aux53) AND aux52 AND 
+fsm_a_a_cs(2)) OR (aux43 AND NOT(fsm_a_a_cs(0)) AND NOT(
+fsm_a_a_cs(2))) OR (((((NOT(fsm_a_a_cs(4)) AND aux45) OR (NOT(
+fsm_a_a_cs(0)) AND NOT(fsm_a_a_cs(3)))) AND fsm_a_a_cs(2)) OR 
+((aux44 OR NOT(fsm_a_a_cs(0))) AND fsm_a_a_cs(3) 
+AND NOT(fsm_a_a_cs(2)))) AND fsm_a_a_cs(1)) OR (
+aux43 AND fsm_a_a_cs(0) AND aux165));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs (1) <= GUARDED (((((word_in(0) OR fsm_a_a_cs(4)) AND aux168) OR 
+(((((aux57 AND NOT(fsm_a_a_cs(4)) AND word_in(6) 
+AND word_in(2) AND aux169) OR aux22) AND 
+fsm_a_a_cs(0)) OR (aux21 AND NOT(fsm_a_a_cs(0)))) AND aux170))
+ AND fsm_a_a_cs(1)) OR (((word_in(0) AND NOT(
+fsm_a_a_cs(4)) AND aux168) OR ((NOT(aux60) OR NOT(
+fsm_a_a_cs(0))) AND ((aux59 AND aux169) OR ((word_in(0) XOR 
+fsm_a_a_cs(4)) AND fsm_a_a_cs(3)) OR aux43) AND aux170)) AND 
+NOT(fsm_a_a_cs(1))));
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs (2) <= GUARDED (((((aux61 OR (aux44 AND NOT(fsm_a_a_cs(3)))) AND
+ aux171) OR (aux1 AND word_in(0) AND NOT(
+fsm_a_a_cs(3)) AND aux166) OR (((aux66 AND aux175) OR aux62 OR
+ (aux60 AND NOT(fsm_a_a_cs(0)))) AND aux170)) AND 
+fsm_a_a_cs(1)) OR (((aux61 AND aux167) OR (aux45 AND (
+word_in(0) OR fsm_a_a_cs(3)) AND fsm_a_a_cs(4) AND aux170))
+ AND NOT(fsm_a_a_cs(1))));
+  END BLOCK label2;
+  label3 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs (3) <= GUARDED (((NOT(fsm_a_a_cs(4)) OR NOT(fsm_a_a_cs(2))) AND 
+aux68 AND aux171) OR (((NOT(aux21) AND aux166) OR ((
+aux62 OR (aux67 AND aux175)) AND aux170)) AND 
+fsm_a_a_cs(1)) OR (((fsm_a_a_cs(4) AND NOT(fsm_a_a_cs(0))) OR 
+(fsm_a_a_cs(4) XOR fsm_a_a_cs(3))) AND NOT(reset) 
+AND aux165));
+  END BLOCK label3;
+  label4 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_a_a_cs (4) <= GUARDED ((((aux20 AND aux166) OR ((aux62 OR ((aux68 OR 
+aux43) AND NOT(fsm_a_a_cs(0)))) AND aux170)) AND 
+fsm_a_a_cs(1)) OR (((aux53 AND aux166) OR (aux61 AND aux170)) 
+AND NOT(fsm_a_a_cs(1))));
+  END BLOCK label4;
+  label5 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs (0) <= GUARDED (reset OR (((aux52 AND fsm_b_b_cs(2)) OR (((aux51
+ AND aux176) OR aux75) AND NOT(fsm_b_b_cs(2)))) 
+AND fsm_b_b_cs(4)) OR (aux3 AND NOT(fsm_b_b_cs(4))) 
+OR ((NOT(aux71) OR NOT(fsm_b_b_cs(4))) AND aux69 
+AND aux52 AND fsm_b_b_cs(0)) OR (((fsm_b_b_cs(1) AND
+ aux70 AND fsm_b_b_cs(4)) OR (fsm_b_b_cs(1) AND 
+aux69 AND NOT(fsm_b_b_cs(4)))) AND NOT(fsm_b_b_cs(0)))
+);
+  END BLOCK label5;
+  label6 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs (1) <= GUARDED ((((aux23 AND aux178) OR (((aux59 AND NOT(
+fsm_b_b_cs(3)) AND NOT(word_in(7))) OR aux78) AND NOT(reset) 
+AND NOT(fsm_b_b_cs(2)) AND NOT(fsm_b_b_cs(4)))) AND 
+fsm_b_b_cs(0)) OR ((((aux2 OR NOT(fsm_b_b_cs(2))) AND NOT(
+aux78) AND aux179) OR (((aux76 AND aux180) OR (NOT(
+aux176) AND ((word_in(4) AND word_in(3) AND NOT(
+fsm_b_b_cs(1)) AND word_in(5) AND NOT(word_in(0)) AND 
+word_in(6) AND word_in(2)) OR fsm_b_b_cs(3)) AND (
+word_in(1) OR fsm_b_b_cs(1)) AND aux181)) AND NOT(
+fsm_b_b_cs(4)))) AND NOT(fsm_b_b_cs(0))));
+  END BLOCK label6;
+  label7 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs (2) <= GUARDED ((((NOT(aux86) AND fsm_b_b_cs(3)) OR (aux77 AND 
+NOT(fsm_b_b_cs(3)))) AND aux178) OR (((aux73 AND NOT
+(fsm_b_b_cs(3)) AND aux180) OR (aux85 AND NOT(
+word_in(0)) AND NOT(word_in(6)) AND NOT(word_in(2)) AND NOT
+(fsm_b_b_cs(3)) AND word_in(7) AND aux181)) AND 
+NOT(fsm_b_b_cs(4))) OR aux83 OR ((((aux73 OR NOT(
+fsm_b_b_cs(2))) AND (aux79 OR aux76) AND aux179) OR (aux71 AND
+ aux183)) AND NOT(fsm_b_b_cs(0))));
+  END BLOCK label7;
+  label8 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs (3) <= GUARDED ((aux75 AND aux178) OR ((aux90 OR (((aux85 AND 
+word_in(0) AND NOT(word_in(6)) AND NOT(word_in(2)) AND 
+aux176) OR aux79) AND aux181)) AND NOT(fsm_b_b_cs(4))) 
+OR aux83 OR (((aux88 AND fsm_b_b_cs(4)) OR (
+word_in(1) AND aux183)) AND NOT(fsm_b_b_cs(0))));
+  END BLOCK label8;
+  label9 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_b_b_cs (4) <= GUARDED (((aux82 OR ((aux90 OR aux88) AND NOT(
+fsm_b_b_cs(4)))) AND fsm_b_b_cs(0)) OR (((aux70 AND (
+word_in(1) OR NOT(fsm_b_b_cs(3))) AND fsm_b_b_cs(1) AND 
+aux179) OR (((NOT(aux24) AND aux180) OR (aux86 AND 
+fsm_b_b_cs(3) AND aux181)) AND NOT(fsm_b_b_cs(4)))) AND NOT(
+fsm_b_b_cs(0))));
+  END BLOCK label9;
+  label10 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs (0) <= GUARDED ((aux51 AND fsm_c_c_cs(4) AND word_in(7) AND 
+fsm_c_c_cs(2)) OR reset OR (aux97 AND aux52 AND fsm_c_c_cs(0))
+ OR (aux95 AND NOT(fsm_c_c_cs(0))) OR (((((aux51 
+AND NOT(fsm_c_c_cs(4)) AND word_in(7)) OR (aux96 AND
+ fsm_c_c_cs(4))) AND aux184) OR aux6) AND 
+fsm_c_c_cs(3)) OR ((((aux95 OR (aux93 AND NOT(fsm_c_c_cs(2))))
+ AND fsm_c_c_cs(0)) OR (((NOT(aux92) AND 
+fsm_c_c_cs(2)) OR (fsm_c_c_cs(4) AND NOT(fsm_c_c_cs(2)))) AND 
+NOT(fsm_c_c_cs(0)))) AND NOT(fsm_c_c_cs(3))));
+  END BLOCK label10;
+  label11 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs (1) <= GUARDED (((aux25 OR NOT(fsm_c_c_cs(0))) AND (
+fsm_c_c_cs(1) OR (word_in(2) XOR fsm_c_c_cs(4))) AND NOT(reset
+) AND NOT(fsm_c_c_cs(2)) AND fsm_c_c_cs(3)) OR (((
+((aux59 AND NOT(fsm_c_c_cs(4)) AND NOT(word_in(7))
+) OR aux93) AND aux185) OR ((((aux99 OR aux98) AND
+ aux186) OR (((aux58 AND NOT(fsm_c_c_cs(1)) AND 
+aux187) OR fsm_c_c_cs(4)) AND aux188)) AND NOT(
+fsm_c_c_cs(0)))) AND NOT(fsm_c_c_cs(3))));
+  END BLOCK label11;
+  label12 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs (2) <= GUARDED ((((aux99 AND aux185) OR (((NOT(fsm_c_c_cs(4)) 
+AND aux186) OR (((NOT(aux96) AND fsm_c_c_cs(4)) OR 
+aux94) AND aux188)) AND NOT(fsm_c_c_cs(0)))) AND 
+fsm_c_c_cs(3)) OR (((NOT(fsm_c_c_cs(4)) AND fsm_c_c_cs(2)) OR 
+(aux92 AND NOT(fsm_c_c_cs(2))) OR NOT(
+fsm_c_c_cs(0))) AND ((aux96 AND aux186) OR (((aux100 AND 
+aux190) OR (word_in(2) AND fsm_c_c_cs(4))) AND aux188))
+ AND NOT(fsm_c_c_cs(3))));
+  END BLOCK label12;
+  label13 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs (3) <= GUARDED (((aux106 OR ((aux98 OR NOT(fsm_c_c_cs(2))) AND 
+aux192)) AND fsm_c_c_cs(3)) OR (((aux102 AND 
+fsm_c_c_cs(2)) OR (((aux101 AND aux190) OR aux93) AND aux188))
+ AND NOT(fsm_c_c_cs(3))));
+  END BLOCK label13;
+  label14 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_c_c_cs (4) <= GUARDED (((aux106 OR (aux4 AND NOT(aux93) AND aux192)) 
+AND fsm_c_c_cs(3)) OR ((aux102 OR NOT(fsm_c_c_cs(0))
+) AND aux97 AND NOT(aux93) AND NOT(reset) AND NOT(
+fsm_c_c_cs(3))));
+  END BLOCK label14;
+  label15 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs (0) <= GUARDED (((((((NOT(aux110) OR fsm_d_d_cs(2)) AND aux51 
+AND word_in(7)) OR ((word_in(3) OR NOT(fsm_d_d_cs(0)
+)) AND fsm_d_d_cs(1) AND NOT(fsm_d_d_cs(2)))) AND 
+fsm_d_d_cs(4)) OR (((aux107 AND word_in(7)) OR aux27) AND NOT(
+fsm_d_d_cs(4)))) AND fsm_d_d_cs(3)) OR ((((aux52 OR aux29) AND
+ fsm_d_d_cs(4)) OR ((fsm_d_d_cs(1) OR word_in(7)) 
+AND (aux107 OR fsm_d_d_cs(1)) AND aux193)) AND NOT(
+fsm_d_d_cs(3))) OR reset);
+  END BLOCK label15;
+  label16 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs (1) <= GUARDED ((((((NOT(aux112) OR fsm_d_d_cs(1)) AND aux194) 
+OR (aux108 AND (word_in(3) OR fsm_d_d_cs(1)) AND 
+NOT(fsm_d_d_cs(2)) AND NOT(fsm_d_d_cs(4)))) AND 
+fsm_d_d_cs(3)) OR (((aux29 AND fsm_d_d_cs(4)) OR (((aux59 AND 
+NOT(aux27) AND NOT(aux195)) OR (aux111 AND 
+fsm_d_d_cs(2))) AND NOT(fsm_d_d_cs(4)))) AND NOT(fsm_d_d_cs(3)
+))) AND NOT(reset));
+  END BLOCK label16;
+  label17 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs (2) <= GUARDED ((((((NOT(aux108) OR (NOT(aux113) AND NOT(
+fsm_d_d_cs(0)))) AND aux194) OR (NOT(aux28) AND NOT(
+fsm_d_d_cs(0)) AND NOT(fsm_d_d_cs(4)))) AND fsm_d_d_cs(3)) OR 
+((((aux113 OR NOT(fsm_d_d_cs(2))) AND word_in(3) 
+AND aux108 AND fsm_d_d_cs(4)) OR (((aux100 AND NOT(
+word_in(2)) AND fsm_d_d_cs(1) AND NOT(fsm_d_d_cs(2)) AND 
+word_in(7)) OR (aux113 AND fsm_d_d_cs(2))) AND NOT(
+fsm_d_d_cs(4)))) AND NOT(fsm_d_d_cs(3)))) AND NOT(reset));
+  END BLOCK label17;
+  label18 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs (3) <= GUARDED ((((((NOT(aux108) OR ((word_in(3) OR NOT(
+fsm_d_d_cs(1))) AND NOT(fsm_d_d_cs(0)))) AND aux194) OR ((
+aux28 OR aux111) AND NOT(fsm_d_d_cs(4)))) AND 
+fsm_d_d_cs(3)) OR (((aux28 AND fsm_d_d_cs(4)) OR (aux195 AND (
+(aux101 AND NOT(word_in(2))) OR fsm_d_d_cs(2)) AND
+ fsm_d_d_cs(1) AND NOT(fsm_d_d_cs(4)))) AND NOT(
+fsm_d_d_cs(3)))) AND NOT(reset));
+  END BLOCK label18;
+  label19 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_d_d_cs (4) <= GUARDED (((((aux112 AND fsm_d_d_cs(1) AND aux194) OR (
+aux26 AND (aux111 OR NOT(fsm_d_d_cs(1))) AND NOT(
+fsm_d_d_cs(4)))) AND fsm_d_d_cs(3)) OR (((aux27 AND 
+fsm_d_d_cs(4)) OR (aux110 AND aux193)) AND NOT(fsm_d_d_cs(3)))
+) AND NOT(reset));
+  END BLOCK label19;
+  label20 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs (0) <= GUARDED ((((aux115 AND NOT(word_in(4)) AND NOT(word_in(3)
+) AND word_in(5) AND word_in(0) AND word_in(6) AND
+ word_in(2) AND word_in(7) AND fsm_e_e_cs(4)) OR (
+fsm_e_e_cs(3) AND word_in(1) AND NOT(word_in(4)) AND NOT(
+word_in(3)) AND word_in(5) AND word_in(0) AND word_in(6) 
+AND word_in(2) AND aux196)) AND fsm_e_e_cs(0)) OR 
+reset OR (aux52 AND aux114 AND fsm_e_e_cs(2)) OR (NOT(
+fsm_e_e_cs(3)) AND fsm_e_e_cs(4) AND NOT(fsm_e_e_cs(0)) AND 
+NOT(fsm_e_e_cs(2))) OR (((aux221 AND fsm_e_e_cs(2)) 
+OR (((word_in(4) AND fsm_e_e_cs(4)) OR NOT(
+fsm_e_e_cs(0))) AND fsm_e_e_cs(3) AND NOT(fsm_e_e_cs(2)))) AND
+ fsm_e_e_cs(1)) OR ((NOT(fsm_e_e_cs(3)) OR aux52) 
+AND fsm_e_e_cs(4) AND fsm_e_e_cs(0) AND aux197));
+  END BLOCK label20;
+  label21 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs (1) <= GUARDED ((((NOT(fsm_e_e_cs(3)) AND (word_in(4) OR 
+fsm_e_e_cs(4)) AND aux199) OR ((((aux32 OR (aux115 AND 
+word_in(4) AND word_in(3) AND word_in(5) AND NOT(word_in(0)
+) AND word_in(6) AND word_in(2) AND NOT(word_in(7)
+) AND NOT(fsm_e_e_cs(4)))) AND NOT(reset) AND 
+fsm_e_e_cs(0)) OR (aux120 AND NOT(fsm_e_e_cs(0)))) AND NOT(
+fsm_e_e_cs(2)))) AND fsm_e_e_cs(1)) OR (((aux119 AND aux200) 
+OR (aux118 AND ((NOT(aux117) AND fsm_e_e_cs(4)) OR 
+((fsm_e_e_cs(3) OR (word_in(3) AND word_in(5) AND 
+NOT(word_in(0)) AND aux201)) AND NOT(aux116) AND 
+word_in(4) AND NOT(fsm_e_e_cs(4)))) AND aux202)) AND NOT(
+fsm_e_e_cs(1))));
+  END BLOCK label21;
+  label22 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs (2) <= GUARDED ((((aux221 AND aux121 AND aux203) OR (((((NOT(
+aux129) AND fsm_e_e_cs(4)) OR (aux128 AND NOT(
+word_in(0)) AND NOT(word_in(6)) AND NOT(word_in(2)) AND 
+aux196)) AND NOT(reset)) OR aux125 OR (((aux119 AND 
+fsm_e_e_cs(4)) OR aux122) AND aux204)) AND NOT(fsm_e_e_cs(2)))
+) AND fsm_e_e_cs(1)) OR (((aux123 AND aux198) OR (
+(NOT(fsm_e_e_cs(3)) OR NOT(fsm_e_e_cs(0))) AND 
+aux121 AND fsm_e_e_cs(4) AND aux202)) AND NOT(
+fsm_e_e_cs(1))));
+  END BLOCK label22;
+  label23 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs (3) <= GUARDED (((NOT(fsm_e_e_cs(4)) OR NOT(fsm_e_e_cs(2))) AND 
+aux117 AND aux204) OR (((NOT(aux31) AND aux203) OR ((
+aux125 OR (aux128 AND word_in(0) AND NOT(word_in(6)) 
+AND NOT(word_in(2)) AND word_in(7) AND NOT(
+fsm_e_e_cs(4)) AND NOT(reset))) AND NOT(fsm_e_e_cs(2)))) AND 
+fsm_e_e_cs(1)) OR (aux118 AND aux120 AND aux197));
+  END BLOCK label23;
+  label24 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_e_e_cs (4) <= GUARDED ((((aux11 AND NOT(fsm_e_e_cs(3)) AND aux203) OR (
+(aux125 OR (aux31 AND aux129 AND aux204)) AND NOT(
+fsm_e_e_cs(2)))) AND fsm_e_e_cs(1)) OR ((aux200 OR (aux123 AND
+ NOT(fsm_e_e_cs(2)))) AND NOT(fsm_e_e_cs(1))));
+  END BLOCK label24;
+  label25 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs (0) <= GUARDED ((((NOT(aux137) AND NOT(fsm_f_f_cs(1))) OR 
+fsm_f_f_cs(4)) AND aux49 AND NOT(aux136) AND aux205) OR (
+aux135 AND fsm_f_f_cs(4)) OR reset OR (((aux49 AND 
+aux12 AND word_in(6) AND word_in(2) AND aux206) OR (
+aux134 AND aux164) OR (aux34 AND NOT(fsm_f_f_cs(4)))) 
+AND fsm_f_f_cs(3)) OR ((aux133 OR aux130) AND NOT(
+fsm_f_f_cs(3))));
+  END BLOCK label25;
+  label26 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs (1) <= GUARDED (((((NOT(aux140) OR fsm_f_f_cs(1)) AND NOT(
+fsm_f_f_cs(2)) AND fsm_f_f_cs(4)) OR ((aux135 OR aux139) AND 
+NOT(fsm_f_f_cs(4)))) AND aux207) OR (((NOT(aux34) 
+AND aux57 AND NOT(fsm_f_f_cs(2)) AND word_in(6) AND 
+word_in(2) AND NOT(fsm_f_f_cs(4)) AND NOT(word_in(7))) OR 
+aux133 OR (aux138 AND aux208)) AND aux209));
+  END BLOCK label26;
+  label27 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs (2) <= GUARDED ((((((NOT(aux138) AND NOT(fsm_f_f_cs(2)) AND 
+fsm_f_f_cs(1)) OR aux136) AND fsm_f_f_cs(4)) OR (NOT(
+fsm_f_f_cs(0)) AND NOT(aux131) AND NOT(fsm_f_f_cs(4)))) AND 
+aux207) OR (((aux66 AND NOT(fsm_f_f_cs(2)) AND aux212) 
+OR (((aux138 AND fsm_f_f_cs(1)) OR aux139) AND 
+fsm_f_f_cs(4)) OR (word_in(5) AND fsm_f_f_cs(2) AND 
+fsm_f_f_cs(1) AND NOT(fsm_f_f_cs(4)))) AND aux209));
+  END BLOCK label27;
+  label28 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs (3) <= GUARDED (((((aux142 OR aux136) AND fsm_f_f_cs(4)) OR ((
+aux138 OR aux131) AND NOT(fsm_f_f_cs(4)))) AND aux207) 
+OR (((aux67 AND aux212) OR (aux131 AND 
+fsm_f_f_cs(4)) OR aux130) AND aux209));
+  END BLOCK label28;
+  label29 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_f_f_cs (4) <= GUARDED ((((aux142 AND fsm_f_f_cs(4)) OR (((aux138 AND 
+NOT(fsm_f_f_cs(2))) OR NOT(fsm_f_f_cs(1))) AND 
+aux137 AND NOT(fsm_f_f_cs(4)))) AND aux207) OR (((aux34
+ AND fsm_f_f_cs(4)) OR (aux33 AND aux208)) AND 
+aux209));
+  END BLOCK label29;
+  label30 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs (0) <= GUARDED ((((fsm_g_g_cs(0) AND fsm_g_g_cs(2)) OR (
+fsm_g_g_cs(3) AND NOT(fsm_g_g_cs(2))) OR fsm_g_g_cs(4)) AND (
+fsm_g_g_cs(0) OR fsm_g_g_cs(2)) AND aux51 AND word_in(7)) OR (
+aux146 AND (aux143 OR word_in(6)) AND aux145 AND 
+fsm_g_g_cs(4)) OR (aux39 AND aux143 AND fsm_g_g_cs(1) AND NOT(
+fsm_g_g_cs(4))) OR reset);
+  END BLOCK label30;
+  label31 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs (1) <= GUARDED (((aux35 AND aux55 AND NOT(aux38) AND word_in(5) 
+AND NOT(word_in(0)) AND word_in(6) AND word_in(2) 
+AND NOT(fsm_g_g_cs(2)) AND NOT(fsm_g_g_cs(4)) AND 
+NOT(word_in(7))) OR (aux146 AND ((NOT(fsm_g_g_cs(0))
+ AND NOT(word_in(6))) OR aux145) AND fsm_g_g_cs(4)
+) OR (((aux144 AND word_in(6) AND fsm_g_g_cs(2)) 
+OR ((aux38 OR word_in(6)) AND fsm_g_g_cs(3) AND 
+aux147 AND NOT(fsm_g_g_cs(2)))) AND NOT(fsm_g_g_cs(4)))
+) AND NOT(reset));
+  END BLOCK label31;
+  label32 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs (2) <= GUARDED (((aux143 AND aux64 AND fsm_g_g_cs(1) AND NOT(
+word_in(5)) AND NOT(word_in(0)) AND aux216) OR (((aux16 AND
+ NOT(fsm_g_g_cs(0))) OR NOT(fsm_g_g_cs(2))) AND ((
+fsm_g_g_cs(3) AND NOT(fsm_g_g_cs(1) XOR fsm_g_g_cs(0))) OR (
+NOT(fsm_g_g_cs(3)) AND aux147 AND word_in(6)) OR NOT
+(aux149)) AND fsm_g_g_cs(4)) OR (aux39 AND (
+fsm_g_g_cs(3) OR word_in(6)) AND aux143 AND aux148 AND NOT(
+fsm_g_g_cs(4)))) AND NOT(reset));
+  END BLOCK label32;
+  label33 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs (3) <= GUARDED (((aux64 AND NOT(fsm_g_g_cs(3)) AND fsm_g_g_cs(1)
+ AND NOT(word_in(5)) AND word_in(0) AND aux216) OR
+ ((aux35 OR word_in(6)) AND (aux15 OR aux37) AND 
+NOT(fsm_g_g_cs(2)) AND fsm_g_g_cs(4)) OR ((((NOT(
+fsm_g_g_cs(3)) OR aux150) AND aux148 AND fsm_g_g_cs(2)) OR 
+aux153) AND NOT(fsm_g_g_cs(4)))) AND NOT(reset));
+  END BLOCK label33;
+  label34 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_g_g_cs (4) <= GUARDED (((aux146 AND aux149 AND (fsm_g_g_cs(3) OR NOT(
+fsm_g_g_cs(0))) AND fsm_g_g_cs(1) AND fsm_g_g_cs(4)) OR (((
+aux36 AND NOT(aux38) AND fsm_g_g_cs(2)) OR aux153) AND
+ NOT(fsm_g_g_cs(4)))) AND NOT(reset));
+  END BLOCK label34;
+  label35 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs (0) <= GUARDED (((aux157 OR word_in(7)) AND ((NOT(aux157) AND 
+aux49 AND (word_in(6) AND word_in(2))) OR (aux156 AND 
+fsm_h_h_cs(1) AND aux40)) AND fsm_h_h_cs(3)) OR ((((
+fsm_h_h_cs(4) OR fsm_h_h_cs(0)) AND aux17 AND aux49 AND aux205
+) OR (aux154 AND aux17 AND aux42)) AND NOT(
+fsm_h_h_cs(3))) OR reset);
+  END BLOCK label35;
+  label36 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs (1) <= GUARDED (((((fsm_h_h_cs(1) AND NOT(fsm_h_h_cs(2)) AND 
+aux156) OR (aux159 AND NOT(aux17) AND word_in(7)) OR (
+aux160 AND NOT(aux217))) AND fsm_h_h_cs(3)) OR (((
+aux159 AND aux42 AND fsm_h_h_cs(4)) OR (aux19 AND NOT(
+aux218)) OR (aux158 AND aux55 AND NOT(fsm_h_h_cs(2)) 
+AND word_in(5) AND NOT(word_in(0)) AND NOT(
+fsm_h_h_cs(4)) AND aux201)) AND NOT(fsm_h_h_cs(3)))) AND NOT(
+reset));
+  END BLOCK label36;
+  label37 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs (2) <= GUARDED ((((NOT(aux41) OR aux218) AND (aux41 OR NOT(
+fsm_h_h_cs(0))) AND (aux160 OR NOT(aux163)) AND fsm_h_h_cs(3))
+ OR ((aux17 OR aux161) AND aux154 AND ((aux64 AND 
+fsm_h_h_cs(1) AND NOT(word_in(5)) AND NOT(word_in(0))) OR 
+fsm_h_h_cs(2) OR fsm_h_h_cs(4)) AND aux42 AND word_in(7) AND 
+NOT(fsm_h_h_cs(3)))) AND NOT(reset));
+  END BLOCK label37;
+  label38 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs (3) <= GUARDED ((((aux162 OR aux217) AND (aux41 OR (aux162 AND 
+NOT(fsm_h_h_cs(4))) OR NOT(fsm_h_h_cs(0))) AND aux40
+ AND fsm_h_h_cs(3)) OR ((aux17 OR (aux161 AND 
+word_in(7))) AND ((aux162 AND fsm_h_h_cs(4)) OR ((
+fsm_h_h_cs(2) OR (NOT(word_in(5)) AND word_in(0))) AND (aux64 
+OR fsm_h_h_cs(2)) AND aux219)) AND NOT(
+fsm_h_h_cs(3)))) AND NOT(reset));
+  END BLOCK label38;
+  label39 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    fsm_h_h_cs (4) <= GUARDED ((((aux158 OR word_in(7)) AND (aux163 OR NOT(
+fsm_h_h_cs(0))) AND (fsm_h_h_cs(1) OR NOT(fsm_h_h_cs(4))) AND 
+(NOT(fsm_h_h_cs(1)) OR NOT(fsm_h_h_cs(2))) AND 
+fsm_h_h_cs(3)) OR ((aux219 OR NOT(fsm_h_h_cs(0))) AND (aux41 
+OR aux19) AND NOT(fsm_h_h_cs(3)))) AND NOT(reset));
+  END BLOCK label39;
+
+address (0) <= ((NOT(aux1) OR fsm_a_a_cs(1)) AND (fsm_a_a_cs(4) 
+OR (NOT(fsm_a_a_cs(3)) AND fsm_a_a_cs(2)) OR (NOT(
+aux0) AND NOT(fsm_a_a_cs(2)))));
+
+address (1) <= (((aux3 OR fsm_b_b_cs(4)) AND fsm_b_b_cs(0)) OR (
+((fsm_b_b_cs(3) XOR fsm_b_b_cs(2)) OR 
+fsm_b_b_cs(4)) AND fsm_b_b_cs(1) AND NOT(fsm_b_b_cs(0))));
+
+address (2) <= (aux220 OR (aux6 AND fsm_c_c_cs(3)) OR (NOT(aux4)
+ AND NOT(fsm_c_c_cs(3))));
+
+address (3) <= (((NOT(aux9) OR fsm_d_d_cs(4)) AND aux8 AND 
+fsm_d_d_cs(3)) OR (((fsm_d_d_cs(1) AND fsm_d_d_cs(2)) OR 
+fsm_d_d_cs(4)) AND aux8 AND NOT(fsm_d_d_cs(3))));
+
+address (4) <= ((NOT(aux11) OR fsm_e_e_cs(1)) AND (fsm_e_e_cs(4)
+ OR (NOT(fsm_e_e_cs(3)) AND fsm_e_e_cs(2)) OR (NOT
+(aux10) AND NOT(fsm_e_e_cs(2)))));
+
+address (5) <= (((aux14 OR fsm_f_f_cs(4)) AND aux12 AND 
+fsm_f_f_cs(3)) OR ((aux13 OR fsm_f_f_cs(4)) AND aux12 AND NOT(
+fsm_f_f_cs(3))));
+
+address (6) <= (((aux16 AND fsm_g_g_cs(2)) OR (aux15 AND NOT(
+fsm_g_g_cs(2))) OR fsm_g_g_cs(4)) AND (fsm_g_g_cs(1) OR 
+fsm_g_g_cs(0)));
+
+address (7) <= (((aux18 OR (fsm_h_h_cs(1) AND NOT(aux19) AND NOT
+(fsm_h_h_cs(0)))) AND fsm_h_h_cs(3)) OR ((aux18 OR
+ (fsm_h_h_cs(1) AND aux17)) AND NOT(fsm_h_h_cs(3))
+));
+
+data (0) <= (((aux22 OR fsm_a_a_cs(2)) AND aux0 AND aux21 AND
+ fsm_a_a_cs(1)) OR (((NOT(fsm_a_a_cs(4)) AND 
+fsm_a_a_cs(0)) OR fsm_a_a_cs(2)) AND NOT(aux20) AND NOT(
+fsm_a_a_cs(1))));
+
+data (1) <= (((((aux24 OR fsm_b_b_cs(2)) AND fsm_b_b_cs(4)) 
+OR ((NOT(fsm_b_b_cs(1)) OR fsm_b_b_cs(2)) AND 
+fsm_b_b_cs(3) AND NOT(fsm_b_b_cs(4)))) AND fsm_b_b_cs(0)) OR (
+(NOT(fsm_b_b_cs(1)) OR fsm_b_b_cs(4)) AND NOT(
+aux23) AND fsm_b_b_cs(2)));
+
+data (2) <= ((((NOT(fsm_c_c_cs(1)) AND fsm_c_c_cs(2)) OR 
+fsm_c_c_cs(0)) AND (aux25 OR fsm_c_c_cs(2)) AND fsm_c_c_cs(3))
+ OR (aux220 AND fsm_c_c_cs(2) AND NOT(
+fsm_c_c_cs(3))));
+
+data (3) <= ((((NOT(aux29) AND fsm_d_d_cs(4)) OR (((NOT(
+fsm_d_d_cs(1)) AND aux9) OR (fsm_d_d_cs(2) AND fsm_d_d_cs(0)))
+ AND NOT(fsm_d_d_cs(4)))) AND fsm_d_d_cs(3)) OR (
+NOT(aux26) AND fsm_d_d_cs(4) AND NOT(fsm_d_d_cs(3)))
+);
+
+data (4) <= (((aux32 OR fsm_e_e_cs(2)) AND aux10 AND aux31 
+AND fsm_e_e_cs(1)) OR (((NOT(fsm_e_e_cs(4)) AND 
+fsm_e_e_cs(0)) OR fsm_e_e_cs(2)) AND NOT(aux30) AND NOT(
+fsm_e_e_cs(1))));
+
+data (5) <= ((((NOT(aux34) AND fsm_f_f_cs(2)) OR (
+fsm_f_f_cs(0) AND aux164) OR (NOT(aux33) AND NOT(fsm_f_f_cs(4)
+))) AND fsm_f_f_cs(3)) OR (aux12 AND fsm_f_f_cs(2)
+ AND fsm_f_f_cs(4) AND NOT(fsm_f_f_cs(3))));
+
+data (6) <= ((aux39 AND (NOT(aux37) OR fsm_g_g_cs(0)) AND 
+fsm_g_g_cs(4)) OR ((NOT(aux36) OR fsm_g_g_cs(2)) AND 
+fsm_g_g_cs(3) AND aux35 AND NOT(fsm_g_g_cs(4))));
+
+data (7) <= (((NOT(aux42) OR fsm_h_h_cs(0)) AND (
+fsm_h_h_cs(2) OR aux41 OR (NOT(fsm_h_h_cs(1)) AND NOT(
+fsm_h_h_cs(4)))) AND fsm_h_h_cs(3)) OR ((fsm_h_h_cs(1) OR 
+fsm_h_h_cs(0)) AND NOT(aux40) AND NOT(fsm_h_h_cs(3))));
+
+error_f <= (NOT(aux21) AND NOT(fsm_a_a_cs(0)) AND aux165);
+END;

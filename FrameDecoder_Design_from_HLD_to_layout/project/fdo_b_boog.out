@@ -1,0 +1,121 @@
+
+                  @@@@@@@                             @@@@ @  
+                    @@   @@                         @@    @@  
+                    @@    @@                       @@      @  
+                    @@    @@     @@@       @@@    @@          
+                    @@   @@    @@   @@   @@   @@  @@          
+                    @@@@@@    @@     @@ @@     @@ @@     @@@@@
+                    @@    @@  @@     @@ @@     @@ @@     @ @@ 
+                    @@     @@ @@     @@ @@     @@ @@    @  @@ 
+                    @@     @@ @@     @@ @@     @@  @@      @@ 
+                    @@    @@   @@   @@   @@   @@    @@    @@  
+                  @@@@@@@@       @@@       @@@        @@@@    
+
+                         Binding and Optimizing On Gates
+
+                 Alliance CAD System 5.0, boog 5.0 [2003/01/09]
+                 Copyright (c) 2000-2015,        ASIM/LIP6/UPMC
+                 Author(s):                     François Donnet
+                 E-mail        :    alliance-users@asim.lip6.fr
+
+        MBK_VDD        : vdd
+        MBK_VSS        : vss
+        MBK_IN_LO      : vst
+        MBK_OUT_LO     : vst
+        MBK_WORK_LIB   : .
+        MBK_TARGET_LIB : /usr/share/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'fdo_b.vbe'...
+Controlling file 'paramfile.lax'...
+Controlling file 'fdo_b.vbe'...
+Reading lib '/usr/share/alliance/cells/sxlib'...
+Controlling lib '/usr/share/alliance/cells/sxlib'...
+Preparing file 'fdo_b.vbe'...
+Capacitances on file 'fdo_b.vbe'...
+Unflattening file 'fdo_b.vbe'...
+Mapping file 'fdo_b.vbe'...
+Saving file 'fdo_b.vst'...
+Adding signal 'not_fsm_a_a_cs 2'
+Adding signal 'not_fsm_a_a_cs 3'
+Adding signal 'not_fsm_a_a_cs 4'
+Adding signal 'not_fsm_a_a_cs 5'
+Adding signal 'not_fsm_a_a_cs 6'
+Adding signal 'not_fsm_a_a_cs 7'
+Adding signal 'not_fsm_a_a_cs 8'
+Adding signal 'not_fsm_a_a_cs 9'
+Adding signal 'not_fsm_a_a_cs 10'
+Adding signal 'not_fsm_a_a_cs 12'
+Adding signal 'not_fsm_b_b_cs 4'
+Adding signal 'not_fsm_b_b_cs 5'
+Adding signal 'not_fsm_b_b_cs 8'
+Adding signal 'not_fsm_b_b_cs 9'
+Adding signal 'not_fsm_b_b_cs 10'
+Adding signal 'not_fsm_b_b_cs 11'
+Adding signal 'not_fsm_b_b_cs 12'
+Adding signal 'not_fsm_d_d_cs 12'
+Adding signal 'not_fsm_e_e_cs 2'
+Adding signal 'not_fsm_e_e_cs 4'
+Adding signal 'not_fsm_e_e_cs 5'
+Adding signal 'not_fsm_e_e_cs 6'
+Adding signal 'not_fsm_e_e_cs 7'
+Adding signal 'not_fsm_e_e_cs 10'
+Adding signal 'not_fsm_e_e_cs 11'
+Adding signal 'not_fsm_f_f_cs 2'
+Adding signal 'not_fsm_f_f_cs 3'
+Adding signal 'not_fsm_f_f_cs 4'
+Adding signal 'not_fsm_f_f_cs 5'
+Adding signal 'not_fsm_f_f_cs 6'
+Adding signal 'not_fsm_f_f_cs 8'
+Adding signal 'not_fsm_f_f_cs 9'
+Adding signal 'not_fsm_f_f_cs 10'
+Adding signal 'not_fsm_f_f_cs 12'
+Adding signal 'not_fsm_g_g_cs 1'
+Adding signal 'not_fsm_g_g_cs 2'
+Adding signal 'not_fsm_g_g_cs 3'
+Adding signal 'not_fsm_g_g_cs 4'
+Adding signal 'not_fsm_g_g_cs 5'
+Adding signal 'not_fsm_g_g_cs 6'
+Adding signal 'not_fsm_g_g_cs 7'
+Adding signal 'not_fsm_g_g_cs 8'
+Adding signal 'not_fsm_g_g_cs 9'
+Adding signal 'not_fsm_g_g_cs 10'
+Adding signal 'not_fsm_g_g_cs 11'
+Adding signal 'not_fsm_g_g_cs 12'
+Adding signal 'not_fsm_g_g_cs 20'
+Adding signal 'not_fsm_h_h_cs 17'
+Adding signal 'not_fsm_h_h_cs 19'
+Adding signal 'not_fsm_h_h_cs 21'
+Adding signal 'not_word_in 1'
+Adding signal 'not_word_in 2'
+Adding signal 'not_word_in 5'
+Quick estimated critical path (no warranty)...2301 ps from 'fsm_d_d_cs 12' to 'fsm_d_d_cs 24'
+Quick estimated area (with over-cell routing)...1485750 lambda²
+Details...
+	no2_x1: 207
+	sff1_x4: 200
+	inv_x2: 132
+	no3_x1: 38
+	na3_x1: 26
+	no4_x1: 25
+	o2_x2: 19
+	a2_x2: 15
+	on12_x1: 15
+	na4_x1: 12
+	ao22_x2: 11
+	nao22_x1: 7
+	o4_x2: 6
+	a4_x2: 6
+	o3_x2: 5
+	a3_x2: 5
+	an12_x1: 5
+	na2_x1: 5
+	noa22_x1: 3
+	buf_x2: 1
+	noa2a22_x1: 1
+	oa22_x2: 1
+	Total: 745
+Saving critical path in xsch color file 'fdo_b.xsc'...
+End of boog...
+

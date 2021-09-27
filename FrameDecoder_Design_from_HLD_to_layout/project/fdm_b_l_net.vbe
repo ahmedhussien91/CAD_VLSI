@@ -1,0 +1,2025 @@
+-- VHDL data flow description generated from `fdm_b_l_net`
+--		date : Wed May 27 19:42:06 2015
+
+
+-- Entity Declaration
+
+ENTITY fdm_b_l_net IS
+  PORT (
+  address : out bit_vector(7 DOWNTO 0) ;	-- address
+  data : out bit_vector(7 DOWNTO 0) ;	-- data
+  error_f : out BIT;	-- error_f
+  reset : in BIT;	-- reset
+  word_in : in bit_vector(7 DOWNTO 0) ;	-- word_in
+  vss : in BIT;	-- vss
+  vdd : in BIT;	-- vdd
+  ck : in BIT	-- ck
+  );
+END fdm_b_l_net;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF fdm_b_l_net IS
+  SIGNAL fsm_a_a_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_a_a_cs
+  SIGNAL fsm_b_b_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_b_b_cs
+  SIGNAL fsm_c_c_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_c_c_cs
+  SIGNAL fsm_d_d_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_d_d_cs
+  SIGNAL fsm_e_e_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_e_e_cs
+  SIGNAL fsm_f_f_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_f_f_cs
+  SIGNAL fsm_g_g_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_g_g_cs
+  SIGNAL fsm_h_h_cs : REG_VECTOR(4 DOWNTO 0) REGISTER;	-- fsm_h_h_cs
+  SIGNAL not_aux18 : BIT;		-- not_aux18
+  SIGNAL not_aux10 : BIT;		-- not_aux10
+  SIGNAL not_aux9 : BIT;		-- not_aux9
+  SIGNAL not_aux220 : BIT;		-- not_aux220
+  SIGNAL not_aux0 : BIT;		-- not_aux0
+  SIGNAL not_aux219 : BIT;		-- not_aux219
+  SIGNAL not_aux163 : BIT;		-- not_aux163
+  SIGNAL not_aux162 : BIT;		-- not_aux162
+  SIGNAL not_aux158 : BIT;		-- not_aux158
+  SIGNAL not_aux19 : BIT;		-- not_aux19
+  SIGNAL not_aux42 : BIT;		-- not_aux42
+  SIGNAL not_aux154 : BIT;		-- not_aux154
+  SIGNAL not_aux41 : BIT;		-- not_aux41
+  SIGNAL not_aux17 : BIT;		-- not_aux17
+  SIGNAL not_fsm_h_h_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_h_h_cs
+  SIGNAL not_aux156 : BIT;		-- not_aux156
+  SIGNAL not_aux157 : BIT;		-- not_aux157
+  SIGNAL not_aux40 : BIT;		-- not_aux40
+  SIGNAL not_aux36 : BIT;		-- not_aux36
+  SIGNAL not_aux150 : BIT;		-- not_aux150
+  SIGNAL not_aux148 : BIT;		-- not_aux148
+  SIGNAL not_aux15 : BIT;		-- not_aux15
+  SIGNAL na3_x1_sig : BIT;		-- na3_x1_sig
+  SIGNAL not_aux216 : BIT;		-- not_aux216
+  SIGNAL not_aux147 : BIT;		-- not_aux147
+  SIGNAL not_aux35 : BIT;		-- not_aux35
+  SIGNAL not_aux39 : BIT;		-- not_aux39
+  SIGNAL not_aux38 : BIT;		-- not_aux38
+  SIGNAL not_aux37 : BIT;		-- not_aux37
+  SIGNAL not_aux144 : BIT;		-- not_aux144
+  SIGNAL not_aux143 : BIT;		-- not_aux143
+  SIGNAL not_aux146 : BIT;		-- not_aux146
+  SIGNAL not_aux16 : BIT;		-- not_aux16
+  SIGNAL not_fsm_g_g_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_g_g_cs
+  SIGNAL not_aux33 : BIT;		-- not_aux33
+  SIGNAL no3_x1_sig : BIT;		-- no3_x1_sig
+  SIGNAL not_aux212 : BIT;		-- not_aux212
+  SIGNAL not_aux208 : BIT;		-- not_aux208
+  SIGNAL not_aux138 : BIT;		-- not_aux138
+  SIGNAL not_aux139 : BIT;		-- not_aux139
+  SIGNAL not_aux140 : BIT;		-- not_aux140
+  SIGNAL not_aux130 : BIT;		-- not_aux130
+  SIGNAL not_aux13 : BIT;		-- not_aux13
+  SIGNAL not_aux133 : BIT;		-- not_aux133
+  SIGNAL not_aux131 : BIT;		-- not_aux131
+  SIGNAL not_aux34 : BIT;		-- not_aux34
+  SIGNAL not_aux164 : BIT;		-- not_aux164
+  SIGNAL not_aux134 : BIT;		-- not_aux134
+  SIGNAL not_aux206 : BIT;		-- not_aux206
+  SIGNAL not_aux12 : BIT;		-- not_aux12
+  SIGNAL not_aux205 : BIT;		-- not_aux205
+  SIGNAL not_aux136 : BIT;		-- not_aux136
+  SIGNAL not_aux14 : BIT;		-- not_aux14
+  SIGNAL not_fsm_f_f_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_f_f_cs
+  SIGNAL not_aux137 : BIT;		-- not_aux137
+  SIGNAL not_aux204 : BIT;		-- not_aux204
+  SIGNAL not_aux122 : BIT;		-- not_aux122
+  SIGNAL o2_x2_sig : BIT;		-- o2_x2_sig
+  SIGNAL not_aux125 : BIT;		-- not_aux125
+  SIGNAL not_aux128 : BIT;		-- not_aux128
+  SIGNAL not_aux129 : BIT;		-- not_aux129
+  SIGNAL not_aux203 : BIT;		-- not_aux203
+  SIGNAL not_aux121 : BIT;		-- not_aux121
+  SIGNAL not_aux202 : BIT;		-- not_aux202
+  SIGNAL not_aux116 : BIT;		-- not_aux116
+  SIGNAL not_aux201 : BIT;		-- not_aux201
+  SIGNAL not_aux117 : BIT;		-- not_aux117
+  SIGNAL not_aux118 : BIT;		-- not_aux118
+  SIGNAL not_aux200 : BIT;		-- not_aux200
+  SIGNAL not_aux31 : BIT;		-- not_aux31
+  SIGNAL not_aux32 : BIT;		-- not_aux32
+  SIGNAL not_aux198 : BIT;		-- not_aux198
+  SIGNAL not_aux197 : BIT;		-- not_aux197
+  SIGNAL not_fsm_e_e_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_e_e_cs
+  SIGNAL not_aux221 : BIT;		-- not_aux221
+  SIGNAL not_aux11 : BIT;		-- not_aux11
+  SIGNAL not_aux114 : BIT;		-- not_aux114
+  SIGNAL not_aux26 : BIT;		-- not_aux26
+  SIGNAL not_aux8 : BIT;		-- not_aux8
+  SIGNAL not_aux113 : BIT;		-- not_aux113
+  SIGNAL not_aux111 : BIT;		-- not_aux111
+  SIGNAL not_aux108 : BIT;		-- not_aux108
+  SIGNAL not_aux194 : BIT;		-- not_aux194
+  SIGNAL not_aux112 : BIT;		-- not_aux112
+  SIGNAL not_aux29 : BIT;		-- not_aux29
+  SIGNAL not_aux28 : BIT;		-- not_aux28
+  SIGNAL not_fsm_d_d_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_d_d_cs
+  SIGNAL not_aux27 : BIT;		-- not_aux27
+  SIGNAL not_aux107 : BIT;		-- not_aux107
+  SIGNAL not_aux110 : BIT;		-- not_aux110
+  SIGNAL not_aux101 : BIT;		-- not_aux101
+  SIGNAL o2_x2_2_sig : BIT;		-- o2_x2_2_sig
+  SIGNAL not_aux106 : BIT;		-- not_aux106
+  SIGNAL na2_x1_sig : BIT;		-- na2_x1_sig
+  SIGNAL not_aux190 : BIT;		-- not_aux190
+  SIGNAL not_aux187 : BIT;		-- not_aux187
+  SIGNAL not_aux186 : BIT;		-- not_aux186
+  SIGNAL not_aux98 : BIT;		-- not_aux98
+  SIGNAL not_aux99 : BIT;		-- not_aux99
+  SIGNAL not_aux25 : BIT;		-- not_aux25
+  SIGNAL not_aux92 : BIT;		-- not_aux92
+  SIGNAL not_aux93 : BIT;		-- not_aux93
+  SIGNAL not_fsm_c_c_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_c_c_cs
+  SIGNAL not_aux6 : BIT;		-- not_aux6
+  SIGNAL not_aux96 : BIT;		-- not_aux96
+  SIGNAL not_aux95 : BIT;		-- not_aux95
+  SIGNAL not_aux94 : BIT;		-- not_aux94
+  SIGNAL not_aux97 : BIT;		-- not_aux97
+  SIGNAL no2_x1_sig : BIT;		-- no2_x1_sig
+  SIGNAL not_aux88 : BIT;		-- not_aux88
+  SIGNAL o2_x2_3_sig : BIT;		-- o2_x2_3_sig
+  SIGNAL not_aux90 : BIT;		-- not_aux90
+  SIGNAL not_aux183 : BIT;		-- not_aux183
+  SIGNAL not_aux79 : BIT;		-- not_aux79
+  SIGNAL o2_x2_4_sig : BIT;		-- o2_x2_4_sig
+  SIGNAL not_aux82 : BIT;		-- not_aux82
+  SIGNAL not_aux24 : BIT;		-- not_aux24
+  SIGNAL no2_x1_2_sig : BIT;		-- no2_x1_2_sig
+  SIGNAL not_aux85 : BIT;		-- not_aux85
+  SIGNAL not_aux86 : BIT;		-- not_aux86
+  SIGNAL not_aux181 : BIT;		-- not_aux181
+  SIGNAL not_aux180 : BIT;		-- not_aux180
+  SIGNAL not_aux76 : BIT;		-- not_aux76
+  SIGNAL not_aux179 : BIT;		-- not_aux179
+  SIGNAL not_aux78 : BIT;		-- not_aux78
+  SIGNAL not_aux77 : BIT;		-- not_aux77
+  SIGNAL not_aux178 : BIT;		-- not_aux178
+  SIGNAL not_aux23 : BIT;		-- not_aux23
+  SIGNAL not_fsm_b_b_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_b_b_cs
+  SIGNAL not_aux69 : BIT;		-- not_aux69
+  SIGNAL not_aux71 : BIT;		-- not_aux71
+  SIGNAL not_aux3 : BIT;		-- not_aux3
+  SIGNAL not_aux2 : BIT;		-- not_aux2
+  SIGNAL not_aux75 : BIT;		-- not_aux75
+  SIGNAL not_aux73 : BIT;		-- not_aux73
+  SIGNAL not_aux176 : BIT;		-- not_aux176
+  SIGNAL not_aux20 : BIT;		-- not_aux20
+  SIGNAL not_aux67 : BIT;		-- not_aux67
+  SIGNAL not_aux68 : BIT;		-- not_aux68
+  SIGNAL not_aux62 : BIT;		-- not_aux62
+  SIGNAL na3_x1_2_sig : BIT;		-- na3_x1_2_sig
+  SIGNAL not_aux175 : BIT;		-- not_aux175
+  SIGNAL not_aux66 : BIT;		-- not_aux66
+  SIGNAL not_aux65 : BIT;		-- not_aux65
+  SIGNAL not_aux64 : BIT;		-- not_aux64
+  SIGNAL not_aux1 : BIT;		-- not_aux1
+  SIGNAL not_aux61 : BIT;		-- not_aux61
+  SIGNAL not_aux59 : BIT;		-- not_aux59
+  SIGNAL not_aux58 : BIT;		-- not_aux58
+  SIGNAL not_aux60 : BIT;		-- not_aux60
+  SIGNAL not_aux170 : BIT;		-- not_aux170
+  SIGNAL not_aux22 : BIT;		-- not_aux22
+  SIGNAL not_aux169 : BIT;		-- not_aux169
+  SIGNAL not_aux57 : BIT;		-- not_aux57
+  SIGNAL not_aux55 : BIT;		-- not_aux55
+  SIGNAL not_aux167 : BIT;		-- not_aux167
+  SIGNAL not_aux166 : BIT;		-- not_aux166
+  SIGNAL not_aux165 : BIT;		-- not_aux165
+  SIGNAL not_fsm_a_a_cs : BIT_VECTOR(4 DOWNTO 0);	-- not_fsm_a_a_cs
+  SIGNAL not_aux44 : BIT;		-- not_aux44
+  SIGNAL not_aux45 : BIT;		-- not_aux45
+  SIGNAL not_aux43 : BIT;		-- not_aux43
+  SIGNAL not_aux52 : BIT;		-- not_aux52
+  SIGNAL not_aux53 : BIT;		-- not_aux53
+  SIGNAL not_aux51 : BIT;		-- not_aux51
+  SIGNAL not_aux49 : BIT;		-- not_aux49
+  SIGNAL not_aux21 : BIT;		-- not_aux21
+  SIGNAL not_word_in : BIT_VECTOR(7 DOWNTO 0);	-- not_word_in
+  SIGNAL not_reset : BIT;		-- not_reset
+  SIGNAL aux218 : BIT;		-- aux218
+  SIGNAL aux217 : BIT;		-- aux217
+  SIGNAL aux209 : BIT;		-- aux209
+  SIGNAL aux207 : BIT;		-- aux207
+  SIGNAL aux204 : BIT;		-- aux204
+  SIGNAL aux203 : BIT;		-- aux203
+  SIGNAL aux199 : BIT;		-- aux199
+  SIGNAL aux196 : BIT;		-- aux196
+  SIGNAL aux195 : BIT;		-- aux195
+  SIGNAL aux194 : BIT;		-- aux194
+  SIGNAL aux193 : BIT;		-- aux193
+  SIGNAL a2_x2_sig : BIT;		-- a2_x2_sig
+  SIGNAL aux192 : BIT;		-- aux192
+  SIGNAL aux188 : BIT;		-- aux188
+  SIGNAL aux185 : BIT;		-- aux185
+  SIGNAL aux184 : BIT;		-- aux184
+  SIGNAL aux181 : BIT;		-- aux181
+  SIGNAL aux180 : BIT;		-- aux180
+  SIGNAL aux179 : BIT;		-- aux179
+  SIGNAL aux178 : BIT;		-- aux178
+  SIGNAL aux171 : BIT;		-- aux171
+  SIGNAL aux170 : BIT;		-- aux170
+  SIGNAL aux168 : BIT;		-- aux168
+  SIGNAL aux166 : BIT;		-- aux166
+  SIGNAL aux165 : BIT;		-- aux165
+  SIGNAL aux161 : BIT;		-- aux161
+  SIGNAL aux160 : BIT;		-- aux160
+  SIGNAL aux159 : BIT;		-- aux159
+  SIGNAL a2_x2_2_sig : BIT;		-- a2_x2_2_sig
+  SIGNAL aux153 : BIT;		-- aux153
+  SIGNAL aux149 : BIT;		-- aux149
+  SIGNAL aux145 : BIT;		-- aux145
+  SIGNAL aux142 : BIT;		-- aux142
+  SIGNAL aux138 : BIT;		-- aux138
+  SIGNAL aux136 : BIT;		-- aux136
+  SIGNAL aux135 : BIT;		-- aux135
+  SIGNAL aux131 : BIT;		-- aux131
+  SIGNAL aux123 : BIT;		-- aux123
+  SIGNAL aux120 : BIT;		-- aux120
+  SIGNAL aux119 : BIT;		-- aux119
+  SIGNAL aux115 : BIT;		-- aux115
+  SIGNAL aux108 : BIT;		-- aux108
+  SIGNAL aux102 : BIT;		-- aux102
+  SIGNAL aux100 : BIT;		-- aux100
+  SIGNAL aux96 : BIT;		-- aux96
+  SIGNAL aux83 : BIT;		-- aux83
+  SIGNAL aux73 : BIT;		-- aux73
+  SIGNAL aux70 : BIT;		-- aux70
+  SIGNAL aux64 : BIT;		-- aux64
+  SIGNAL aux59 : BIT;		-- aux59
+  SIGNAL aux55 : BIT;		-- aux55
+  SIGNAL aux52 : BIT;		-- aux52
+  SIGNAL na4_x1_sig : BIT;		-- na4_x1_sig
+  SIGNAL aux49 : BIT;		-- aux49
+  SIGNAL aux38 : BIT;		-- aux38
+  SIGNAL aux30 : BIT;		-- aux30
+  SIGNAL aux29 : BIT;		-- aux29
+  SIGNAL aux28 : BIT;		-- aux28
+  SIGNAL aux12 : BIT;		-- aux12
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL na3_x1_3_sig : BIT;		-- na3_x1_3_sig
+  SIGNAL no3_x1_2_sig : BIT;		-- no3_x1_2_sig
+  SIGNAL na2_x1_2_sig : BIT;		-- na2_x1_2_sig
+  SIGNAL o2_x2_6_sig : BIT;		-- o2_x2_6_sig
+  SIGNAL on12_x1_sig : BIT;		-- on12_x1_sig
+  SIGNAL na4_x1_2_sig : BIT;		-- na4_x1_2_sig
+  SIGNAL no3_x1_3_sig : BIT;		-- no3_x1_3_sig
+  SIGNAL o2_x2_5_sig : BIT;		-- o2_x2_5_sig
+  SIGNAL na2_x1_3_sig : BIT;		-- na2_x1_3_sig
+  SIGNAL a3_x2_sig : BIT;		-- a3_x2_sig
+  SIGNAL nao2o22_x1_sig : BIT;		-- nao2o22_x1_sig
+  SIGNAL oa22_x2_2_sig : BIT;		-- oa22_x2_2_sig
+  SIGNAL oa22_x2_sig : BIT;		-- oa22_x2_sig
+  SIGNAL inv_x2_sig : BIT;		-- inv_x2_sig
+  SIGNAL noa22_x1_sig : BIT;		-- noa22_x1_sig
+  SIGNAL no2_x1_3_sig : BIT;		-- no2_x1_3_sig
+  SIGNAL o3_x2_2_sig : BIT;		-- o3_x2_2_sig
+  SIGNAL o3_x2_sig : BIT;		-- o3_x2_sig
+  SIGNAL noa22_x1_2_sig : BIT;		-- noa22_x1_2_sig
+  SIGNAL ao22_x2_sig : BIT;		-- ao22_x2_sig
+  SIGNAL ao22_x2_2_sig : BIT;		-- ao22_x2_2_sig
+  SIGNAL xr2_x1_sig : BIT;		-- xr2_x1_sig
+  SIGNAL a2_x2_3_sig : BIT;		-- a2_x2_3_sig
+  SIGNAL nao22_x1_sig : BIT;		-- nao22_x1_sig
+  SIGNAL an12_x1_sig : BIT;		-- an12_x1_sig
+  SIGNAL oa2ao222_x2_2_sig : BIT;		-- oa2ao222_x2_2_sig
+  SIGNAL oa2ao222_x2_sig : BIT;		-- oa2ao222_x2_sig
+  SIGNAL no2_x1_4_sig : BIT;		-- no2_x1_4_sig
+  SIGNAL o2_x2_7_sig : BIT;		-- o2_x2_7_sig
+  SIGNAL on12_x1_2_sig : BIT;		-- on12_x1_2_sig
+  SIGNAL noa22_x1_3_sig : BIT;		-- noa22_x1_3_sig
+  SIGNAL ao22_x2_3_sig : BIT;		-- ao22_x2_3_sig
+  SIGNAL nao22_x1_2_sig : BIT;		-- nao22_x1_2_sig
+  SIGNAL nao22_x1_3_sig : BIT;		-- nao22_x1_3_sig
+  SIGNAL no3_x1_4_sig : BIT;		-- no3_x1_4_sig
+  SIGNAL oa2a2a23_x2_sig : BIT;		-- oa2a2a23_x2_sig
+  SIGNAL oa2ao222_x2_3_sig : BIT;		-- oa2ao222_x2_3_sig
+  SIGNAL no2_x1_5_sig : BIT;		-- no2_x1_5_sig
+  SIGNAL inv_x2_2_sig : BIT;		-- inv_x2_2_sig
+  SIGNAL oa2ao222_x2_4_sig : BIT;		-- oa2ao222_x2_4_sig
+  SIGNAL xr2_x1_2_sig : BIT;		-- xr2_x1_2_sig
+  SIGNAL oa22_x2_3_sig : BIT;		-- oa22_x2_3_sig
+  SIGNAL no2_x1_6_sig : BIT;		-- no2_x1_6_sig
+  SIGNAL an12_x1_2_sig : BIT;		-- an12_x1_2_sig
+  SIGNAL na2_x1_4_sig : BIT;		-- na2_x1_4_sig
+  SIGNAL oa2a2a23_x2_2_sig : BIT;		-- oa2a2a23_x2_2_sig
+  SIGNAL no2_x1_7_sig : BIT;		-- no2_x1_7_sig
+  SIGNAL oa22_x2_4_sig : BIT;		-- oa22_x2_4_sig
+  SIGNAL noa22_x1_4_sig : BIT;		-- noa22_x1_4_sig
+  SIGNAL nao2o22_x1_2_sig : BIT;		-- nao2o22_x1_2_sig
+  SIGNAL oa2ao222_x2_5_sig : BIT;		-- oa2ao222_x2_5_sig
+  SIGNAL a3_x2_2_sig : BIT;		-- a3_x2_2_sig
+  SIGNAL no3_x1_5_sig : BIT;		-- no3_x1_5_sig
+  SIGNAL nao22_x1_4_sig : BIT;		-- nao22_x1_4_sig
+  SIGNAL a2_x2_4_sig : BIT;		-- a2_x2_4_sig
+  SIGNAL o2_x2_8_sig : BIT;		-- o2_x2_8_sig
+  SIGNAL noa22_x1_5_sig : BIT;		-- noa22_x1_5_sig
+  SIGNAL nao22_x1_5_sig : BIT;		-- nao22_x1_5_sig
+  SIGNAL ao22_x2_4_sig : BIT;		-- ao22_x2_4_sig
+  SIGNAL no2_x1_8_sig : BIT;		-- no2_x1_8_sig
+  SIGNAL a2_x2_5_sig : BIT;		-- a2_x2_5_sig
+  SIGNAL nao22_x1_6_sig : BIT;		-- nao22_x1_6_sig
+  SIGNAL na4_x1_3_sig : BIT;		-- na4_x1_3_sig
+  SIGNAL na2_x1_5_sig : BIT;		-- na2_x1_5_sig
+  SIGNAL a3_x2_3_sig : BIT;		-- a3_x2_3_sig
+  SIGNAL no2_x1_9_sig : BIT;		-- no2_x1_9_sig
+  SIGNAL na2_x1_6_sig : BIT;		-- na2_x1_6_sig
+  SIGNAL a4_x2_2_sig : BIT;		-- a4_x2_2_sig
+  SIGNAL no2_x1_10_sig : BIT;		-- no2_x1_10_sig
+  SIGNAL na3_x1_4_sig : BIT;		-- na3_x1_4_sig
+  SIGNAL na2_x1_7_sig : BIT;		-- na2_x1_7_sig
+  SIGNAL a4_x2_sig : BIT;		-- a4_x2_sig
+  SIGNAL ao22_x2_5_sig : BIT;		-- ao22_x2_5_sig
+  SIGNAL o2_x2_9_sig : BIT;		-- o2_x2_9_sig
+  SIGNAL ao22_x2_6_sig : BIT;		-- ao22_x2_6_sig
+  SIGNAL o3_x2_3_sig : BIT;		-- o3_x2_3_sig
+  SIGNAL nao2o22_x1_3_sig : BIT;		-- nao2o22_x1_3_sig
+  SIGNAL oa2ao222_x2_6_sig : BIT;		-- oa2ao222_x2_6_sig
+  SIGNAL a2_x2_6_sig : BIT;		-- a2_x2_6_sig
+  SIGNAL no2_x1_11_sig : BIT;		-- no2_x1_11_sig
+  SIGNAL ao22_x2_7_sig : BIT;		-- ao22_x2_7_sig
+  SIGNAL no2_x1_12_sig : BIT;		-- no2_x1_12_sig
+  SIGNAL oa22_x2_5_sig : BIT;		-- oa22_x2_5_sig
+  SIGNAL noa22_x1_6_sig : BIT;		-- noa22_x1_6_sig
+  SIGNAL ao22_x2_8_sig : BIT;		-- ao22_x2_8_sig
+  SIGNAL o2_x2_10_sig : BIT;		-- o2_x2_10_sig
+  SIGNAL no2_x1_13_sig : BIT;		-- no2_x1_13_sig
+  SIGNAL na4_x1_4_sig : BIT;		-- na4_x1_4_sig
+  SIGNAL no4_x1_sig : BIT;		-- no4_x1_sig
+  SIGNAL ao22_x2_9_sig : BIT;		-- ao22_x2_9_sig
+  SIGNAL o4_x2_sig : BIT;		-- o4_x2_sig
+  SIGNAL o2_x2_11_sig : BIT;		-- o2_x2_11_sig
+  SIGNAL o2_x2_12_sig : BIT;		-- o2_x2_12_sig
+  SIGNAL noa22_x1_7_sig : BIT;		-- noa22_x1_7_sig
+  SIGNAL no2_x1_14_sig : BIT;		-- no2_x1_14_sig
+  SIGNAL o3_x2_4_sig : BIT;		-- o3_x2_4_sig
+  SIGNAL o4_x2_2_sig : BIT;		-- o4_x2_2_sig
+  SIGNAL ao22_x2_10_sig : BIT;		-- ao22_x2_10_sig
+  SIGNAL nao22_x1_7_sig : BIT;		-- nao22_x1_7_sig
+  SIGNAL oa22_x2_6_sig : BIT;		-- oa22_x2_6_sig
+  SIGNAL an12_x1_3_sig : BIT;		-- an12_x1_3_sig
+  SIGNAL na2_x1_8_sig : BIT;		-- na2_x1_8_sig
+  SIGNAL a3_x2_4_sig : BIT;		-- a3_x2_4_sig
+  SIGNAL no2_x1_15_sig : BIT;		-- no2_x1_15_sig
+  SIGNAL a2_x2_7_sig : BIT;		-- a2_x2_7_sig
+  SIGNAL a2_x2_8_sig : BIT;		-- a2_x2_8_sig
+  SIGNAL ao22_x2_11_sig : BIT;		-- ao22_x2_11_sig
+  SIGNAL a2_x2_9_sig : BIT;		-- a2_x2_9_sig
+  SIGNAL nao22_x1_8_sig : BIT;		-- nao22_x1_8_sig
+  SIGNAL oa2ao222_x2_7_sig : BIT;		-- oa2ao222_x2_7_sig
+  SIGNAL no2_x1_16_sig : BIT;		-- no2_x1_16_sig
+  SIGNAL a2_x2_10_sig : BIT;		-- a2_x2_10_sig
+  SIGNAL a2_x2_11_sig : BIT;		-- a2_x2_11_sig
+  SIGNAL ao22_x2_12_sig : BIT;		-- ao22_x2_12_sig
+  SIGNAL inv_x2_3_sig : BIT;		-- inv_x2_3_sig
+  SIGNAL nao22_x1_9_sig : BIT;		-- nao22_x1_9_sig
+  SIGNAL a2_x2_12_sig : BIT;		-- a2_x2_12_sig
+  SIGNAL a2_x2_13_sig : BIT;		-- a2_x2_13_sig
+  SIGNAL ao22_x2_13_sig : BIT;		-- ao22_x2_13_sig
+  SIGNAL o2_x2_13_sig : BIT;		-- o2_x2_13_sig
+  SIGNAL noa22_x1_8_sig : BIT;		-- noa22_x1_8_sig
+  SIGNAL nao22_x1_10_sig : BIT;		-- nao22_x1_10_sig
+  SIGNAL no2_x1_17_sig : BIT;		-- no2_x1_17_sig
+  SIGNAL o2_x2_14_sig : BIT;		-- o2_x2_14_sig
+  SIGNAL no3_x1_6_sig : BIT;		-- no3_x1_6_sig
+  SIGNAL no2_x1_18_sig : BIT;		-- no2_x1_18_sig
+  SIGNAL a2_x2_14_sig : BIT;		-- a2_x2_14_sig
+  SIGNAL no4_x1_2_sig : BIT;		-- no4_x1_2_sig
+  SIGNAL na3_x1_5_sig : BIT;		-- na3_x1_5_sig
+  SIGNAL inv_x2_4_sig : BIT;		-- inv_x2_4_sig
+  SIGNAL o2_x2_15_sig : BIT;		-- o2_x2_15_sig
+  SIGNAL on12_x1_3_sig : BIT;		-- on12_x1_3_sig
+  SIGNAL noa22_x1_9_sig : BIT;		-- noa22_x1_9_sig
+  SIGNAL noa22_x1_10_sig : BIT;		-- noa22_x1_10_sig
+  SIGNAL inv_x2_5_sig : BIT;		-- inv_x2_5_sig
+  SIGNAL no2_x1_19_sig : BIT;		-- no2_x1_19_sig
+  SIGNAL on12_x1_4_sig : BIT;		-- on12_x1_4_sig
+  SIGNAL noa22_x1_11_sig : BIT;		-- noa22_x1_11_sig
+  SIGNAL ao22_x2_14_sig : BIT;		-- ao22_x2_14_sig
+  SIGNAL a2_x2_15_sig : BIT;		-- a2_x2_15_sig
+  SIGNAL no4_x1_3_sig : BIT;		-- no4_x1_3_sig
+  SIGNAL nxr2_x1_sig : BIT;		-- nxr2_x1_sig
+  SIGNAL na2_x1_9_sig : BIT;		-- na2_x1_9_sig
+  SIGNAL oa2ao222_x2_8_sig : BIT;		-- oa2ao222_x2_8_sig
+  SIGNAL an12_x1_4_sig : BIT;		-- an12_x1_4_sig
+  SIGNAL no2_x1_20_sig : BIT;		-- no2_x1_20_sig
+  SIGNAL inv_x2_6_sig : BIT;		-- inv_x2_6_sig
+  SIGNAL na2_x1_10_sig : BIT;		-- na2_x1_10_sig
+  SIGNAL noa22_x1_12_sig : BIT;		-- noa22_x1_12_sig
+  SIGNAL ao22_x2_15_sig : BIT;		-- ao22_x2_15_sig
+  SIGNAL no2_x1_22_sig : BIT;		-- no2_x1_22_sig
+  SIGNAL no2_x1_23_sig : BIT;		-- no2_x1_23_sig
+  SIGNAL no3_x1_7_sig : BIT;		-- no3_x1_7_sig
+  SIGNAL no2_x1_21_sig : BIT;		-- no2_x1_21_sig
+  SIGNAL an12_x1_5_sig : BIT;		-- an12_x1_5_sig
+  SIGNAL a2_x2_16_sig : BIT;		-- a2_x2_16_sig
+  SIGNAL inv_x2_7_sig : BIT;		-- inv_x2_7_sig
+  SIGNAL oa2ao222_x2_10_sig : BIT;		-- oa2ao222_x2_10_sig
+  SIGNAL oa2ao222_x2_9_sig : BIT;		-- oa2ao222_x2_9_sig
+  SIGNAL a2_x2_17_sig : BIT;		-- a2_x2_17_sig
+  SIGNAL inv_x2_8_sig : BIT;		-- inv_x2_8_sig
+  SIGNAL o2_x2_16_sig : BIT;		-- o2_x2_16_sig
+  SIGNAL noa22_x1_13_sig : BIT;		-- noa22_x1_13_sig
+  SIGNAL inv_x2_9_sig : BIT;		-- inv_x2_9_sig
+  SIGNAL a2_x2_18_sig : BIT;		-- a2_x2_18_sig
+  SIGNAL nao22_x1_11_sig : BIT;		-- nao22_x1_11_sig
+  SIGNAL oa2ao222_x2_11_sig : BIT;		-- oa2ao222_x2_11_sig
+  SIGNAL on12_x1_5_sig : BIT;		-- on12_x1_5_sig
+  SIGNAL no2_x1_24_sig : BIT;		-- no2_x1_24_sig
+  SIGNAL a2_x2_19_sig : BIT;		-- a2_x2_19_sig
+  SIGNAL a3_x2_5_sig : BIT;		-- a3_x2_5_sig
+  SIGNAL na3_x1_6_sig : BIT;		-- na3_x1_6_sig
+  SIGNAL na2_x1_11_sig : BIT;		-- na2_x1_11_sig
+  SIGNAL oa22_x2_7_sig : BIT;		-- oa22_x2_7_sig
+  SIGNAL no2_x1_25_sig : BIT;		-- no2_x1_25_sig
+  SIGNAL ao22_x2_17_sig : BIT;		-- ao22_x2_17_sig
+  SIGNAL na2_x1_12_sig : BIT;		-- na2_x1_12_sig
+  SIGNAL a3_x2_6_sig : BIT;		-- a3_x2_6_sig
+  SIGNAL ao22_x2_16_sig : BIT;		-- ao22_x2_16_sig
+  SIGNAL o2_x2_17_sig : BIT;		-- o2_x2_17_sig
+  SIGNAL noa22_x1_14_sig : BIT;		-- noa22_x1_14_sig
+  SIGNAL nao22_x1_12_sig : BIT;		-- nao22_x1_12_sig
+  SIGNAL na2_x1_13_sig : BIT;		-- na2_x1_13_sig
+  SIGNAL na2_x1_14_sig : BIT;		-- na2_x1_14_sig
+  SIGNAL a3_x2_7_sig : BIT;		-- a3_x2_7_sig
+  SIGNAL noa22_x1_15_sig : BIT;		-- noa22_x1_15_sig
+  SIGNAL nao22_x1_13_sig : BIT;		-- nao22_x1_13_sig
+  SIGNAL na3_x1_7_sig : BIT;		-- na3_x1_7_sig
+  SIGNAL no2_x1_26_sig : BIT;		-- no2_x1_26_sig
+  SIGNAL o4_x2_3_sig : BIT;		-- o4_x2_3_sig
+  SIGNAL nao22_x1_14_sig : BIT;		-- nao22_x1_14_sig
+  SIGNAL oa22_x2_8_sig : BIT;		-- oa22_x2_8_sig
+  SIGNAL na2_x1_15_sig : BIT;		-- na2_x1_15_sig
+  SIGNAL o2_x2_18_sig : BIT;		-- o2_x2_18_sig
+  SIGNAL inv_x2_10_sig : BIT;		-- inv_x2_10_sig
+  SIGNAL na3_x1_8_sig : BIT;		-- na3_x1_8_sig
+  SIGNAL oa22_x2_10_sig : BIT;		-- oa22_x2_10_sig
+  SIGNAL oa22_x2_9_sig : BIT;		-- oa22_x2_9_sig
+  SIGNAL noa22_x1_16_sig : BIT;		-- noa22_x1_16_sig
+  SIGNAL a3_x2_8_sig : BIT;		-- a3_x2_8_sig
+  SIGNAL na2_x1_16_sig : BIT;		-- na2_x1_16_sig
+  SIGNAL noa22_x1_18_sig : BIT;		-- noa22_x1_18_sig
+  SIGNAL nao22_x1_15_sig : BIT;		-- nao22_x1_15_sig
+  SIGNAL a2_x2_20_sig : BIT;		-- a2_x2_20_sig
+  SIGNAL o2_x2_19_sig : BIT;		-- o2_x2_19_sig
+  SIGNAL o3_x2_5_sig : BIT;		-- o3_x2_5_sig
+  SIGNAL o2_x2_20_sig : BIT;		-- o2_x2_20_sig
+  SIGNAL na3_x1_9_sig : BIT;		-- na3_x1_9_sig
+  SIGNAL o3_x2_6_sig : BIT;		-- o3_x2_6_sig
+  SIGNAL oa22_x2_12_sig : BIT;		-- oa22_x2_12_sig
+  SIGNAL oa22_x2_11_sig : BIT;		-- oa22_x2_11_sig
+  SIGNAL noa22_x1_17_sig : BIT;		-- noa22_x1_17_sig
+  SIGNAL noa22_x1_19_sig : BIT;		-- noa22_x1_19_sig
+  SIGNAL oa22_x2_13_sig : BIT;		-- oa22_x2_13_sig
+  SIGNAL noa22_x1_20_sig : BIT;		-- noa22_x1_20_sig
+  SIGNAL ao22_x2_19_sig : BIT;		-- ao22_x2_19_sig
+  SIGNAL a2_x2_21_sig : BIT;		-- a2_x2_21_sig
+  SIGNAL nao22_x1_16_sig : BIT;		-- nao22_x1_16_sig
+  SIGNAL a4_x2_3_sig : BIT;		-- a4_x2_3_sig
+  SIGNAL ao22_x2_20_sig : BIT;		-- ao22_x2_20_sig
+  SIGNAL ao22_x2_18_sig : BIT;		-- ao22_x2_18_sig
+  SIGNAL on12_x1_6_sig : BIT;		-- on12_x1_6_sig
+  SIGNAL o2_x2_21_sig : BIT;		-- o2_x2_21_sig
+  SIGNAL oa22_x2_14_sig : BIT;		-- oa22_x2_14_sig
+  SIGNAL no2_x1_27_sig : BIT;		-- no2_x1_27_sig
+  SIGNAL on12_x1_7_sig : BIT;		-- on12_x1_7_sig
+  SIGNAL a2_x2_22_sig : BIT;		-- a2_x2_22_sig
+  SIGNAL o3_x2_7_sig : BIT;		-- o3_x2_7_sig
+  SIGNAL oa22_x2_15_sig : BIT;		-- oa22_x2_15_sig
+  SIGNAL noa22_x1_21_sig : BIT;		-- noa22_x1_21_sig
+  SIGNAL no4_x1_5_sig : BIT;		-- no4_x1_5_sig
+  SIGNAL a2_x2_23_sig : BIT;		-- a2_x2_23_sig
+  SIGNAL no4_x1_6_sig : BIT;		-- no4_x1_6_sig
+  SIGNAL no2_x1_28_sig : BIT;		-- no2_x1_28_sig
+  SIGNAL a2_x2_24_sig : BIT;		-- a2_x2_24_sig
+  SIGNAL no4_x1_4_sig : BIT;		-- no4_x1_4_sig
+  SIGNAL o2_x2_22_sig : BIT;		-- o2_x2_22_sig
+  SIGNAL na2_x1_17_sig : BIT;		-- na2_x1_17_sig
+  SIGNAL noa22_x1_22_sig : BIT;		-- noa22_x1_22_sig
+  SIGNAL no2_x1_29_sig : BIT;		-- no2_x1_29_sig
+  SIGNAL nao22_x1_17_sig : BIT;		-- nao22_x1_17_sig
+  SIGNAL no4_x1_7_sig : BIT;		-- no4_x1_7_sig
+  SIGNAL a3_x2_9_sig : BIT;		-- a3_x2_9_sig
+  SIGNAL a4_x2_4_sig : BIT;		-- a4_x2_4_sig
+  SIGNAL no4_x1_8_sig : BIT;		-- no4_x1_8_sig
+  SIGNAL a3_x2_10_sig : BIT;		-- a3_x2_10_sig
+  SIGNAL a4_x2_5_sig : BIT;		-- a4_x2_5_sig
+  SIGNAL nao22_x1_18_sig : BIT;		-- nao22_x1_18_sig
+  SIGNAL na3_x1_10_sig : BIT;		-- na3_x1_10_sig
+  SIGNAL na2_x1_18_sig : BIT;		-- na2_x1_18_sig
+  SIGNAL a3_x2_11_sig : BIT;		-- a3_x2_11_sig
+  SIGNAL a2_x2_25_sig : BIT;		-- a2_x2_25_sig
+  SIGNAL na2_x1_19_sig : BIT;		-- na2_x1_19_sig
+  SIGNAL a4_x2_6_sig : BIT;		-- a4_x2_6_sig
+  SIGNAL no3_x1_8_sig : BIT;		-- no3_x1_8_sig
+  SIGNAL na4_x1_5_sig : BIT;		-- na4_x1_5_sig
+  SIGNAL noa22_x1_23_sig : BIT;		-- noa22_x1_23_sig
+  SIGNAL ao22_x2_21_sig : BIT;		-- ao22_x2_21_sig
+  SIGNAL no2_x1_30_sig : BIT;		-- no2_x1_30_sig
+  SIGNAL a2_x2_26_sig : BIT;		-- a2_x2_26_sig
+  SIGNAL o4_x2_4_sig : BIT;		-- o4_x2_4_sig
+  SIGNAL on12_x1_8_sig : BIT;		-- on12_x1_8_sig
+  SIGNAL a2_x2_27_sig : BIT;		-- a2_x2_27_sig
+  SIGNAL a3_x2_12_sig : BIT;		-- a3_x2_12_sig
+  SIGNAL inv_x2_11_sig : BIT;		-- inv_x2_11_sig
+  SIGNAL oa2ao222_x2_13_sig : BIT;		-- oa2ao222_x2_13_sig
+  SIGNAL oa2ao222_x2_12_sig : BIT;		-- oa2ao222_x2_12_sig
+  SIGNAL no3_x1_9_sig : BIT;		-- no3_x1_9_sig
+  SIGNAL no4_x1_9_sig : BIT;		-- no4_x1_9_sig
+  SIGNAL a2_x2_29_sig : BIT;		-- a2_x2_29_sig
+  SIGNAL a2_x2_30_sig : BIT;		-- a2_x2_30_sig
+  SIGNAL nao22_x1_19_sig : BIT;		-- nao22_x1_19_sig
+  SIGNAL a2_x2_31_sig : BIT;		-- a2_x2_31_sig
+  SIGNAL inv_x2_12_sig : BIT;		-- inv_x2_12_sig
+  SIGNAL nao22_x1_20_sig : BIT;		-- nao22_x1_20_sig
+  SIGNAL na3_x1_11_sig : BIT;		-- na3_x1_11_sig
+  SIGNAL a2_x2_28_sig : BIT;		-- a2_x2_28_sig
+  SIGNAL na2_x1_20_sig : BIT;		-- na2_x1_20_sig
+  SIGNAL no2_x1_31_sig : BIT;		-- no2_x1_31_sig
+  SIGNAL na3_x1_12_sig : BIT;		-- na3_x1_12_sig
+  SIGNAL inv_x2_13_sig : BIT;		-- inv_x2_13_sig
+  SIGNAL nao22_x1_21_sig : BIT;		-- nao22_x1_21_sig
+  SIGNAL oa2ao222_x2_14_sig : BIT;		-- oa2ao222_x2_14_sig
+  SIGNAL inv_x2_14_sig : BIT;		-- inv_x2_14_sig
+  SIGNAL o3_x2_8_sig : BIT;		-- o3_x2_8_sig
+  SIGNAL a2_x2_32_sig : BIT;		-- a2_x2_32_sig
+  SIGNAL o2_x2_23_sig : BIT;		-- o2_x2_23_sig
+  SIGNAL nao22_x1_22_sig : BIT;		-- nao22_x1_22_sig
+  SIGNAL inv_x2_15_sig : BIT;		-- inv_x2_15_sig
+  SIGNAL no4_x1_10_sig : BIT;		-- no4_x1_10_sig
+  SIGNAL no2_x1_32_sig : BIT;		-- no2_x1_32_sig
+  SIGNAL a3_x2_13_sig : BIT;		-- a3_x2_13_sig
+  SIGNAL oa2ao222_x2_15_sig : BIT;		-- oa2ao222_x2_15_sig
+  SIGNAL oa22_x2_16_sig : BIT;		-- oa22_x2_16_sig
+  SIGNAL o2_x2_24_sig : BIT;		-- o2_x2_24_sig
+  SIGNAL no2_x1_33_sig : BIT;		-- no2_x1_33_sig
+  SIGNAL o3_x2_9_sig : BIT;		-- o3_x2_9_sig
+  SIGNAL noa22_x1_24_sig : BIT;		-- noa22_x1_24_sig
+  SIGNAL inv_x2_16_sig : BIT;		-- inv_x2_16_sig
+  SIGNAL oa22_x2_17_sig : BIT;		-- oa22_x2_17_sig
+  SIGNAL oa2ao222_x2_16_sig : BIT;		-- oa2ao222_x2_16_sig
+  SIGNAL no4_x1_11_sig : BIT;		-- no4_x1_11_sig
+  SIGNAL inv_x2_17_sig : BIT;		-- inv_x2_17_sig
+  SIGNAL inv_x2_18_sig : BIT;		-- inv_x2_18_sig
+  SIGNAL inv_x2_19_sig : BIT;		-- inv_x2_19_sig
+  SIGNAL noa2a2a23_x1_sig : BIT;		-- noa2a2a23_x1_sig
+  SIGNAL on12_x1_9_sig : BIT;		-- on12_x1_9_sig
+  SIGNAL o3_x2_10_sig : BIT;		-- o3_x2_10_sig
+  SIGNAL na2_x1_21_sig : BIT;		-- na2_x1_21_sig
+  SIGNAL oa22_x2_18_sig : BIT;		-- oa22_x2_18_sig
+  SIGNAL na2_x1_22_sig : BIT;		-- na2_x1_22_sig
+  SIGNAL inv_x2_20_sig : BIT;		-- inv_x2_20_sig
+  SIGNAL noa22_x1_25_sig : BIT;		-- noa22_x1_25_sig
+  SIGNAL na2_x1_23_sig : BIT;		-- na2_x1_23_sig
+  SIGNAL na4_x1_6_sig : BIT;		-- na4_x1_6_sig
+  SIGNAL nao22_x1_23_sig : BIT;		-- nao22_x1_23_sig
+  SIGNAL no4_x1_12_sig : BIT;		-- no4_x1_12_sig
+  SIGNAL a4_x2_7_sig : BIT;		-- a4_x2_7_sig
+  SIGNAL o2_x2_25_sig : BIT;		-- o2_x2_25_sig
+  SIGNAL na3_x1_13_sig : BIT;		-- na3_x1_13_sig
+  SIGNAL an12_x1_6_sig : BIT;		-- an12_x1_6_sig
+  SIGNAL nao22_x1_24_sig : BIT;		-- nao22_x1_24_sig
+  SIGNAL oa2ao222_x2_17_sig : BIT;		-- oa2ao222_x2_17_sig
+  SIGNAL a3_x2_14_sig : BIT;		-- a3_x2_14_sig
+  SIGNAL na3_x1_14_sig : BIT;		-- na3_x1_14_sig
+  SIGNAL noa22_x1_26_sig : BIT;		-- noa22_x1_26_sig
+  SIGNAL a2_x2_33_sig : BIT;		-- a2_x2_33_sig
+  SIGNAL inv_x2_21_sig : BIT;		-- inv_x2_21_sig
+  SIGNAL nao22_x1_25_sig : BIT;		-- nao22_x1_25_sig
+  SIGNAL na4_x1_7_sig : BIT;		-- na4_x1_7_sig
+  SIGNAL o2_x2_26_sig : BIT;		-- o2_x2_26_sig
+  SIGNAL on12_x1_10_sig : BIT;		-- on12_x1_10_sig
+  SIGNAL na3_x1_15_sig : BIT;		-- na3_x1_15_sig
+  SIGNAL oa2ao222_x2_18_sig : BIT;		-- oa2ao222_x2_18_sig
+  SIGNAL nao22_x1_26_sig : BIT;		-- nao22_x1_26_sig
+  SIGNAL a2_x2_34_sig : BIT;		-- a2_x2_34_sig
+  SIGNAL na2_x1_24_sig : BIT;		-- na2_x1_24_sig
+  SIGNAL oa2ao222_x2_20_sig : BIT;		-- oa2ao222_x2_20_sig
+  SIGNAL oa2ao222_x2_19_sig : BIT;		-- oa2ao222_x2_19_sig
+  SIGNAL no2_x1_34_sig : BIT;		-- no2_x1_34_sig
+  SIGNAL no2_x1_35_sig : BIT;		-- no2_x1_35_sig
+  SIGNAL ao22_x2_22_sig : BIT;		-- ao22_x2_22_sig
+  SIGNAL a2_x2_35_sig : BIT;		-- a2_x2_35_sig
+  SIGNAL nao2o22_x1_4_sig : BIT;		-- nao2o22_x1_4_sig
+  SIGNAL oa2ao222_x2_21_sig : BIT;		-- oa2ao222_x2_21_sig
+  SIGNAL o2_x2_27_sig : BIT;		-- o2_x2_27_sig
+  SIGNAL no3_x1_11_sig : BIT;		-- no3_x1_11_sig
+  SIGNAL inv_x2_22_sig : BIT;		-- inv_x2_22_sig
+  SIGNAL a2_x2_36_sig : BIT;		-- a2_x2_36_sig
+  SIGNAL no4_x1_13_sig : BIT;		-- no4_x1_13_sig
+  SIGNAL no3_x1_10_sig : BIT;		-- no3_x1_10_sig
+  SIGNAL no2_x1_36_sig : BIT;		-- no2_x1_36_sig
+  SIGNAL o3_x2_11_sig : BIT;		-- o3_x2_11_sig
+  SIGNAL na2_x1_25_sig : BIT;		-- na2_x1_25_sig
+  SIGNAL na2_x1_26_sig : BIT;		-- na2_x1_26_sig
+  SIGNAL a3_x2_15_sig : BIT;		-- a3_x2_15_sig
+  SIGNAL nao22_x1_27_sig : BIT;		-- nao22_x1_27_sig
+  SIGNAL no2_x1_38_sig : BIT;		-- no2_x1_38_sig
+  SIGNAL on12_x1_11_sig : BIT;		-- on12_x1_11_sig
+  SIGNAL a2_x2_37_sig : BIT;		-- a2_x2_37_sig
+  SIGNAL o4_x2_5_sig : BIT;		-- o4_x2_5_sig
+  SIGNAL oa22_x2_19_sig : BIT;		-- oa22_x2_19_sig
+  SIGNAL inv_x2_23_sig : BIT;		-- inv_x2_23_sig
+  SIGNAL ao22_x2_23_sig : BIT;		-- ao22_x2_23_sig
+  SIGNAL o3_x2_12_sig : BIT;		-- o3_x2_12_sig
+  SIGNAL na2_x1_28_sig : BIT;		-- na2_x1_28_sig
+  SIGNAL a2_x2_38_sig : BIT;		-- a2_x2_38_sig
+  SIGNAL na4_x1_8_sig : BIT;		-- na4_x1_8_sig
+  SIGNAL no4_x1_14_sig : BIT;		-- no4_x1_14_sig
+  SIGNAL na2_x1_27_sig : BIT;		-- na2_x1_27_sig
+  SIGNAL a3_x2_16_sig : BIT;		-- a3_x2_16_sig
+  SIGNAL no2_x1_37_sig : BIT;		-- no2_x1_37_sig
+  SIGNAL o2_x2_28_sig : BIT;		-- o2_x2_28_sig
+  SIGNAL noa22_x1_28_sig : BIT;		-- noa22_x1_28_sig
+  SIGNAL o2_x2_29_sig : BIT;		-- o2_x2_29_sig
+  SIGNAL nao22_x1_29_sig : BIT;		-- nao22_x1_29_sig
+  SIGNAL xr2_x1_3_sig : BIT;		-- xr2_x1_3_sig
+  SIGNAL no2_x1_39_sig : BIT;		-- no2_x1_39_sig
+  SIGNAL nao22_x1_28_sig : BIT;		-- nao22_x1_28_sig
+  SIGNAL o4_x2_6_sig : BIT;		-- o4_x2_6_sig
+  SIGNAL o3_x2_13_sig : BIT;		-- o3_x2_13_sig
+  SIGNAL na2_x1_29_sig : BIT;		-- na2_x1_29_sig
+  SIGNAL no3_x1_12_sig : BIT;		-- no3_x1_12_sig
+  SIGNAL na3_x1_16_sig : BIT;		-- na3_x1_16_sig
+  SIGNAL a2_x2_39_sig : BIT;		-- a2_x2_39_sig
+  SIGNAL noa22_x1_27_sig : BIT;		-- noa22_x1_27_sig
+  SIGNAL o3_x2_14_sig : BIT;		-- o3_x2_14_sig
+  SIGNAL no4_x1_15_sig : BIT;		-- no4_x1_15_sig
+  SIGNAL oa2a22_x2_sig : BIT;		-- oa2a22_x2_sig
+  SIGNAL no3_x1_13_sig : BIT;		-- no3_x1_13_sig
+  SIGNAL no2_x1_40_sig : BIT;		-- no2_x1_40_sig
+  SIGNAL a2_x2_40_sig : BIT;		-- a2_x2_40_sig
+  SIGNAL no3_x1_14_sig : BIT;		-- no3_x1_14_sig
+  SIGNAL nao22_x1_30_sig : BIT;		-- nao22_x1_30_sig
+  SIGNAL noa22_x1_29_sig : BIT;		-- noa22_x1_29_sig
+  SIGNAL an12_x1_7_sig : BIT;		-- an12_x1_7_sig
+  SIGNAL na2_x1_30_sig : BIT;		-- na2_x1_30_sig
+  SIGNAL no2_x1_41_sig : BIT;		-- no2_x1_41_sig
+  SIGNAL o3_x2_15_sig : BIT;		-- o3_x2_15_sig
+  SIGNAL no3_x1_15_sig : BIT;		-- no3_x1_15_sig
+  SIGNAL nao22_x1_31_sig : BIT;		-- nao22_x1_31_sig
+  SIGNAL noa22_x1_30_sig : BIT;		-- noa22_x1_30_sig
+  SIGNAL noa22_x1_31_sig : BIT;		-- noa22_x1_31_sig
+  SIGNAL a4_x2_8_sig : BIT;		-- a4_x2_8_sig
+  SIGNAL no2_x1_42_sig : BIT;		-- no2_x1_42_sig
+  SIGNAL a2_x2_41_sig : BIT;		-- a2_x2_41_sig
+  SIGNAL nao22_x1_32_sig : BIT;		-- nao22_x1_32_sig
+  SIGNAL o3_x2_16_sig : BIT;		-- o3_x2_16_sig
+  SIGNAL noa22_x1_32_sig : BIT;		-- noa22_x1_32_sig
+  SIGNAL no3_x1_16_sig : BIT;		-- no3_x1_16_sig
+  SIGNAL nao22_x1_33_sig : BIT;		-- nao22_x1_33_sig
+  SIGNAL na3_x1_17_sig : BIT;		-- na3_x1_17_sig
+  SIGNAL on12_x1_13_sig : BIT;		-- on12_x1_13_sig
+  SIGNAL na3_x1_19_sig : BIT;		-- na3_x1_19_sig
+  SIGNAL o3_x2_17_sig : BIT;		-- o3_x2_17_sig
+  SIGNAL na3_x1_18_sig : BIT;		-- na3_x1_18_sig
+  SIGNAL on12_x1_12_sig : BIT;		-- on12_x1_12_sig
+  SIGNAL an12_x1_8_sig : BIT;		-- an12_x1_8_sig
+  SIGNAL o3_x2_18_sig : BIT;		-- o3_x2_18_sig
+  SIGNAL no4_x1_16_sig : BIT;		-- no4_x1_16_sig
+  SIGNAL inv_x2_24_sig : BIT;		-- inv_x2_24_sig
+  SIGNAL inv_x2_25_sig : BIT;		-- inv_x2_25_sig
+  SIGNAL oa2a2a23_x2_3_sig : BIT;		-- oa2a2a23_x2_3_sig
+  SIGNAL on12_x1_14_sig : BIT;		-- on12_x1_14_sig
+  SIGNAL noa22_x1_33_sig : BIT;		-- noa22_x1_33_sig
+  SIGNAL o2_x2_30_sig : BIT;		-- o2_x2_30_sig
+  SIGNAL o2_x2_31_sig : BIT;		-- o2_x2_31_sig
+  SIGNAL noa22_x1_35_sig : BIT;		-- noa22_x1_35_sig
+  SIGNAL na3_x1_20_sig : BIT;		-- na3_x1_20_sig
+  SIGNAL no3_x1_18_sig : BIT;		-- no3_x1_18_sig
+  SIGNAL a2_x2_42_sig : BIT;		-- a2_x2_42_sig
+  SIGNAL no3_x1_17_sig : BIT;		-- no3_x1_17_sig
+  SIGNAL an12_x1_9_sig : BIT;		-- an12_x1_9_sig
+  SIGNAL o4_x2_7_sig : BIT;		-- o4_x2_7_sig
+  SIGNAL o3_x2_19_sig : BIT;		-- o3_x2_19_sig
+  SIGNAL noa22_x1_34_sig : BIT;		-- noa22_x1_34_sig
+  SIGNAL na2_x1_31_sig : BIT;		-- na2_x1_31_sig
+  SIGNAL noa22_x1_37_sig : BIT;		-- noa22_x1_37_sig
+  SIGNAL no2_x1_43_sig : BIT;		-- no2_x1_43_sig
+  SIGNAL ao22_x2_24_sig : BIT;		-- ao22_x2_24_sig
+  SIGNAL no3_x1_19_sig : BIT;		-- no3_x1_19_sig
+  SIGNAL no2_x1_44_sig : BIT;		-- no2_x1_44_sig
+  SIGNAL nao22_x1_34_sig : BIT;		-- nao22_x1_34_sig
+  SIGNAL inv_x2_26_sig : BIT;		-- inv_x2_26_sig
+  SIGNAL noa22_x1_38_sig : BIT;		-- noa22_x1_38_sig
+  SIGNAL a2_x2_43_sig : BIT;		-- a2_x2_43_sig
+  SIGNAL na2_x1_32_sig : BIT;		-- na2_x1_32_sig
+  SIGNAL no2_x1_45_sig : BIT;		-- no2_x1_45_sig
+  SIGNAL nao22_x1_35_sig : BIT;		-- nao22_x1_35_sig
+  SIGNAL noa22_x1_36_sig : BIT;		-- noa22_x1_36_sig
+  SIGNAL o2_x2_32_sig : BIT;		-- o2_x2_32_sig
+  SIGNAL na2_x1_33_sig : BIT;		-- na2_x1_33_sig
+  SIGNAL na2_x1_34_sig : BIT;		-- na2_x1_34_sig
+  SIGNAL noa22_x1_40_sig : BIT;		-- noa22_x1_40_sig
+  SIGNAL na4_x1_9_sig : BIT;		-- na4_x1_9_sig
+  SIGNAL oa22_x2_21_sig : BIT;		-- oa22_x2_21_sig
+  SIGNAL oa22_x2_20_sig : BIT;		-- oa22_x2_20_sig
+  SIGNAL noa22_x1_39_sig : BIT;		-- noa22_x1_39_sig
+  SIGNAL a2_x2_44_sig : BIT;		-- a2_x2_44_sig
+  SIGNAL no2_x1_46_sig : BIT;		-- no2_x1_46_sig
+  SIGNAL o3_x2_20_sig : BIT;		-- o3_x2_20_sig
+  SIGNAL no2_x1_47_sig : BIT;		-- no2_x1_47_sig
+  SIGNAL xr2_x1_4_sig : BIT;		-- xr2_x1_4_sig
+  SIGNAL na2_x1_35_sig : BIT;		-- na2_x1_35_sig
+  SIGNAL on12_x1_15_sig : BIT;		-- on12_x1_15_sig
+  SIGNAL o2_x2_33_sig : BIT;		-- o2_x2_33_sig
+  SIGNAL no2_x1_48_sig : BIT;		-- no2_x1_48_sig
+  SIGNAL o3_x2_21_sig : BIT;		-- o3_x2_21_sig
+  SIGNAL o2_x2_34_sig : BIT;		-- o2_x2_34_sig
+  SIGNAL noa22_x1_41_sig : BIT;		-- noa22_x1_41_sig
+  SIGNAL a2_x2_45_sig : BIT;		-- a2_x2_45_sig
+  SIGNAL no2_x1_49_sig : BIT;		-- no2_x1_49_sig
+  SIGNAL o3_x2_22_sig : BIT;		-- o3_x2_22_sig
+  SIGNAL na2_x1_36_sig : BIT;		-- na2_x1_36_sig
+  SIGNAL na3_x1_21_sig : BIT;		-- na3_x1_21_sig
+  SIGNAL o2_x2_35_sig : BIT;		-- o2_x2_35_sig
+  SIGNAL a2_x2_46_sig : BIT;		-- a2_x2_46_sig
+  SIGNAL no2_x1_50_sig : BIT;		-- no2_x1_50_sig
+  SIGNAL no2_x1_51_sig : BIT;		-- no2_x1_51_sig
+  SIGNAL o3_x2_23_sig : BIT;		-- o3_x2_23_sig
+  SIGNAL inv_x2_27_sig : BIT;		-- inv_x2_27_sig
+  SIGNAL no2_x1_52_sig : BIT;		-- no2_x1_52_sig
+  SIGNAL na3_x1_22_sig : BIT;		-- na3_x1_22_sig
+  SIGNAL na2_x1_37_sig : BIT;		-- na2_x1_37_sig
+  SIGNAL na2_x1_38_sig : BIT;		-- na2_x1_38_sig
+  SIGNAL no2_x1_53_sig : BIT;		-- no2_x1_53_sig
+  SIGNAL na3_x1_23_sig : BIT;		-- na3_x1_23_sig
+  SIGNAL na2_x1_39_sig : BIT;		-- na2_x1_39_sig
+  SIGNAL noa22_x1_42_sig : BIT;		-- noa22_x1_42_sig
+  SIGNAL noa22_x1_43_sig : BIT;		-- noa22_x1_43_sig
+  SIGNAL na2_x1_40_sig : BIT;		-- na2_x1_40_sig
+  SIGNAL a3_x2_17_sig : BIT;		-- a3_x2_17_sig
+  SIGNAL a2_x2_47_sig : BIT;		-- a2_x2_47_sig
+  SIGNAL na2_x1_41_sig : BIT;		-- na2_x1_41_sig
+  SIGNAL oa22_x2_22_sig : BIT;		-- oa22_x2_22_sig
+  SIGNAL na2_x1_42_sig : BIT;		-- na2_x1_42_sig
+  SIGNAL a3_x2_18_sig : BIT;		-- a3_x2_18_sig
+  SIGNAL no3_x1_20_sig : BIT;		-- no3_x1_20_sig
+  SIGNAL a3_x2_19_sig : BIT;		-- a3_x2_19_sig
+  SIGNAL no2_x1_54_sig : BIT;		-- no2_x1_54_sig
+  SIGNAL a2_x2_48_sig : BIT;		-- a2_x2_48_sig
+  SIGNAL oa2ao222_x2_22_sig : BIT;		-- oa2ao222_x2_22_sig
+  SIGNAL no2_x1_55_sig : BIT;		-- no2_x1_55_sig
+  SIGNAL a2_x2_49_sig : BIT;		-- a2_x2_49_sig
+  SIGNAL no2_x1_56_sig : BIT;		-- no2_x1_56_sig
+  SIGNAL a2_x2_50_sig : BIT;		-- a2_x2_50_sig
+  SIGNAL na2_x1_43_sig : BIT;		-- na2_x1_43_sig
+  SIGNAL inv_x2_28_sig : BIT;		-- inv_x2_28_sig
+  SIGNAL a4_x2_9_sig : BIT;		-- a4_x2_9_sig
+  SIGNAL inv_x2_29_sig : BIT;		-- inv_x2_29_sig
+  SIGNAL oa2a2a23_x2_4_sig : BIT;		-- oa2a2a23_x2_4_sig
+  SIGNAL no2_x1_57_sig : BIT;		-- no2_x1_57_sig
+  SIGNAL o4_x2_8_sig : BIT;		-- o4_x2_8_sig
+  SIGNAL no2_x1_58_sig : BIT;		-- no2_x1_58_sig
+  SIGNAL o3_x2_24_sig : BIT;		-- o3_x2_24_sig
+  SIGNAL ao22_x2_25_sig : BIT;		-- ao22_x2_25_sig
+  SIGNAL inv_x2_30_sig : BIT;		-- inv_x2_30_sig
+  SIGNAL a2_x2_51_sig : BIT;		-- a2_x2_51_sig
+  SIGNAL na2_x1_44_sig : BIT;		-- na2_x1_44_sig
+  SIGNAL mbk_buf_fsm_e_e_cs : BIT_VECTOR(3 DOWNTO 3);	-- mbk_buf_fsm_e_e_cs
+  SIGNAL mbk_buf_not_aux58 : BIT;		-- mbk_buf_not_aux58
+  SIGNAL mbk_buf_not_word_in : BIT_VECTOR(3 DOWNTO 3);	-- mbk_buf_not_word_in
+  SIGNAL mbk_buf_aux55 : BIT;		-- mbk_buf_aux55
+  SIGNAL mbk_buf_not_aux55 : BIT;		-- mbk_buf_not_aux55
+
+BEGIN
+  mbk_buf_not_aux55 <= not_aux55;
+  mbk_buf_aux55 <= aux55;
+  mbk_buf_not_word_in (3) <= not_word_in(3);
+  mbk_buf_not_aux58 <= not_aux58;
+  mbk_buf_fsm_e_e_cs (3) <= fsm_e_e_cs(3);
+  na2_x1_44_sig <= NOT((not_fsm_h_h_cs(0) AND not_fsm_h_h_cs(1)));
+  a2_x2_51_sig <= (not_fsm_h_h_cs(4) AND not_fsm_h_h_cs(1));
+  inv_x2_30_sig <= NOT(not_aux41);
+  ao22_x2_25_sig <= ((fsm_h_h_cs(0) OR not_aux42) AND fsm_h_h_cs(3));
+  o3_x2_24_sig <= ((not_aux39 OR not_fsm_g_g_cs(4)) OR 
+no2_x1_58_sig);
+  no2_x1_58_sig <= NOT((not_aux37 OR fsm_g_g_cs(0)));
+  o4_x2_8_sig <= (((fsm_g_g_cs(4) OR not_aux35) OR 
+not_fsm_g_g_cs(3)) OR no2_x1_57_sig);
+  no2_x1_57_sig <= NOT((not_aux36 OR fsm_g_g_cs(2)));
+  oa2a2a23_x2_4_sig <= (((fsm_f_f_cs(2) AND not_aux34) OR (inv_x2_29_sig
+ AND fsm_f_f_cs(0))) OR (not_fsm_f_f_cs(4) AND 
+not_aux33));
+  inv_x2_29_sig <= NOT(not_aux164);
+  a4_x2_9_sig <= (((fsm_f_f_cs(2) AND inv_x2_28_sig) AND 
+fsm_f_f_cs(4)) AND aux12);
+  inv_x2_28_sig <= NOT(fsm_f_f_cs(3));
+  na2_x1_43_sig <= NOT((not_aux32 AND not_fsm_e_e_cs(2)));
+  a2_x2_50_sig <= (no2_x1_56_sig AND fsm_e_e_cs(1));
+  no2_x1_56_sig <= NOT((not_aux10 OR not_aux31));
+  a2_x2_49_sig <= (fsm_e_e_cs(0) AND not_fsm_e_e_cs(4));
+  no2_x1_55_sig <= NOT((fsm_e_e_cs(1) OR aux30));
+  oa2ao222_x2_22_sig <= ((fsm_d_d_cs(4) AND not_aux29) OR (
+not_fsm_d_d_cs(4) AND (a2_x2_48_sig OR no2_x1_54_sig)));
+  a2_x2_48_sig <= (fsm_d_d_cs(0) AND fsm_d_d_cs(2));
+  no2_x1_54_sig <= NOT((not_aux9 OR fsm_d_d_cs(1)));
+  a3_x2_19_sig <= ((not_aux26 AND fsm_d_d_cs(4)) AND 
+not_fsm_d_d_cs(3));
+  no3_x1_20_sig <= NOT(((not_aux220 OR not_fsm_c_c_cs(2)) OR 
+fsm_c_c_cs(3)));
+  a3_x2_18_sig <= ((fsm_c_c_cs(3) AND na2_x1_42_sig) AND 
+oa22_x2_22_sig);
+  na2_x1_42_sig <= NOT((not_aux25 AND not_fsm_c_c_cs(2)));
+  oa22_x2_22_sig <= ((not_fsm_c_c_cs(1) AND fsm_c_c_cs(2)) OR 
+fsm_c_c_cs(0));
+  na2_x1_41_sig <= NOT((fsm_b_b_cs(1) AND not_fsm_b_b_cs(4)));
+  a2_x2_47_sig <= (not_aux23 AND fsm_b_b_cs(2));
+  a3_x2_17_sig <= ((not_fsm_b_b_cs(4) AND fsm_b_b_cs(3)) AND 
+na2_x1_40_sig);
+  na2_x1_40_sig <= NOT((fsm_b_b_cs(1) AND not_fsm_b_b_cs(2)));
+  noa22_x1_43_sig <= NOT(((not_fsm_b_b_cs(2) AND not_aux24) OR 
+not_fsm_b_b_cs(4)));
+  noa22_x1_42_sig <= NOT(((not_fsm_a_a_cs(4) AND fsm_a_a_cs(0)) OR 
+fsm_a_a_cs(2)));
+  na2_x1_39_sig <= NOT((not_aux20 AND not_fsm_a_a_cs(1)));
+  na3_x1_23_sig <= NOT(((no2_x1_53_sig AND fsm_a_a_cs(1)) AND 
+na2_x1_38_sig));
+  no2_x1_53_sig <= NOT((not_aux0 OR not_aux21));
+  na2_x1_38_sig <= NOT((not_aux22 AND not_fsm_a_a_cs(2)));
+  na2_x1_37_sig <= NOT((not_aux18 AND na3_x1_22_sig));
+  na3_x1_22_sig <= NOT(((not_aux19 AND fsm_h_h_cs(1)) AND 
+not_fsm_h_h_cs(0)));
+  no2_x1_52_sig <= NOT((not_aux17 OR not_fsm_h_h_cs(1)));
+  inv_x2_27_sig <= NOT(not_aux18);
+  o3_x2_23_sig <= ((fsm_g_g_cs(4) OR no2_x1_51_sig) OR 
+no2_x1_50_sig);
+  no2_x1_51_sig <= NOT((not_aux15 OR fsm_g_g_cs(2)));
+  no2_x1_50_sig <= NOT((not_aux16 OR not_fsm_g_g_cs(2)));
+  a2_x2_46_sig <= (not_aux13 AND not_fsm_f_f_cs(4));
+  o2_x2_35_sig <= (not_aux12 OR fsm_f_f_cs(3));
+  na3_x1_21_sig <= NOT(((aux12 AND fsm_f_f_cs(3)) AND na2_x1_36_sig)
+);
+  na2_x1_36_sig <= NOT((not_aux14 AND not_fsm_f_f_cs(4)));
+  o3_x2_22_sig <= ((fsm_e_e_cs(4) OR no2_x1_49_sig) OR a2_x2_45_sig
+);
+  no2_x1_49_sig <= NOT((mbk_buf_fsm_e_e_cs(3) OR not_fsm_e_e_cs(2)));
+  a2_x2_45_sig <= (not_aux10 AND not_fsm_e_e_cs(2));
+  noa22_x1_41_sig <= NOT(((fsm_d_d_cs(1) AND fsm_d_d_cs(2)) OR 
+fsm_d_d_cs(4)));
+  o2_x2_34_sig <= (not_aux8 OR fsm_d_d_cs(3));
+  o3_x2_21_sig <= ((not_aux8 OR not_fsm_d_d_cs(3)) OR no2_x1_48_sig
+);
+  no2_x1_48_sig <= NOT((not_aux9 OR fsm_d_d_cs(4)));
+  o2_x2_33_sig <= (not_aux6 OR not_fsm_c_c_cs(3));
+  on12_x1_15_sig <= (NOT(not_fsm_c_c_cs(3)) OR aux4);
+  na2_x1_35_sig <= NOT((not_aux3 AND not_fsm_b_b_cs(4)));
+  xr2_x1_4_sig <= (fsm_b_b_cs(3) XOR fsm_b_b_cs(2));
+  no2_x1_47_sig <= NOT((fsm_b_b_cs(0) OR not_fsm_b_b_cs(1)));
+  o3_x2_20_sig <= ((fsm_a_a_cs(4) OR no2_x1_46_sig) OR a2_x2_44_sig
+);
+  no2_x1_46_sig <= NOT((fsm_a_a_cs(3) OR not_fsm_a_a_cs(2)));
+  a2_x2_44_sig <= (not_aux0 AND not_fsm_a_a_cs(2));
+  noa22_x1_39_sig <= NOT(((oa22_x2_20_sig AND na4_x1_9_sig) OR reset));
+  oa22_x2_20_sig <= ((fsm_h_h_cs(0) AND not_aux219) OR oa22_x2_21_sig
+);
+  oa22_x2_21_sig <= ((not_aux41 AND not_aux19) OR fsm_h_h_cs(3));
+  na4_x1_9_sig <= NOT((((noa22_x1_40_sig AND na2_x1_34_sig) AND 
+na2_x1_33_sig) AND o2_x2_32_sig));
+  noa22_x1_40_sig <= NOT(((not_aux158 AND not_word_in(7)) OR 
+not_fsm_h_h_cs(3)));
+  na2_x1_34_sig <= NOT((fsm_h_h_cs(2) AND fsm_h_h_cs(1)));
+  na2_x1_33_sig <= NOT((not_aux163 AND fsm_h_h_cs(0)));
+  o2_x2_32_sig <= (fsm_h_h_cs(1) OR not_fsm_h_h_cs(4));
+  noa22_x1_36_sig <= NOT(((nao22_x1_35_sig AND nao22_x1_34_sig) OR 
+reset));
+  nao22_x1_35_sig <= NOT(((no2_x1_45_sig OR na2_x1_32_sig) AND 
+a2_x2_43_sig));
+  no2_x1_45_sig <= NOT((not_aux162 OR fsm_h_h_cs(4)));
+  na2_x1_32_sig <= NOT((not_aux41 AND fsm_h_h_cs(0)));
+  a2_x2_43_sig <= (noa22_x1_38_sig AND fsm_h_h_cs(3));
+  noa22_x1_38_sig <= NOT(((inv_x2_26_sig AND not_aux162) OR not_aux40)
+);
+  inv_x2_26_sig <= NOT(aux217);
+  nao22_x1_34_sig <= NOT(((no2_x1_44_sig OR no3_x1_19_sig) AND 
+noa22_x1_37_sig));
+  no2_x1_44_sig <= NOT((not_aux162 OR not_fsm_h_h_cs(4)));
+  no3_x1_19_sig <= NOT(((not_aux219 OR ao22_x2_24_sig) OR 
+no2_x1_43_sig));
+  ao22_x2_24_sig <= ((word_in(5) OR not_word_in(0)) AND 
+not_fsm_h_h_cs(2));
+  no2_x1_43_sig <= NOT((aux64 OR fsm_h_h_cs(2)));
+  noa22_x1_37_sig <= NOT(((not_aux17 AND na2_x1_31_sig) OR 
+fsm_h_h_cs(3)));
+  na2_x1_31_sig <= NOT((word_in(7) AND aux161));
+  noa22_x1_34_sig <= NOT(((o3_x2_19_sig AND na3_x1_20_sig) OR reset));
+  o3_x2_19_sig <= ((fsm_h_h_cs(3) OR o4_x2_7_sig) OR no3_x1_17_sig);
+  o4_x2_7_sig <= (((not_aux42 OR not_word_in(7)) OR not_aux154) OR
+ an12_x1_9_sig);
+  an12_x1_9_sig <= (NOT(aux161) AND not_aux17);
+  no3_x1_17_sig <= NOT(((fsm_h_h_cs(2) OR a2_x2_42_sig) OR 
+fsm_h_h_cs(4)));
+  a2_x2_42_sig <= (no3_x1_18_sig AND fsm_h_h_cs(1));
+  no3_x1_18_sig <= NOT(((word_in(0) OR not_aux64) OR word_in(5)));
+  na3_x1_20_sig <= NOT(((noa22_x1_35_sig AND o2_x2_31_sig) AND 
+o2_x2_30_sig));
+  noa22_x1_35_sig <= NOT(((fsm_h_h_cs(0) AND not_aux41) OR 
+not_fsm_h_h_cs(3)));
+  o2_x2_31_sig <= (not_aux41 OR aux218);
+  o2_x2_30_sig <= (not_aux163 OR aux160);
+  noa22_x1_33_sig <= NOT(((on12_x1_14_sig AND on12_x1_12_sig) OR reset
+));
+  on12_x1_14_sig <= (NOT(oa2a2a23_x2_3_sig) OR fsm_h_h_cs(3));
+  oa2a2a23_x2_3_sig <= (((inv_x2_25_sig AND inv_x2_24_sig) OR (
+not_fsm_h_h_cs(4) AND no4_x1_16_sig)) OR (fsm_h_h_cs(4) AND 
+an12_x1_8_sig));
+  inv_x2_25_sig <= NOT(not_aux19);
+  inv_x2_24_sig <= NOT(aux218);
+  no4_x1_16_sig <= NOT((((not_aux158 OR o3_x2_18_sig) OR 
+fsm_h_h_cs(2)) OR mbk_buf_not_aux55));
+  o3_x2_18_sig <= ((word_in(0) OR not_aux201) OR not_word_in(5));
+  an12_x1_8_sig <= (NOT(not_aux42) AND aux159);
+  on12_x1_12_sig <= (NOT(na3_x1_18_sig) OR not_fsm_h_h_cs(3));
+  na3_x1_18_sig <= NOT(((o3_x2_17_sig AND na3_x1_19_sig) AND 
+on12_x1_13_sig));
+  o3_x2_17_sig <= ((not_aux156 OR fsm_h_h_cs(2)) OR 
+not_fsm_h_h_cs(1));
+  na3_x1_19_sig <= NOT(((word_in(7) AND not_aux17) AND aux159));
+  on12_x1_13_sig <= (NOT(aux160) OR aux217);
+  na3_x1_17_sig <= NOT(((not_reset AND nao22_x1_33_sig) AND 
+nao22_x1_32_sig));
+  nao22_x1_33_sig <= NOT(((no3_x1_16_sig OR noa22_x1_32_sig) AND 
+not_fsm_h_h_cs(3)));
+  no3_x1_16_sig <= NOT(((not_aux42 OR not_aux17) OR not_aux154));
+  noa22_x1_32_sig <= NOT(((not_fsm_h_h_cs(4) AND not_fsm_h_h_cs(0)) OR
+ o3_x2_16_sig));
+  o3_x2_16_sig <= ((not_aux205 OR not_aux49) OR not_aux17);
+  nao22_x1_32_sig <= NOT(((a2_x2_41_sig OR a4_x2_8_sig) AND 
+noa22_x1_31_sig));
+  a2_x2_41_sig <= (no2_x1_42_sig AND fsm_h_h_cs(1));
+  no2_x1_42_sig <= NOT((not_aux40 OR not_aux156));
+  a4_x2_8_sig <= (((aux49 AND word_in(6)) AND word_in(2)) AND 
+not_aux157);
+  noa22_x1_31_sig <= NOT(((not_aux157 AND not_word_in(7)) OR 
+not_fsm_h_h_cs(3)));
+  noa22_x1_30_sig <= NOT(((nao22_x1_31_sig AND o3_x2_15_sig) OR reset)
+);
+  nao22_x1_31_sig <= NOT(((aux153 OR no3_x1_15_sig) AND 
+not_fsm_g_g_cs(4)));
+  no3_x1_15_sig <= NOT(((aux38 OR not_fsm_g_g_cs(2)) OR not_aux36));
+  o3_x2_15_sig <= ((not_fsm_g_g_cs(4) OR no2_x1_41_sig) OR 
+na2_x1_30_sig);
+  no2_x1_41_sig <= NOT((fsm_g_g_cs(3) OR not_fsm_g_g_cs(0)));
+  na2_x1_30_sig <= NOT((fsm_g_g_cs(1) AND an12_x1_7_sig));
+  an12_x1_7_sig <= (NOT(not_aux146) AND aux149);
+  noa22_x1_29_sig <= NOT(((nao22_x1_30_sig AND no2_x1_40_sig) OR reset
+));
+  nao22_x1_30_sig <= NOT(((aux153 OR no3_x1_14_sig) AND 
+not_fsm_g_g_cs(4)));
+  no3_x1_14_sig <= NOT(((not_aux148 OR a2_x2_40_sig) OR 
+not_fsm_g_g_cs(2)));
+  a2_x2_40_sig <= (not_aux150 AND fsm_g_g_cs(3));
+  no2_x1_40_sig <= NOT((no3_x1_13_sig OR no4_x1_15_sig));
+  no3_x1_13_sig <= NOT(((not_fsm_g_g_cs(4) OR fsm_g_g_cs(2)) OR 
+oa2a22_x2_sig));
+  oa2a22_x2_sig <= ((not_aux15 AND not_aux37) OR (not_word_in(6) AND
+ not_aux35));
+  no4_x1_15_sig <= NOT((((not_fsm_g_g_cs(1) OR o3_x2_14_sig) OR 
+fsm_g_g_cs(3)) OR not_aux216));
+  o3_x2_14_sig <= ((word_in(5) OR not_aux64) OR not_word_in(0));
+  noa22_x1_27_sig <= NOT(((a2_x2_39_sig AND nao22_x1_28_sig) OR reset)
+);
+  a2_x2_39_sig <= (na3_x1_16_sig AND o3_x2_13_sig);
+  na3_x1_16_sig <= NOT(((no3_x1_12_sig AND not_fsm_g_g_cs(4)) AND 
+na2_x1_29_sig));
+  no3_x1_12_sig <= NOT(((not_aux148 OR not_aux143) OR not_aux39));
+  na2_x1_29_sig <= NOT((not_word_in(6) AND not_fsm_g_g_cs(3)));
+  o3_x2_13_sig <= ((not_aux216 OR o4_x2_6_sig) OR not_fsm_g_g_cs(1)
+);
+  o4_x2_6_sig <= (((word_in(5) OR word_in(0)) OR not_aux143) OR 
+not_aux64);
+  nao22_x1_28_sig <= NOT(((no2_x1_39_sig OR nao22_x1_29_sig) AND 
+noa22_x1_28_sig));
+  no2_x1_39_sig <= NOT((not_fsm_g_g_cs(3) OR xr2_x1_3_sig));
+  xr2_x1_3_sig <= (fsm_g_g_cs(0) XOR fsm_g_g_cs(1));
+  nao22_x1_29_sig <= NOT(((o2_x2_29_sig OR fsm_g_g_cs(3)) AND aux149));
+  o2_x2_29_sig <= (not_word_in(6) OR not_aux147);
+  noa22_x1_28_sig <= NOT(((o2_x2_28_sig AND fsm_g_g_cs(2)) OR 
+not_fsm_g_g_cs(4)));
+  o2_x2_28_sig <= (not_aux16 OR fsm_g_g_cs(0));
+  no2_x1_37_sig <= NOT((reset OR a3_x2_16_sig));
+  a3_x2_16_sig <= ((na2_x1_27_sig AND o3_x2_12_sig) AND 
+oa22_x2_19_sig);
+  na2_x1_27_sig <= NOT((not_fsm_g_g_cs(2) AND no4_x1_14_sig));
+  no4_x1_14_sig <= NOT((((fsm_g_g_cs(4) OR na4_x1_8_sig) OR 
+na2_x1_28_sig) OR not_aux35));
+  na4_x1_8_sig <= NOT((((word_in(5) AND not_word_in(0)) AND 
+not_word_in(7)) AND a2_x2_38_sig));
+  a2_x2_38_sig <= (word_in(6) AND word_in(2));
+  na2_x1_28_sig <= NOT((not_aux38 AND mbk_buf_aux55));
+  o3_x2_12_sig <= ((not_aux146 OR not_fsm_g_g_cs(4)) OR 
+ao22_x2_23_sig);
+  ao22_x2_23_sig <= ((fsm_g_g_cs(0) OR word_in(6)) AND inv_x2_23_sig);
+  inv_x2_23_sig <= NOT(aux145);
+  oa22_x2_19_sig <= ((o4_x2_5_sig AND on12_x1_11_sig) OR 
+fsm_g_g_cs(4));
+  o4_x2_5_sig <= (((not_aux147 OR a2_x2_37_sig) OR fsm_g_g_cs(2)) 
+OR not_fsm_g_g_cs(3));
+  a2_x2_37_sig <= (not_word_in(6) AND not_aux38);
+  on12_x1_11_sig <= (NOT(no2_x1_38_sig) OR not_fsm_g_g_cs(2));
+  no2_x1_38_sig <= NOT((not_word_in(6) OR not_aux144));
+  nao22_x1_27_sig <= NOT(((a3_x2_15_sig OR o3_x2_11_sig) AND 
+no3_x1_10_sig));
+  a3_x2_15_sig <= ((not_fsm_g_g_cs(4) AND na2_x1_26_sig) AND 
+na2_x1_25_sig);
+  na2_x1_26_sig <= NOT((fsm_g_g_cs(2) AND fsm_g_g_cs(0)));
+  na2_x1_25_sig <= NOT((fsm_g_g_cs(3) AND not_fsm_g_g_cs(2)));
+  o3_x2_11_sig <= ((not_word_in(7) OR not_aux51) OR no2_x1_36_sig);
+  no2_x1_36_sig <= NOT((fsm_g_g_cs(2) OR fsm_g_g_cs(0)));
+  no3_x1_10_sig <= NOT(((reset OR no4_x1_13_sig) OR no3_x1_11_sig));
+  no4_x1_13_sig <= NOT((((a2_x2_36_sig OR inv_x2_22_sig) OR 
+not_fsm_g_g_cs(4)) OR not_aux146));
+  a2_x2_36_sig <= (not_word_in(6) AND not_aux143);
+  inv_x2_22_sig <= NOT(aux145);
+  no3_x1_11_sig <= NOT(((not_fsm_g_g_cs(1) OR fsm_g_g_cs(4)) OR 
+o2_x2_27_sig));
+  o2_x2_27_sig <= (not_aux143 OR not_aux39);
+  oa2ao222_x2_21_sig <= ((nao2o22_x1_4_sig AND aux209) OR (aux207 AND (
+a2_x2_35_sig OR ao22_x2_22_sig)));
+  nao2o22_x1_4_sig <= NOT(((not_aux34 OR not_fsm_f_f_cs(4)) AND (
+not_aux33 OR not_aux208)));
+  a2_x2_35_sig <= (fsm_f_f_cs(4) AND aux142);
+  ao22_x2_22_sig <= ((no2_x1_35_sig OR not_fsm_f_f_cs(1)) AND 
+no2_x1_34_sig);
+  no2_x1_35_sig <= NOT((not_aux138 OR fsm_f_f_cs(2)));
+  no2_x1_34_sig <= NOT((not_aux137 OR fsm_f_f_cs(4)));
+  oa2ao222_x2_19_sig <= ((oa2ao222_x2_20_sig AND aux207) OR (aux209 AND (
+a2_x2_34_sig OR nao22_x1_26_sig)));
+  oa2ao222_x2_20_sig <= ((not_fsm_f_f_cs(4) AND na2_x1_24_sig) OR (
+fsm_f_f_cs(4) AND (aux142 OR aux136)));
+  na2_x1_24_sig <= NOT((not_aux131 AND not_aux138));
+  a2_x2_34_sig <= (fsm_f_f_cs(4) AND aux131);
+  nao22_x1_26_sig <= NOT(((not_aux212 OR not_aux67) AND not_aux130));
+  oa2ao222_x2_18_sig <= ((na3_x1_15_sig AND aux209) OR (aux207 AND (
+noa22_x1_26_sig OR a3_x2_14_sig)));
+  na3_x1_15_sig <= NOT(((on12_x1_10_sig AND na4_x1_7_sig) AND 
+nao22_x1_25_sig));
+  on12_x1_10_sig <= (NOT(not_fsm_f_f_cs(2)) OR o2_x2_26_sig);
+  o2_x2_26_sig <= (not_aux66 OR not_aux212);
+  na4_x1_7_sig <= NOT((((fsm_f_f_cs(2) AND word_in(5)) AND 
+fsm_f_f_cs(1)) AND not_fsm_f_f_cs(4)));
+  nao22_x1_25_sig <= NOT(((inv_x2_21_sig OR a2_x2_33_sig) AND 
+fsm_f_f_cs(4)));
+  inv_x2_21_sig <= NOT(not_aux139);
+  a2_x2_33_sig <= (fsm_f_f_cs(1) AND aux138);
+  noa22_x1_26_sig <= NOT(((na3_x1_14_sig AND not_aux136) OR 
+not_fsm_f_f_cs(4)));
+  na3_x1_14_sig <= NOT(((not_aux138 AND fsm_f_f_cs(1)) AND 
+not_fsm_f_f_cs(2)));
+  a3_x2_14_sig <= ((not_aux131 AND not_fsm_f_f_cs(0)) AND 
+not_fsm_f_f_cs(4));
+  oa2ao222_x2_17_sig <= ((nao22_x1_24_sig AND aux207) OR (aux209 AND (
+a4_x2_7_sig OR nao22_x1_23_sig)));
+  nao22_x1_24_sig <= NOT(((fsm_f_f_cs(4) OR an12_x1_6_sig) AND 
+na3_x1_13_sig));
+  an12_x1_6_sig <= (NOT(aux135) AND not_aux139);
+  na3_x1_13_sig <= NOT(((not_fsm_f_f_cs(2) AND fsm_f_f_cs(4)) AND 
+o2_x2_25_sig));
+  o2_x2_25_sig <= (not_aux140 OR fsm_f_f_cs(1));
+  a4_x2_7_sig <= (((not_fsm_f_f_cs(4) AND no4_x1_12_sig) AND 
+not_aux34) AND not_fsm_f_f_cs(2));
+  no4_x1_12_sig <= NOT((((word_in(7) OR not_word_in(2)) OR not_aux57
+) OR not_word_in(6)));
+  nao22_x1_23_sig <= NOT(((not_aux208 OR not_aux138) AND not_aux133));
+  na4_x1_6_sig <= NOT((((na2_x1_23_sig AND noa22_x1_25_sig) AND 
+oa22_x2_18_sig) AND on12_x1_9_sig));
+  na2_x1_23_sig <= NOT((fsm_f_f_cs(4) AND aux135));
+  noa22_x1_25_sig <= NOT(((inv_x2_20_sig AND na2_x1_22_sig) OR reset));
+  inv_x2_20_sig <= NOT(fsm_f_f_cs(3));
+  na2_x1_22_sig <= NOT((not_aux130 AND not_aux133));
+  oa22_x2_18_sig <= ((na2_x1_21_sig AND not_fsm_f_f_cs(4)) OR 
+o3_x2_10_sig);
+  na2_x1_21_sig <= NOT((not_aux137 AND not_fsm_f_f_cs(1)));
+  o3_x2_10_sig <= ((not_aux205 OR not_aux49) OR aux136);
+  on12_x1_9_sig <= (NOT(fsm_f_f_cs(3)) OR noa2a2a23_x1_sig);
+  noa2a2a23_x1_sig <= NOT((((inv_x2_19_sig AND inv_x2_18_sig) OR (
+inv_x2_17_sig AND not_fsm_f_f_cs(4))) OR (aux12 AND 
+no4_x1_11_sig)));
+  inv_x2_19_sig <= NOT(not_aux164);
+  inv_x2_18_sig <= NOT(not_aux134);
+  inv_x2_17_sig <= NOT(not_aux34);
+  no4_x1_11_sig <= NOT((((not_aux49 OR not_word_in(2)) OR not_aux206
+) OR not_word_in(6)));
+  oa2ao222_x2_16_sig <= ((oa22_x2_17_sig AND not_fsm_e_e_cs(1)) OR (
+fsm_e_e_cs(1) AND (noa22_x1_24_sig OR no2_x1_33_sig)));
+  oa22_x2_17_sig <= ((not_fsm_e_e_cs(2) AND aux123) OR inv_x2_16_sig);
+  inv_x2_16_sig <= NOT(not_aux200);
+  noa22_x1_24_sig <= NOT(((not_aux125 AND o3_x2_9_sig) OR 
+fsm_e_e_cs(2)));
+  o3_x2_9_sig <= ((not_aux204 OR not_aux129) OR not_aux31);
+  no2_x1_33_sig <= NOT((o2_x2_24_sig OR mbk_buf_fsm_e_e_cs(3)));
+  o2_x2_24_sig <= (not_aux203 OR not_aux11);
+  oa22_x2_16_sig <= ((oa2ao222_x2_15_sig AND fsm_e_e_cs(1)) OR 
+nao22_x1_22_sig);
+  oa2ao222_x2_15_sig <= ((not_aux31 AND aux203) OR (not_fsm_e_e_cs(2) AND
+ (a3_x2_13_sig OR inv_x2_15_sig)));
+  a3_x2_13_sig <= ((no2_x1_32_sig AND no4_x1_10_sig) AND 
+not_fsm_e_e_cs(4));
+  no2_x1_32_sig <= NOT((reset OR not_aux128));
+  no4_x1_10_sig <= NOT((((word_in(2) OR word_in(6)) OR 
+not_word_in(7)) OR not_word_in(0)));
+  inv_x2_15_sig <= NOT(not_aux125);
+  nao22_x1_22_sig <= NOT(((o2_x2_23_sig OR a2_x2_32_sig) AND 
+o3_x2_8_sig));
+  o2_x2_23_sig <= (not_aux204 OR not_aux117);
+  a2_x2_32_sig <= (fsm_e_e_cs(2) AND fsm_e_e_cs(4));
+  o3_x2_8_sig <= ((not_aux197 OR not_aux118) OR inv_x2_14_sig);
+  inv_x2_14_sig <= NOT(aux120);
+  oa2ao222_x2_14_sig <= ((nao22_x1_21_sig AND not_fsm_e_e_cs(1)) OR (
+fsm_e_e_cs(1) AND (a2_x2_28_sig OR no3_x1_9_sig)));
+  nao22_x1_21_sig <= NOT(((not_aux198 OR inv_x2_13_sig) AND 
+na3_x1_12_sig));
+  inv_x2_13_sig <= NOT(aux123);
+  na3_x1_12_sig <= NOT(((no2_x1_31_sig AND fsm_e_e_cs(4)) AND 
+na2_x1_20_sig));
+  no2_x1_31_sig <= NOT((not_aux202 OR not_aux121));
+  na2_x1_20_sig <= NOT((fsm_e_e_cs(0) AND mbk_buf_fsm_e_e_cs(3)));
+  a2_x2_28_sig <= (na3_x1_11_sig AND not_fsm_e_e_cs(2));
+  na3_x1_11_sig <= NOT(((not_aux125 AND nao22_x1_20_sig) AND 
+nao22_x1_19_sig));
+  nao22_x1_20_sig <= NOT(((inv_x2_12_sig OR a2_x2_31_sig) AND aux204));
+  inv_x2_12_sig <= NOT(not_aux122);
+  a2_x2_31_sig <= (fsm_e_e_cs(4) AND aux119);
+  nao22_x1_19_sig <= NOT(((a2_x2_30_sig OR a2_x2_29_sig) AND not_reset
+));
+  a2_x2_30_sig <= (not_aux129 AND fsm_e_e_cs(4));
+  a2_x2_29_sig <= (no4_x1_9_sig AND aux196);
+  no4_x1_9_sig <= NOT((((word_in(2) OR word_in(6)) OR not_aux128) 
+OR word_in(0)));
+  no3_x1_9_sig <= NOT(((not_aux121 OR not_aux203) OR not_aux221));
+  oa2ao222_x2_12_sig <= ((oa2ao222_x2_13_sig AND not_fsm_e_e_cs(1)) OR (
+fsm_e_e_cs(1) AND (ao22_x2_21_sig OR a3_x2_11_sig)));
+  oa2ao222_x2_13_sig <= ((inv_x2_11_sig AND aux119) OR (no2_x1_30_sig AND
+ (a3_x2_12_sig OR a2_x2_26_sig)));
+  inv_x2_11_sig <= NOT(not_aux200);
+  a3_x2_12_sig <= ((a2_x2_27_sig AND not_fsm_e_e_cs(4)) AND 
+on12_x1_8_sig);
+  a2_x2_27_sig <= (word_in(4) AND not_aux116);
+  on12_x1_8_sig <= (NOT(o4_x2_4_sig) OR mbk_buf_fsm_e_e_cs(3));
+  o4_x2_4_sig <= (((word_in(0) OR mbk_buf_not_word_in(3)) OR 
+not_aux201) OR not_word_in(5));
+  a2_x2_26_sig <= (not_aux117 AND fsm_e_e_cs(4));
+  no2_x1_30_sig <= NOT((not_aux202 OR not_aux118));
+  ao22_x2_21_sig <= ((noa22_x1_23_sig OR a2_x2_25_sig) AND 
+not_fsm_e_e_cs(2));
+  noa22_x1_23_sig <= NOT(((na4_x1_5_sig AND not_aux32) OR 
+na2_x1_19_sig));
+  na4_x1_5_sig <= NOT((((no3_x1_8_sig AND a4_x2_6_sig) AND 
+not_fsm_e_e_cs(4)) AND aux115));
+  no3_x1_8_sig <= NOT(((not_word_in(5) OR word_in(7)) OR word_in(0)
+));
+  a4_x2_6_sig <= (((word_in(2) AND word_in(4)) AND word_in(6)) AND
+ word_in(3));
+  na2_x1_19_sig <= NOT((not_reset AND fsm_e_e_cs(0)));
+  a2_x2_25_sig <= (aux120 AND not_fsm_e_e_cs(0));
+  a3_x2_11_sig <= ((aux199 AND not_fsm_e_e_cs(3)) AND na2_x1_18_sig
+);
+  na2_x1_18_sig <= NOT((not_word_in(4) AND not_fsm_e_e_cs(4)));
+  na3_x1_10_sig <= NOT(((nao22_x1_18_sig AND nao22_x1_17_sig) AND 
+no4_x1_4_sig));
+  nao22_x1_18_sig <= NOT(((a4_x2_5_sig OR a4_x2_4_sig) AND 
+fsm_e_e_cs(0)));
+  a4_x2_5_sig <= (((aux115 AND a3_x2_10_sig) AND fsm_e_e_cs(4)) 
+AND no4_x1_8_sig);
+  a3_x2_10_sig <= ((word_in(5) AND word_in(0)) AND word_in(7));
+  no4_x1_8_sig <= NOT((((word_in(4) OR not_word_in(2)) OR 
+word_in(3)) OR not_word_in(6)));
+  a4_x2_4_sig <= (((aux196 AND a3_x2_9_sig) AND 
+mbk_buf_fsm_e_e_cs(3)) AND no4_x1_7_sig);
+  a3_x2_9_sig <= ((word_in(0) AND word_in(1)) AND word_in(5));
+  no4_x1_7_sig <= NOT((((word_in(4) OR not_word_in(2)) OR 
+word_in(3)) OR not_word_in(6)));
+  nao22_x1_17_sig <= NOT(((no2_x1_29_sig OR noa22_x1_22_sig) AND 
+fsm_e_e_cs(1)));
+  no2_x1_29_sig <= NOT((not_aux221 OR not_fsm_e_e_cs(2)));
+  noa22_x1_22_sig <= NOT(((na2_x1_17_sig AND fsm_e_e_cs(0)) OR 
+o2_x2_22_sig));
+  na2_x1_17_sig <= NOT((word_in(4) AND fsm_e_e_cs(4)));
+  o2_x2_22_sig <= (fsm_e_e_cs(2) OR not_fsm_e_e_cs(3));
+  no4_x1_4_sig <= NOT((((a2_x2_24_sig OR reset) OR no4_x1_6_sig) OR
+ no4_x1_5_sig));
+  a2_x2_24_sig <= (no2_x1_28_sig AND fsm_e_e_cs(2));
+  no2_x1_28_sig <= NOT((not_aux52 OR not_aux114));
+  no4_x1_6_sig <= NOT((((not_fsm_e_e_cs(0) OR not_aux197) OR 
+a2_x2_23_sig) OR not_fsm_e_e_cs(4)));
+  a2_x2_23_sig <= (not_aux52 AND mbk_buf_fsm_e_e_cs(3));
+  no4_x1_5_sig <= NOT((((fsm_e_e_cs(2) OR fsm_e_e_cs(0)) OR 
+not_fsm_e_e_cs(4)) OR mbk_buf_fsm_e_e_cs(3)));
+  noa22_x1_21_sig <= NOT(((oa22_x2_15_sig AND oa22_x2_14_sig) OR reset
+));
+  oa22_x2_15_sig <= ((o3_x2_7_sig AND on12_x1_7_sig) OR 
+not_fsm_d_d_cs(3));
+  o3_x2_7_sig <= ((not_aux26 OR fsm_d_d_cs(4)) OR a2_x2_22_sig);
+  a2_x2_22_sig <= (not_aux111 AND fsm_d_d_cs(1));
+  on12_x1_7_sig <= (NOT(no2_x1_27_sig) OR not_fsm_d_d_cs(1));
+  no2_x1_27_sig <= NOT((not_aux194 OR not_aux112));
+  oa22_x2_14_sig <= ((o2_x2_21_sig AND on12_x1_6_sig) OR 
+fsm_d_d_cs(3));
+  o2_x2_21_sig <= (not_aux27 OR not_fsm_d_d_cs(4));
+  on12_x1_6_sig <= (NOT(aux193) OR not_aux110);
+  ao22_x2_18_sig <= ((ao22_x2_20_sig OR ao22_x2_19_sig) AND not_reset
+);
+  ao22_x2_20_sig <= ((a4_x2_3_sig OR a2_x2_21_sig) AND 
+not_fsm_d_d_cs(3));
+  a4_x2_3_sig <= (((not_fsm_d_d_cs(4) AND fsm_d_d_cs(1)) AND 
+nao22_x1_16_sig) AND aux195);
+  nao22_x1_16_sig <= NOT(((not_aux101 OR word_in(2)) AND 
+not_fsm_d_d_cs(2)));
+  a2_x2_21_sig <= (fsm_d_d_cs(4) AND aux28);
+  ao22_x2_19_sig <= ((noa22_x1_20_sig OR noa22_x1_19_sig) AND 
+fsm_d_d_cs(3));
+  noa22_x1_20_sig <= NOT(((oa22_x2_13_sig AND aux108) OR not_aux194));
+  oa22_x2_13_sig <= ((fsm_d_d_cs(1) AND mbk_buf_not_word_in(3)) OR 
+fsm_d_d_cs(0));
+  noa22_x1_19_sig <= NOT(((not_aux28 AND not_aux111) OR fsm_d_d_cs(4))
+);
+  noa22_x1_17_sig <= NOT(((oa22_x2_11_sig AND nao22_x1_15_sig) OR 
+reset));
+  oa22_x2_11_sig <= ((oa22_x2_12_sig AND o3_x2_5_sig) OR 
+fsm_d_d_cs(3));
+  oa22_x2_12_sig <= ((o3_x2_6_sig AND o2_x2_20_sig) OR fsm_d_d_cs(4));
+  o3_x2_6_sig <= ((na3_x1_9_sig OR fsm_d_d_cs(2)) OR 
+not_fsm_d_d_cs(1));
+  na3_x1_9_sig <= NOT(((not_word_in(2) AND word_in(7)) AND aux100));
+  o2_x2_20_sig <= (not_aux113 OR not_fsm_d_d_cs(2));
+  o3_x2_5_sig <= ((o2_x2_19_sig OR not_fsm_d_d_cs(4)) OR 
+a2_x2_20_sig);
+  o2_x2_19_sig <= (mbk_buf_not_word_in(3) OR not_aux108);
+  a2_x2_20_sig <= (not_aux113 AND fsm_d_d_cs(2));
+  nao22_x1_15_sig <= NOT(((noa22_x1_18_sig OR a3_x2_8_sig) AND 
+fsm_d_d_cs(3)));
+  noa22_x1_18_sig <= NOT(((na2_x1_16_sig AND aux108) OR not_aux194));
+  na2_x1_16_sig <= NOT((not_aux113 AND not_fsm_d_d_cs(0)));
+  a3_x2_8_sig <= ((not_aux28 AND not_fsm_d_d_cs(0)) AND 
+not_fsm_d_d_cs(4));
+  noa22_x1_16_sig <= NOT(((oa22_x2_9_sig AND oa22_x2_8_sig) OR reset));
+  oa22_x2_9_sig <= ((oa22_x2_10_sig AND na2_x1_15_sig) OR 
+fsm_d_d_cs(3));
+  oa22_x2_10_sig <= ((na3_x1_8_sig AND o2_x2_18_sig) OR fsm_d_d_cs(4)
+);
+  na3_x1_8_sig <= NOT(((aux59 AND not_aux27) AND inv_x2_10_sig));
+  inv_x2_10_sig <= NOT(aux195);
+  o2_x2_18_sig <= (not_aux111 OR not_fsm_d_d_cs(2));
+  na2_x1_15_sig <= NOT((aux29 AND fsm_d_d_cs(4)));
+  oa22_x2_8_sig <= ((nao22_x1_14_sig AND o4_x2_3_sig) OR 
+not_fsm_d_d_cs(3));
+  nao22_x1_14_sig <= NOT(((fsm_d_d_cs(1) OR not_aux112) AND aux194));
+  o4_x2_3_sig <= (((fsm_d_d_cs(2) OR not_aux108) OR fsm_d_d_cs(4))
+ OR no2_x1_26_sig);
+  no2_x1_26_sig <= NOT((word_in(3) OR fsm_d_d_cs(1)));
+  na3_x1_7_sig <= NOT(((not_reset AND nao22_x1_13_sig) AND 
+nao22_x1_12_sig));
+  nao22_x1_13_sig <= NOT(((noa22_x1_15_sig OR a3_x2_7_sig) AND 
+not_fsm_d_d_cs(3)));
+  noa22_x1_15_sig <= NOT(((not_aux52 AND not_aux29) OR 
+not_fsm_d_d_cs(4)));
+  a3_x2_7_sig <= ((na2_x1_14_sig AND na2_x1_13_sig) AND aux193);
+  na2_x1_14_sig <= NOT((not_word_in(7) AND not_fsm_d_d_cs(1)));
+  na2_x1_13_sig <= NOT((not_aux107 AND not_fsm_d_d_cs(1)));
+  nao22_x1_12_sig <= NOT(((noa22_x1_14_sig OR ao22_x2_16_sig) AND 
+fsm_d_d_cs(3)));
+  noa22_x1_14_sig <= NOT(((not_aux27 AND o2_x2_17_sig) OR 
+fsm_d_d_cs(4)));
+  o2_x2_17_sig <= (not_aux107 OR not_word_in(7));
+  ao22_x2_16_sig <= ((a3_x2_6_sig OR ao22_x2_17_sig) AND 
+fsm_d_d_cs(4));
+  a3_x2_6_sig <= ((not_fsm_d_d_cs(2) AND fsm_d_d_cs(1)) AND 
+na2_x1_12_sig);
+  na2_x1_12_sig <= NOT((mbk_buf_not_word_in(3) AND fsm_d_d_cs(0)));
+  ao22_x2_17_sig <= ((fsm_d_d_cs(2) OR not_aux110) AND no2_x1_25_sig);
+  no2_x1_25_sig <= NOT((not_aux51 OR not_word_in(7)));
+  oa22_x2_7_sig <= ((na2_x1_11_sig AND fsm_c_c_cs(3)) OR a3_x2_5_sig
+);
+  na2_x1_11_sig <= NOT((not_aux106 AND na3_x1_6_sig));
+  na3_x1_6_sig <= NOT(((aux4 AND not_aux93) AND aux192));
+  a3_x2_5_sig <= ((a2_x2_19_sig AND not_fsm_c_c_cs(3)) AND 
+on12_x1_5_sig);
+  a2_x2_19_sig <= (no2_x1_24_sig AND not_aux93);
+  no2_x1_24_sig <= NOT((reset OR not_aux97));
+  on12_x1_5_sig <= (NOT(fsm_c_c_cs(0)) OR aux102);
+  oa2ao222_x2_11_sig <= ((nao22_x1_11_sig AND fsm_c_c_cs(3)) OR (
+not_fsm_c_c_cs(3) AND (noa22_x1_13_sig OR a2_x2_17_sig)));
+  nao22_x1_11_sig <= NOT(((a2_x2_18_sig OR inv_x2_9_sig) AND 
+not_aux106));
+  a2_x2_18_sig <= (not_aux98 AND fsm_c_c_cs(2));
+  inv_x2_9_sig <= NOT(aux192);
+  noa22_x1_13_sig <= NOT(((not_aux93 AND o2_x2_16_sig) OR inv_x2_8_sig
+));
+  o2_x2_16_sig <= (not_aux101 OR not_aux190);
+  inv_x2_8_sig <= NOT(aux188);
+  a2_x2_17_sig <= (aux102 AND fsm_c_c_cs(2));
+  oa2ao222_x2_9_sig <= ((oa2ao222_x2_10_sig AND no2_x1_21_sig) OR (
+fsm_c_c_cs(3) AND (ao22_x2_15_sig OR an12_x1_4_sig)));
+  oa2ao222_x2_10_sig <= ((inv_x2_7_sig AND aux96) OR (aux188 AND (
+a2_x2_16_sig OR an12_x1_5_sig)));
+  inv_x2_7_sig <= NOT(not_aux186);
+  a2_x2_16_sig <= (word_in(2) AND fsm_c_c_cs(4));
+  an12_x1_5_sig <= (NOT(not_aux190) AND aux100);
+  no2_x1_21_sig <= NOT((fsm_c_c_cs(3) OR no3_x1_7_sig));
+  no3_x1_7_sig <= NOT(((not_fsm_c_c_cs(0) OR no2_x1_23_sig) OR 
+no2_x1_22_sig));
+  no2_x1_23_sig <= NOT((fsm_c_c_cs(4) OR not_fsm_c_c_cs(2)));
+  no2_x1_22_sig <= NOT((not_aux92 OR fsm_c_c_cs(2)));
+  ao22_x2_15_sig <= ((noa22_x1_12_sig OR no2_x1_20_sig) AND 
+not_fsm_c_c_cs(0));
+  noa22_x1_12_sig <= NOT(((na2_x1_10_sig AND not_aux94) OR 
+inv_x2_6_sig));
+  na2_x1_10_sig <= NOT((not_aux96 AND fsm_c_c_cs(4)));
+  inv_x2_6_sig <= NOT(aux188);
+  no2_x1_20_sig <= NOT((not_aux186 OR fsm_c_c_cs(4)));
+  an12_x1_4_sig <= (NOT(not_aux99) AND aux185);
+  oa2ao222_x2_8_sig <= ((na2_x1_9_sig AND no4_x1_3_sig) OR (
+not_fsm_c_c_cs(3) AND (ao22_x2_14_sig OR noa22_x1_9_sig)));
+  na2_x1_9_sig <= NOT((not_fsm_c_c_cs(1) AND nxr2_x1_sig));
+  nxr2_x1_sig <= NOT((fsm_c_c_cs(4) XOR word_in(2)));
+  no4_x1_3_sig <= NOT((((not_fsm_c_c_cs(3) OR reset) OR 
+a2_x2_15_sig) OR fsm_c_c_cs(2)));
+  a2_x2_15_sig <= (not_aux25 AND fsm_c_c_cs(0));
+  ao22_x2_14_sig <= ((noa22_x1_11_sig OR noa22_x1_10_sig) AND 
+not_fsm_c_c_cs(0));
+  noa22_x1_11_sig <= NOT(((on12_x1_4_sig AND not_fsm_c_c_cs(4)) OR 
+inv_x2_5_sig));
+  on12_x1_4_sig <= (NOT(no2_x1_19_sig) OR fsm_c_c_cs(1));
+  no2_x1_19_sig <= NOT((not_aux187 OR mbk_buf_not_aux58));
+  inv_x2_5_sig <= NOT(aux188);
+  noa22_x1_10_sig <= NOT(((not_aux99 AND not_aux98) OR not_aux186));
+  noa22_x1_9_sig <= NOT(((on12_x1_3_sig AND not_aux93) OR 
+inv_x2_4_sig));
+  on12_x1_3_sig <= (NOT(not_fsm_c_c_cs(4)) OR o2_x2_15_sig);
+  o2_x2_15_sig <= (word_in(7) OR not_aux59);
+  inv_x2_4_sig <= NOT(aux185);
+  na3_x1_5_sig <= NOT(((no4_x1_2_sig AND nao22_x1_10_sig) AND 
+nao22_x1_9_sig));
+  no4_x1_2_sig <= NOT((((a2_x2_14_sig OR reset) OR no3_x1_6_sig) OR
+ no2_x1_17_sig));
+  a2_x2_14_sig <= (no2_x1_18_sig AND fsm_c_c_cs(0));
+  no2_x1_18_sig <= NOT((not_aux52 OR not_aux97));
+  no3_x1_6_sig <= NOT(((not_fsm_c_c_cs(2) OR not_fsm_c_c_cs(4)) OR 
+o2_x2_14_sig));
+  o2_x2_14_sig <= (not_aux51 OR not_word_in(7));
+  no2_x1_17_sig <= NOT((not_aux95 OR fsm_c_c_cs(0)));
+  nao22_x1_10_sig <= NOT(((noa22_x1_8_sig OR ao22_x2_13_sig) AND 
+not_fsm_c_c_cs(3)));
+  noa22_x1_8_sig <= NOT(((o2_x2_13_sig AND not_aux95) OR 
+not_fsm_c_c_cs(0)));
+  o2_x2_13_sig <= (not_aux93 OR fsm_c_c_cs(2));
+  ao22_x2_13_sig <= ((a2_x2_13_sig OR a2_x2_12_sig) AND 
+not_fsm_c_c_cs(0));
+  a2_x2_13_sig <= (fsm_c_c_cs(4) AND not_fsm_c_c_cs(2));
+  a2_x2_12_sig <= (not_aux92 AND fsm_c_c_cs(2));
+  nao22_x1_9_sig <= NOT(((inv_x2_3_sig OR ao22_x2_12_sig) AND 
+fsm_c_c_cs(3)));
+  inv_x2_3_sig <= NOT(not_aux6);
+  ao22_x2_12_sig <= ((a2_x2_11_sig OR a2_x2_10_sig) AND aux184);
+  a2_x2_11_sig <= (fsm_c_c_cs(4) AND aux96);
+  a2_x2_10_sig <= (no2_x1_16_sig AND not_fsm_c_c_cs(4));
+  no2_x1_16_sig <= NOT((not_aux51 OR not_word_in(7)));
+  oa2ao222_x2_7_sig <= ((nao22_x1_8_sig AND fsm_b_b_cs(0)) OR (
+not_fsm_b_b_cs(0) AND (ao22_x2_11_sig OR a3_x2_4_sig)));
+  nao22_x1_8_sig <= NOT(((a2_x2_9_sig OR fsm_b_b_cs(4)) AND not_aux82
+));
+  a2_x2_9_sig <= (not_aux88 AND not_aux90);
+  ao22_x2_11_sig <= ((a2_x2_8_sig OR a2_x2_7_sig) AND 
+not_fsm_b_b_cs(4));
+  a2_x2_8_sig <= (not_aux24 AND aux180);
+  a2_x2_7_sig <= (no2_x1_15_sig AND fsm_b_b_cs(3));
+  no2_x1_15_sig <= NOT((not_aux86 OR not_aux181));
+  a3_x2_4_sig <= ((fsm_b_b_cs(1) AND na2_x1_8_sig) AND 
+an12_x1_3_sig);
+  na2_x1_8_sig <= NOT((not_word_in(1) AND fsm_b_b_cs(3)));
+  an12_x1_3_sig <= (NOT(not_aux179) AND aux70);
+  oa22_x2_6_sig <= ((nao22_x1_7_sig AND not_fsm_b_b_cs(4)) OR 
+o3_x2_4_sig);
+  nao22_x1_7_sig <= NOT(((not_aux181 OR ao22_x2_10_sig) AND not_aux90
+));
+  ao22_x2_10_sig <= ((o4_x2_2_sig OR not_aux85) AND not_aux79);
+  o4_x2_2_sig <= (((word_in(2) OR word_in(6)) OR not_aux176) OR 
+not_word_in(0));
+  o3_x2_4_sig <= ((no2_x1_14_sig OR aux83) OR noa22_x1_7_sig);
+  no2_x1_14_sig <= NOT((not_aux178 OR not_aux75));
+  noa22_x1_7_sig <= NOT(((o2_x2_12_sig AND o2_x2_11_sig) OR 
+fsm_b_b_cs(0)));
+  o2_x2_12_sig <= (not_aux88 OR not_fsm_b_b_cs(4));
+  o2_x2_11_sig <= (not_aux183 OR not_word_in(1));
+  o4_x2_sig <= (((ao22_x2_9_sig OR aux83) OR ao22_x2_8_sig) OR 
+ao22_x2_7_sig);
+  ao22_x2_9_sig <= ((no4_x1_sig OR no2_x1_13_sig) AND 
+not_fsm_b_b_cs(4));
+  no4_x1_sig <= NOT((((not_aux181 OR na4_x1_4_sig) OR 
+fsm_b_b_cs(3)) OR not_aux85));
+  na4_x1_4_sig <= NOT((((not_word_in(2) AND not_word_in(6)) AND 
+word_in(7)) AND not_word_in(0)));
+  no2_x1_13_sig <= NOT((o2_x2_10_sig OR fsm_b_b_cs(3)));
+  o2_x2_10_sig <= (not_aux73 OR not_aux180);
+  ao22_x2_8_sig <= ((noa22_x1_6_sig OR no2_x1_12_sig) AND 
+not_fsm_b_b_cs(0));
+  noa22_x1_6_sig <= NOT(((fsm_b_b_cs(2) AND not_aux73) OR 
+oa22_x2_5_sig));
+  oa22_x2_5_sig <= ((not_aux79 AND not_aux76) OR not_aux179);
+  no2_x1_12_sig <= NOT((not_aux71 OR not_aux183));
+  ao22_x2_7_sig <= ((no2_x1_11_sig OR a2_x2_6_sig) AND aux178);
+  no2_x1_11_sig <= NOT((not_aux77 OR fsm_b_b_cs(3)));
+  a2_x2_6_sig <= (not_aux86 AND fsm_b_b_cs(3));
+  oa2ao222_x2_6_sig <= ((nao2o22_x1_3_sig AND fsm_b_b_cs(0)) OR (
+not_fsm_b_b_cs(0) AND (ao22_x2_5_sig OR a3_x2_3_sig)));
+  nao2o22_x1_3_sig <= NOT(((o3_x2_3_sig OR ao22_x2_6_sig) AND (
+not_aux178 OR not_aux23)));
+  o3_x2_3_sig <= ((reset OR fsm_b_b_cs(4)) OR fsm_b_b_cs(2));
+  ao22_x2_6_sig <= ((fsm_b_b_cs(3) OR o2_x2_9_sig) AND not_aux78);
+  o2_x2_9_sig <= (word_in(7) OR not_aux59);
+  ao22_x2_5_sig <= ((a4_x2_sig OR no2_x1_9_sig) AND 
+not_fsm_b_b_cs(4));
+  a4_x2_sig <= (((na2_x1_7_sig AND not_aux176) AND aux181) AND 
+na2_x1_6_sig);
+  na2_x1_7_sig <= NOT((not_fsm_b_b_cs(3) AND na3_x1_4_sig));
+  na3_x1_4_sig <= NOT(((no2_x1_10_sig AND a4_x2_2_sig) AND 
+not_fsm_b_b_cs(1)));
+  no2_x1_10_sig <= NOT((word_in(0) OR not_word_in(5)));
+  a4_x2_2_sig <= (((word_in(2) AND word_in(4)) AND word_in(6)) AND
+ word_in(3));
+  na2_x1_6_sig <= NOT((not_word_in(1) AND not_fsm_b_b_cs(1)));
+  no2_x1_9_sig <= NOT((not_aux76 OR not_aux180));
+  a3_x2_3_sig <= ((not_aux78 AND na2_x1_5_sig) AND aux179);
+  na2_x1_5_sig <= NOT((not_aux2 AND fsm_b_b_cs(2)));
+  na4_x1_3_sig <= NOT((((nao22_x1_6_sig AND ao22_x2_4_sig) AND 
+nao22_x1_5_sig) AND nao22_x1_4_sig));
+  nao22_x1_6_sig <= NOT(((not_aux71 OR not_fsm_b_b_cs(4)) AND 
+a2_x2_5_sig));
+  a2_x2_5_sig <= (no2_x1_8_sig AND fsm_b_b_cs(0));
+  no2_x1_8_sig <= NOT((not_aux52 OR not_aux69));
+  ao22_x2_4_sig <= ((fsm_b_b_cs(4) OR not_aux3) AND not_reset);
+  nao22_x1_5_sig <= NOT(((noa22_x1_5_sig OR a2_x2_4_sig) AND 
+fsm_b_b_cs(4)));
+  noa22_x1_5_sig <= NOT(((not_aux75 AND o2_x2_8_sig) OR fsm_b_b_cs(2)
+));
+  o2_x2_8_sig <= (not_aux51 OR not_aux176);
+  a2_x2_4_sig <= (aux52 AND fsm_b_b_cs(2));
+  nao22_x1_4_sig <= NOT(((no3_x1_5_sig OR a3_x2_2_sig) AND 
+not_fsm_b_b_cs(0)));
+  no3_x1_5_sig <= NOT(((not_fsm_b_b_cs(1) OR fsm_b_b_cs(4)) OR 
+not_aux69));
+  a3_x2_2_sig <= ((fsm_b_b_cs(1) AND fsm_b_b_cs(4)) AND aux70);
+  oa2ao222_x2_5_sig <= ((not_fsm_a_a_cs(1) AND nao2o22_x1_2_sig) OR (
+fsm_a_a_cs(1) AND (noa22_x1_4_sig OR no2_x1_7_sig)));
+  nao2o22_x1_2_sig <= NOT(((not_aux53 OR not_aux166) AND (not_aux61 OR 
+not_aux170)));
+  noa22_x1_4_sig <= NOT(((oa22_x2_4_sig AND not_aux62) OR not_aux170)
+);
+  oa22_x2_4_sig <= ((not_aux43 AND not_aux68) OR fsm_a_a_cs(0));
+  no2_x1_7_sig <= NOT((not_aux20 OR not_aux166));
+  oa2a2a23_x2_2_sig <= (((na2_x1_4_sig AND an12_x1_2_sig) OR (
+no2_x1_6_sig AND oa22_x2_3_sig)) OR (oa2ao222_x2_4_sig AND 
+fsm_a_a_cs(1)));
+  na2_x1_4_sig <= NOT((fsm_a_a_cs(2) AND fsm_a_a_cs(4)));
+  an12_x1_2_sig <= (NOT(not_aux68) AND aux171);
+  no2_x1_6_sig <= NOT((reset OR not_aux165));
+  oa22_x2_3_sig <= ((fsm_a_a_cs(4) AND not_fsm_a_a_cs(0)) OR 
+xr2_x1_2_sig);
+  xr2_x1_2_sig <= (fsm_a_a_cs(3) XOR fsm_a_a_cs(4));
+  oa2ao222_x2_4_sig <= ((aux166 AND not_aux21) OR (aux170 AND (
+inv_x2_2_sig OR no2_x1_5_sig)));
+  inv_x2_2_sig <= NOT(not_aux62);
+  no2_x1_5_sig <= NOT((not_aux67 OR not_aux175));
+  oa2ao222_x2_3_sig <= ((oa2a2a23_x2_sig AND fsm_a_a_cs(1)) OR (
+not_fsm_a_a_cs(1) AND (noa22_x1_3_sig OR no2_x1_4_sig)));
+  oa2a2a23_x2_sig <= (((not_fsm_a_a_cs(3) AND no3_x1_4_sig) OR (aux171
+ AND nao22_x1_3_sig)) OR (nao22_x1_2_sig AND 
+aux170));
+  no3_x1_4_sig <= NOT(((not_word_in(0) OR not_aux1) OR not_aux166));
+  nao22_x1_3_sig <= NOT(((not_aux44 OR fsm_a_a_cs(3)) AND not_aux61));
+  nao22_x1_2_sig <= NOT(((not_aux60 OR fsm_a_a_cs(0)) AND 
+ao22_x2_3_sig));
+  ao22_x2_3_sig <= ((not_aux175 OR not_aux66) AND not_aux62);
+  noa22_x1_3_sig <= NOT(((not_fsm_a_a_cs(3) AND not_word_in(0)) OR 
+on12_x1_2_sig));
+  on12_x1_2_sig <= (NOT(fsm_a_a_cs(4)) OR o2_x2_7_sig);
+  o2_x2_7_sig <= (not_aux45 OR not_aux170);
+  no2_x1_4_sig <= NOT((not_aux167 OR not_aux61));
+  oa2ao222_x2_sig <= ((oa2ao222_x2_2_sig AND not_fsm_a_a_cs(1)) OR (
+fsm_a_a_cs(1) AND (ao22_x2_sig OR noa22_x1_sig)));
+  oa2ao222_x2_2_sig <= ((not_fsm_a_a_cs(4) AND an12_x1_sig) OR (
+ao22_x2_2_sig AND (nao22_x1_sig OR a2_x2_3_sig)));
+  an12_x1_sig <= (NOT(not_word_in(0)) AND aux168);
+  nao22_x1_sig <= NOT(((not_aux169 OR not_aux59) AND not_aux43));
+  a2_x2_3_sig <= (xr2_x1_sig AND fsm_a_a_cs(3));
+  xr2_x1_sig <= (fsm_a_a_cs(4) XOR word_in(0));
+  ao22_x2_2_sig <= ((not_fsm_a_a_cs(0) OR not_aux60) AND aux170);
+  ao22_x2_sig <= ((noa22_x1_2_sig OR no2_x1_3_sig) AND aux170);
+  noa22_x1_2_sig <= NOT(((o3_x2_sig AND not_aux22) OR 
+not_fsm_a_a_cs(0)));
+  o3_x2_sig <= ((o3_x2_2_sig OR not_aux169) OR fsm_a_a_cs(4));
+  o3_x2_2_sig <= ((not_word_in(6) OR not_aux57) OR not_word_in(2));
+  no2_x1_3_sig <= NOT((not_aux21 OR fsm_a_a_cs(0)));
+  noa22_x1_sig <= NOT(((not_fsm_a_a_cs(4) AND not_word_in(0)) OR 
+inv_x2_sig));
+  inv_x2_sig <= NOT(aux168);
+  oa22_x2_sig <= ((oa22_x2_2_sig AND fsm_a_a_cs(1)) OR o2_x2_5_sig
+);
+  oa22_x2_2_sig <= ((nao2o22_x1_sig AND fsm_a_a_cs(2)) OR a3_x2_sig);
+  nao2o22_x1_sig <= NOT(((fsm_a_a_cs(0) OR fsm_a_a_cs(3)) AND (
+fsm_a_a_cs(4) OR not_aux45)));
+  a3_x2_sig <= ((not_fsm_a_a_cs(2) AND fsm_a_a_cs(3)) AND 
+na2_x1_3_sig);
+  na2_x1_3_sig <= NOT((not_aux44 AND fsm_a_a_cs(0)));
+  o2_x2_5_sig <= (no3_x1_3_sig OR na4_x1_2_sig);
+  no3_x1_3_sig <= NOT(((fsm_a_a_cs(2) OR fsm_a_a_cs(0)) OR 
+not_aux43));
+  na4_x1_2_sig <= NOT((((on12_x1_sig AND not_reset) AND 
+na2_x1_2_sig) AND na3_x1_3_sig));
+  on12_x1_sig <= (NOT(fsm_a_a_cs(0)) OR o2_x2_6_sig);
+  o2_x2_6_sig <= (not_aux43 OR not_aux165);
+  na2_x1_2_sig <= NOT((no3_x1_2_sig AND fsm_a_a_cs(0)));
+  no3_x1_2_sig <= NOT(((not_word_in(7) OR not_aux51) OR not_aux21));
+  na3_x1_3_sig <= NOT(((not_aux53 AND fsm_a_a_cs(2)) AND aux52));
+  aux4 <= NOT((fsm_c_c_cs(1) AND fsm_c_c_cs(2)));
+  aux12 <= NOT((not_fsm_f_f_cs(0) AND not_fsm_f_f_cs(1)));
+  aux28 <= NOT((fsm_d_d_cs(2) OR fsm_d_d_cs(1)));
+  aux29 <= NOT((not_aux28 AND not_aux27));
+  aux30 <= NOT((not_aux11 OR mbk_buf_fsm_e_e_cs(3)));
+  aux38 <= (fsm_g_g_cs(1) AND fsm_g_g_cs(3));
+  aux49 <= NOT((not_word_in(5) OR na4_x1_sig));
+  na4_x1_sig <= NOT((((not_word_in(3) AND not_word_in(4)) AND 
+word_in(1)) AND word_in(0)));
+  aux52 <= NOT((not_aux51 OR not_word_in(7)));
+  aux55 <= ((word_in(3) AND word_in(4)) AND word_in(1));
+  aux59 <= NOT((not_word_in(2) OR not_aux58));
+  aux64 <= NOT(((word_in(3) OR word_in(4)) OR word_in(1)));
+  aux70 <= NOT((fsm_b_b_cs(2) AND fsm_b_b_cs(3)));
+  aux73 <= (word_in(1) AND fsm_b_b_cs(1));
+  aux83 <= NOT((not_aux82 OR not_fsm_b_b_cs(0)));
+  aux96 <= (word_in(2) AND fsm_c_c_cs(1));
+  aux100 <= NOT((word_in(6) OR not_aux66));
+  aux102 <= NOT((reset OR not_aux94));
+  aux108 <= NOT((fsm_d_d_cs(0) AND fsm_d_d_cs(1)));
+  aux115 <= NOT((not_word_in(1) OR mbk_buf_fsm_e_e_cs(3)));
+  aux119 <= NOT((not_word_in(4) OR mbk_buf_fsm_e_e_cs(3)));
+  aux120 <= NOT((reset OR not_aux31));
+  aux123 <= NOT((reset OR not_aux122));
+  aux131 <= NOT((fsm_f_f_cs(2) OR fsm_f_f_cs(1)));
+  aux135 <= NOT((not_aux14 OR not_fsm_f_f_cs(1)));
+  aux136 <= NOT((not_aux14 OR fsm_f_f_cs(1)));
+  aux138 <= NOT((not_word_in(5) OR fsm_f_f_cs(0)));
+  aux142 <= NOT(((not_aux140 OR not_fsm_f_f_cs(1)) OR 
+fsm_f_f_cs(2)));
+  aux145 <= NOT((not_aux144 AND not_aux37));
+  aux149 <= (word_in(6) OR not_aux15);
+  aux153 <= NOT(((fsm_g_g_cs(2) OR a2_x2_2_sig) OR 
+not_fsm_g_g_cs(3)));
+  a2_x2_2_sig <= (not_aux150 AND fsm_g_g_cs(1));
+  aux159 <= NOT((fsm_h_h_cs(1) AND fsm_h_h_cs(0)));
+  aux160 <= NOT((fsm_h_h_cs(2) OR not_fsm_h_h_cs(4)));
+  aux161 <= NOT((word_in(6) OR word_in(2)));
+  aux165 <= NOT((fsm_a_a_cs(1) OR fsm_a_a_cs(2)));
+  aux166 <= NOT((reset OR not_fsm_a_a_cs(2)));
+  aux168 <= NOT((not_aux167 OR fsm_a_a_cs(3)));
+  aux170 <= NOT((reset OR fsm_a_a_cs(2)));
+  aux171 <= NOT((reset OR fsm_a_a_cs(0)));
+  aux178 <= NOT(((reset OR not_fsm_b_b_cs(4)) OR 
+fsm_b_b_cs(2)));
+  aux179 <= (not_reset AND fsm_b_b_cs(4));
+  aux180 <= (not_reset AND fsm_b_b_cs(2));
+  aux181 <= NOT((reset OR fsm_b_b_cs(2)));
+  aux184 <= NOT((fsm_c_c_cs(2) OR not_fsm_c_c_cs(0)));
+  aux185 <= (NOT(reset) AND aux184);
+  aux188 <= NOT((reset OR fsm_c_c_cs(2)));
+  aux192 <= NOT(((reset OR a2_x2_sig) OR fsm_c_c_cs(0)));
+  a2_x2_sig <= (not_word_in(2) AND fsm_c_c_cs(1));
+  aux193 <= NOT((fsm_d_d_cs(4) OR not_fsm_d_d_cs(2)));
+  aux194 <= NOT((fsm_d_d_cs(2) OR not_fsm_d_d_cs(4)));
+  aux195 <= NOT((not_word_in(7) AND not_fsm_d_d_cs(2)));
+  aux196 <= NOT((not_word_in(7) OR fsm_e_e_cs(4)));
+  aux199 <= NOT((reset OR not_aux198));
+  aux203 <= (not_reset AND fsm_e_e_cs(2));
+  aux204 <= NOT((reset OR fsm_e_e_cs(0)));
+  aux207 <= (not_reset AND fsm_f_f_cs(3));
+  aux209 <= NOT((reset OR fsm_f_f_cs(3)));
+  aux217 <= NOT((not_word_in(7) AND not_fsm_h_h_cs(0)));
+  aux218 <= NOT((word_in(7) AND not_fsm_h_h_cs(0)));
+  not_reset <= NOT(reset);
+  not_word_in (0) <= NOT(word_in(0));
+  not_word_in (1) <= NOT(word_in(1));
+  not_word_in (2) <= NOT(word_in(2));
+  not_word_in (3) <= NOT(word_in(3));
+  not_word_in (4) <= NOT(word_in(4));
+  not_word_in (5) <= NOT(word_in(5));
+  not_word_in (6) <= NOT(word_in(6));
+  not_word_in (7) <= NOT(word_in(7));
+  not_aux21 <= (not_fsm_a_a_cs(4) AND not_fsm_a_a_cs(3));
+  not_aux49 <= NOT(aux49);
+  not_aux51 <= ((not_word_in(6) OR not_word_in(2)) OR not_aux49);
+  not_aux53 <= (fsm_a_a_cs(4) OR fsm_a_a_cs(0));
+  not_aux52 <= NOT(aux52);
+  not_aux43 <= (fsm_a_a_cs(3) OR not_fsm_a_a_cs(4));
+  not_aux45 <= (fsm_a_a_cs(0) AND fsm_a_a_cs(3));
+  not_aux44 <= NOT((word_in(0) AND fsm_a_a_cs(4)));
+  not_fsm_a_a_cs (0) <= NOT(fsm_a_a_cs(0));
+  not_fsm_a_a_cs (1) <= NOT(fsm_a_a_cs(1));
+  not_fsm_a_a_cs (2) <= NOT(fsm_a_a_cs(2));
+  not_fsm_a_a_cs (3) <= NOT(fsm_a_a_cs(3));
+  not_fsm_a_a_cs (4) <= NOT(fsm_a_a_cs(4));
+  not_aux165 <= NOT(aux165);
+  not_aux166 <= NOT(aux166);
+  not_aux167 <= (not_aux166 OR fsm_a_a_cs(0));
+  not_aux55 <= NOT(aux55);
+  not_aux57 <= ((word_in(0) OR not_word_in(5)) OR not_aux55);
+  not_aux169 <= (word_in(7) OR fsm_a_a_cs(3));
+  not_aux22 <= NOT((fsm_a_a_cs(4) AND fsm_a_a_cs(3)));
+  not_aux170 <= NOT(aux170);
+  not_aux60 <= NOT((not_word_in(0) AND fsm_a_a_cs(3)));
+  not_aux58 <= (not_word_in(6) OR not_aux57);
+  not_aux59 <= NOT(aux59);
+  not_aux61 <= (fsm_a_a_cs(4) OR not_fsm_a_a_cs(3));
+  not_aux1 <= (fsm_a_a_cs(4) AND fsm_a_a_cs(0));
+  not_aux64 <= NOT(aux64);
+  not_aux65 <= (word_in(5) OR not_aux64);
+  not_aux66 <= (word_in(0) OR not_aux65);
+  not_aux175 <= ((na3_x1_2_sig OR fsm_a_a_cs(4)) OR fsm_a_a_cs(3)
+);
+  na3_x1_2_sig <= NOT(((not_word_in(6) AND word_in(7)) AND 
+not_word_in(2)));
+  not_aux62 <= (not_aux22 OR not_fsm_a_a_cs(0));
+  not_aux68 <= NOT((word_in(0) AND fsm_a_a_cs(3)));
+  not_aux67 <= (not_aux65 OR not_word_in(0));
+  not_aux20 <= (not_aux1 OR fsm_a_a_cs(3));
+  not_aux176 <= (not_word_in(7) OR fsm_b_b_cs(3));
+  not_aux73 <= NOT(aux73);
+  not_aux75 <= NOT(((not_fsm_b_b_cs(1) AND NOT(fsm_b_b_cs(3))) 
+OR (aux73 AND fsm_b_b_cs(3))));
+  not_aux2 <= (fsm_b_b_cs(3) OR not_fsm_b_b_cs(1));
+  not_aux3 <= (not_aux2 OR not_fsm_b_b_cs(2));
+  not_aux71 <= (not_fsm_b_b_cs(1) AND not_fsm_b_b_cs(2));
+  not_aux69 <= NOT((fsm_b_b_cs(2) OR fsm_b_b_cs(3)));
+  not_fsm_b_b_cs (0) <= NOT(fsm_b_b_cs(0));
+  not_fsm_b_b_cs (1) <= NOT(fsm_b_b_cs(1));
+  not_fsm_b_b_cs (2) <= NOT(fsm_b_b_cs(2));
+  not_fsm_b_b_cs (3) <= NOT(fsm_b_b_cs(3));
+  not_fsm_b_b_cs (4) <= NOT(fsm_b_b_cs(4));
+  not_aux23 <= (fsm_b_b_cs(3) XOR fsm_b_b_cs(1));
+  not_aux178 <= NOT(aux178);
+  not_aux77 <= (not_word_in(1) OR fsm_b_b_cs(1));
+  not_aux78 <= (not_aux77 OR not_fsm_b_b_cs(3));
+  not_aux179 <= NOT(aux179);
+  not_aux76 <= (not_word_in(1) OR fsm_b_b_cs(3));
+  not_aux180 <= NOT(aux180);
+  not_aux181 <= NOT(aux181);
+  not_aux86 <= (not_word_in(1) AND fsm_b_b_cs(1));
+  not_aux85 <= NOT((no2_x1_2_sig AND fsm_b_b_cs(1)));
+  no2_x1_2_sig <= NOT((word_in(5) OR not_aux64));
+  not_aux24 <= NOT((fsm_b_b_cs(1) AND fsm_b_b_cs(3)));
+  not_aux82 <= ((o2_x2_4_sig OR fsm_b_b_cs(2)) OR 
+not_fsm_b_b_cs(4));
+  o2_x2_4_sig <= (reset OR not_aux24);
+  not_aux79 <= (fsm_b_b_cs(1) OR not_fsm_b_b_cs(3));
+  not_aux183 <= ((reset OR fsm_b_b_cs(4)) OR not_fsm_b_b_cs(3));
+  not_aux90 <= (NOT(fsm_b_b_cs(2)) OR o2_x2_3_sig);
+  o2_x2_3_sig <= (reset OR not_aux2);
+  not_aux88 <= (NOT(no2_x1_sig) OR fsm_b_b_cs(2));
+  no2_x1_sig <= NOT((reset OR not_aux79));
+  not_aux97 <= (not_fsm_c_c_cs(2) AND not_fsm_c_c_cs(4));
+  not_aux94 <= (fsm_c_c_cs(4) OR not_fsm_c_c_cs(1));
+  not_aux95 <= (not_aux94 OR not_fsm_c_c_cs(2));
+  not_aux96 <= NOT(aux96);
+  not_aux6 <= ((fsm_c_c_cs(0) OR fsm_c_c_cs(2)) OR 
+not_fsm_c_c_cs(1));
+  not_fsm_c_c_cs (0) <= NOT(fsm_c_c_cs(0));
+  not_fsm_c_c_cs (1) <= NOT(fsm_c_c_cs(1));
+  not_fsm_c_c_cs (2) <= NOT(fsm_c_c_cs(2));
+  not_fsm_c_c_cs (3) <= NOT(fsm_c_c_cs(3));
+  not_fsm_c_c_cs (4) <= NOT(fsm_c_c_cs(4));
+  not_aux93 <= (fsm_c_c_cs(1) OR not_fsm_c_c_cs(4));
+  not_aux92 <= NOT(((not_fsm_c_c_cs(4) AND word_in(7)) OR 
+not_fsm_c_c_cs(1)));
+  not_aux25 <= (fsm_c_c_cs(4) XOR fsm_c_c_cs(1));
+  not_aux99 <= NOT((fsm_c_c_cs(1) AND fsm_c_c_cs(4)));
+  not_aux98 <= (not_word_in(2) OR fsm_c_c_cs(4));
+  not_aux186 <= (reset OR not_fsm_c_c_cs(2));
+  not_aux187 <= (word_in(7) OR not_word_in(2));
+  not_aux190 <= ((na2_x1_sig OR fsm_c_c_cs(4)) OR 
+not_fsm_c_c_cs(1));
+  na2_x1_sig <= NOT((word_in(7) AND not_word_in(2)));
+  not_aux106 <= ((o2_x2_2_sig OR fsm_c_c_cs(2)) OR 
+not_fsm_c_c_cs(0));
+  o2_x2_2_sig <= (reset OR not_aux25);
+  not_aux101 <= (word_in(6) OR not_aux67);
+  not_aux110 <= (fsm_d_d_cs(0) AND not_fsm_d_d_cs(1));
+  not_aux107 <= (not_aux51 OR not_fsm_d_d_cs(0));
+  not_aux27 <= (fsm_d_d_cs(0) OR not_fsm_d_d_cs(1));
+  not_fsm_d_d_cs (0) <= NOT(fsm_d_d_cs(0));
+  not_fsm_d_d_cs (1) <= NOT(fsm_d_d_cs(1));
+  not_fsm_d_d_cs (2) <= NOT(fsm_d_d_cs(2));
+  not_fsm_d_d_cs (3) <= NOT(fsm_d_d_cs(3));
+  not_fsm_d_d_cs (4) <= NOT(fsm_d_d_cs(4));
+  not_aux28 <= NOT(aux28);
+  not_aux29 <= NOT(aux29);
+  not_aux112 <= (mbk_buf_not_word_in(3) AND not_fsm_d_d_cs(0));
+  not_aux194 <= NOT(aux194);
+  not_aux108 <= NOT(aux108);
+  not_aux111 <= (mbk_buf_not_word_in(3) OR fsm_d_d_cs(0));
+  not_aux113 <= (mbk_buf_not_word_in(3) OR not_fsm_d_d_cs(1));
+  not_aux8 <= (not_fsm_d_d_cs(0) AND not_fsm_d_d_cs(1));
+  not_aux26 <= NOT((not_aux8 OR not_fsm_d_d_cs(2)));
+  not_aux114 <= (not_fsm_e_e_cs(0) AND not_fsm_e_e_cs(4));
+  not_aux11 <= (fsm_e_e_cs(0) AND fsm_e_e_cs(4));
+  not_aux221 <= NOT((not_aux114 OR aux30));
+  not_fsm_e_e_cs (0) <= NOT(fsm_e_e_cs(0));
+  not_fsm_e_e_cs (1) <= NOT(fsm_e_e_cs(1));
+  not_fsm_e_e_cs (2) <= NOT(fsm_e_e_cs(2));
+  not_fsm_e_e_cs (3) <= NOT(mbk_buf_fsm_e_e_cs(3));
+  not_fsm_e_e_cs (4) <= NOT(fsm_e_e_cs(4));
+  not_aux197 <= (fsm_e_e_cs(1) OR fsm_e_e_cs(2));
+  not_aux198 <= (fsm_e_e_cs(0) OR not_fsm_e_e_cs(2));
+  not_aux32 <= NOT((mbk_buf_fsm_e_e_cs(3) AND fsm_e_e_cs(4)));
+  not_aux31 <= (not_fsm_e_e_cs(4) AND not_fsm_e_e_cs(3));
+  not_aux200 <= (NOT(aux199) OR fsm_e_e_cs(4));
+  not_aux118 <= NOT((not_aux32 OR not_fsm_e_e_cs(0)));
+  not_aux117 <= NOT((word_in(4) AND mbk_buf_fsm_e_e_cs(3)));
+  not_aux201 <= (not_word_in(6) OR not_aux187);
+  not_aux116 <= (word_in(1) OR fsm_e_e_cs(3));
+  not_aux202 <= (reset OR fsm_e_e_cs(2));
+  not_aux121 <= NOT((word_in(4) OR mbk_buf_fsm_e_e_cs(3)));
+  not_aux203 <= NOT(aux203);
+  not_aux129 <= (not_word_in(4) AND mbk_buf_fsm_e_e_cs(3));
+  not_aux128 <= (((word_in(3) OR word_in(4)) OR word_in(5)) OR 
+not_aux116);
+  not_aux125 <= (NOT(fsm_e_e_cs(0)) OR o2_x2_sig);
+  o2_x2_sig <= (reset OR not_aux32);
+  not_aux122 <= (fsm_e_e_cs(4) OR not_fsm_e_e_cs(3));
+  not_aux204 <= NOT(aux204);
+  not_aux137 <= (fsm_f_f_cs(0) AND fsm_f_f_cs(2));
+  not_fsm_f_f_cs (0) <= NOT(fsm_f_f_cs(0));
+  not_fsm_f_f_cs (1) <= NOT(fsm_f_f_cs(1));
+  not_fsm_f_f_cs (2) <= NOT(fsm_f_f_cs(2));
+  not_fsm_f_f_cs (4) <= NOT(fsm_f_f_cs(4));
+  not_aux14 <= (fsm_f_f_cs(0) OR fsm_f_f_cs(2));
+  not_aux136 <= NOT(aux136);
+  not_aux205 <= ((not_word_in(6) OR not_word_in(2)) OR 
+not_word_in(7));
+  not_aux12 <= NOT(aux12);
+  not_aux206 <= (not_word_in(7) OR fsm_f_f_cs(4));
+  not_aux134 <= (not_word_in(5) OR fsm_f_f_cs(2));
+  not_aux164 <= NOT((fsm_f_f_cs(1) AND fsm_f_f_cs(4)));
+  not_aux34 <= (fsm_f_f_cs(0) OR not_fsm_f_f_cs(1));
+  not_aux131 <= NOT(aux131);
+  not_aux133 <= ((not_aux34 AND not_aux131) OR not_fsm_f_f_cs(4));
+  not_aux13 <= NOT((fsm_f_f_cs(2) AND fsm_f_f_cs(1)));
+  not_aux130 <= (not_aux13 OR fsm_f_f_cs(4));
+  not_aux140 <= (not_word_in(5) AND not_fsm_f_f_cs(0));
+  not_aux139 <= (not_aux134 OR fsm_f_f_cs(1));
+  not_aux138 <= NOT(aux138);
+  not_aux208 <= (fsm_f_f_cs(4) OR not_fsm_f_f_cs(2));
+  not_aux212 <= NOT((no3_x1_sig AND fsm_f_f_cs(1)));
+  no3_x1_sig <= NOT(((word_in(6) OR not_aux206) OR word_in(2)));
+  not_aux33 <= (fsm_f_f_cs(0) AND not_fsm_f_f_cs(1));
+  not_fsm_g_g_cs (0) <= NOT(fsm_g_g_cs(0));
+  not_fsm_g_g_cs (1) <= NOT(fsm_g_g_cs(1));
+  not_fsm_g_g_cs (2) <= NOT(fsm_g_g_cs(2));
+  not_fsm_g_g_cs (3) <= NOT(fsm_g_g_cs(3));
+  not_fsm_g_g_cs (4) <= NOT(fsm_g_g_cs(4));
+  not_aux16 <= (fsm_g_g_cs(3) OR not_fsm_g_g_cs(1));
+  not_aux146 <= (not_aux16 AND fsm_g_g_cs(2));
+  not_aux143 <= (fsm_g_g_cs(3) AND fsm_g_g_cs(0));
+  not_aux144 <= (fsm_g_g_cs(3) OR fsm_g_g_cs(0));
+  not_aux37 <= (fsm_g_g_cs(3) XOR fsm_g_g_cs(1));
+  not_aux38 <= NOT(aux38);
+  not_aux39 <= (not_aux38 AND not_fsm_g_g_cs(2));
+  not_aux35 <= (fsm_g_g_cs(1) AND not_fsm_g_g_cs(0));
+  not_aux147 <= (fsm_g_g_cs(1) AND fsm_g_g_cs(0));
+  not_aux216 <= ((na3_x1_sig OR fsm_g_g_cs(4)) OR fsm_g_g_cs(2));
+  na3_x1_sig <= NOT(((not_word_in(6) AND word_in(7)) AND 
+not_word_in(2)));
+  not_aux15 <= (fsm_g_g_cs(0) OR not_fsm_g_g_cs(3));
+  not_aux148 <= (not_fsm_g_g_cs(1) AND not_fsm_g_g_cs(3));
+  not_aux150 <= (not_word_in(6) OR fsm_g_g_cs(0));
+  not_aux36 <= (fsm_g_g_cs(0) AND not_fsm_g_g_cs(1));
+  not_aux40 <= (fsm_h_h_cs(2) AND fsm_h_h_cs(4));
+  not_aux157 <= (not_aux40 OR fsm_h_h_cs(0));
+  not_aux156 <= (fsm_h_h_cs(0) AND not_fsm_h_h_cs(4));
+  not_fsm_h_h_cs (0) <= NOT(fsm_h_h_cs(0));
+  not_fsm_h_h_cs (1) <= NOT(fsm_h_h_cs(1));
+  not_fsm_h_h_cs (2) <= NOT(fsm_h_h_cs(2));
+  not_fsm_h_h_cs (3) <= NOT(fsm_h_h_cs(3));
+  not_fsm_h_h_cs (4) <= NOT(fsm_h_h_cs(4));
+  not_aux17 <= (not_fsm_h_h_cs(2) AND not_fsm_h_h_cs(4));
+  not_aux41 <= NOT((fsm_h_h_cs(1) AND fsm_h_h_cs(4)));
+  not_aux154 <= NOT((not_aux41 OR not_fsm_h_h_cs(0)));
+  not_aux42 <= (fsm_h_h_cs(2) AND not_fsm_h_h_cs(1));
+  not_aux19 <= (fsm_h_h_cs(4) OR not_fsm_h_h_cs(2));
+  not_aux158 <= (fsm_h_h_cs(1) AND not_fsm_h_h_cs(0));
+  not_aux162 <= (fsm_h_h_cs(2) OR fsm_h_h_cs(1));
+  not_aux163 <= (not_aux162 AND not_fsm_h_h_cs(4));
+  not_aux219 <= (fsm_h_h_cs(4) OR not_fsm_h_h_cs(1));
+  not_aux0 <= (fsm_a_a_cs(3) AND not_fsm_a_a_cs(0));
+  not_aux220 <= NOT(((fsm_c_c_cs(1) OR fsm_c_c_cs(0)) AND 
+fsm_c_c_cs(4)));
+  not_aux9 <= (not_fsm_d_d_cs(0) AND not_fsm_d_d_cs(2));
+  not_aux10 <= (mbk_buf_fsm_e_e_cs(3) AND not_fsm_e_e_cs(0));
+  not_aux18 <= (not_fsm_h_h_cs(0) OR not_fsm_h_h_cs(4));
+  label0 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_h_h_cs (0) <= GUARDED na3_x1_17_sig;
+  END BLOCK label0;
+  label1 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_h_h_cs (1) <= GUARDED noa22_x1_33_sig;
+  END BLOCK label1;
+  label2 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_h_h_cs (2) <= GUARDED noa22_x1_34_sig;
+  END BLOCK label2;
+  label3 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_h_h_cs (3) <= GUARDED noa22_x1_36_sig;
+  END BLOCK label3;
+  label4 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_h_h_cs (4) <= GUARDED noa22_x1_39_sig;
+  END BLOCK label4;
+  label5 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_g_g_cs (0) <= GUARDED nao22_x1_27_sig;
+  END BLOCK label5;
+  label6 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_g_g_cs (1) <= GUARDED no2_x1_37_sig;
+  END BLOCK label6;
+  label7 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_g_g_cs (2) <= GUARDED noa22_x1_27_sig;
+  END BLOCK label7;
+  label8 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_g_g_cs (3) <= GUARDED noa22_x1_29_sig;
+  END BLOCK label8;
+  label9 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_g_g_cs (4) <= GUARDED noa22_x1_30_sig;
+  END BLOCK label9;
+  label10 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_f_f_cs (0) <= GUARDED na4_x1_6_sig;
+  END BLOCK label10;
+  label11 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_f_f_cs (1) <= GUARDED oa2ao222_x2_17_sig;
+  END BLOCK label11;
+  label12 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_f_f_cs (2) <= GUARDED oa2ao222_x2_18_sig;
+  END BLOCK label12;
+  label13 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_f_f_cs (3) <= GUARDED oa2ao222_x2_19_sig;
+  END BLOCK label13;
+  label14 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_f_f_cs (4) <= GUARDED oa2ao222_x2_21_sig;
+  END BLOCK label14;
+  label15 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_e_e_cs (0) <= GUARDED na3_x1_10_sig;
+  END BLOCK label15;
+  label16 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_e_e_cs (1) <= GUARDED oa2ao222_x2_12_sig;
+  END BLOCK label16;
+  label17 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_e_e_cs (2) <= GUARDED oa2ao222_x2_14_sig;
+  END BLOCK label17;
+  label18 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_e_e_cs (3) <= GUARDED oa22_x2_16_sig;
+  END BLOCK label18;
+  label19 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_e_e_cs (4) <= GUARDED oa2ao222_x2_16_sig;
+  END BLOCK label19;
+  label20 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_d_d_cs (0) <= GUARDED na3_x1_7_sig;
+  END BLOCK label20;
+  label21 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_d_d_cs (1) <= GUARDED noa22_x1_16_sig;
+  END BLOCK label21;
+  label22 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_d_d_cs (2) <= GUARDED noa22_x1_17_sig;
+  END BLOCK label22;
+  label23 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_d_d_cs (3) <= GUARDED ao22_x2_18_sig;
+  END BLOCK label23;
+  label24 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_d_d_cs (4) <= GUARDED noa22_x1_21_sig;
+  END BLOCK label24;
+  label25 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_c_c_cs (0) <= GUARDED na3_x1_5_sig;
+  END BLOCK label25;
+  label26 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_c_c_cs (1) <= GUARDED oa2ao222_x2_8_sig;
+  END BLOCK label26;
+  label27 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_c_c_cs (2) <= GUARDED oa2ao222_x2_9_sig;
+  END BLOCK label27;
+  label28 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_c_c_cs (3) <= GUARDED oa2ao222_x2_11_sig;
+  END BLOCK label28;
+  label29 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_c_c_cs (4) <= GUARDED oa22_x2_7_sig;
+  END BLOCK label29;
+  label30 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_b_b_cs (0) <= GUARDED na4_x1_3_sig;
+  END BLOCK label30;
+  label31 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_b_b_cs (1) <= GUARDED oa2ao222_x2_6_sig;
+  END BLOCK label31;
+  label32 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_b_b_cs (2) <= GUARDED o4_x2_sig;
+  END BLOCK label32;
+  label33 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_b_b_cs (3) <= GUARDED oa22_x2_6_sig;
+  END BLOCK label33;
+  label34 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_b_b_cs (4) <= GUARDED oa2ao222_x2_7_sig;
+  END BLOCK label34;
+  label35 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_a_a_cs (0) <= GUARDED oa22_x2_sig;
+  END BLOCK label35;
+  label36 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_a_a_cs (1) <= GUARDED oa2ao222_x2_sig;
+  END BLOCK label36;
+  label37 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_a_a_cs (2) <= GUARDED oa2ao222_x2_3_sig;
+  END BLOCK label37;
+  label38 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_a_a_cs (3) <= GUARDED oa2a2a23_x2_2_sig;
+  END BLOCK label38;
+  label39 : BLOCK (NOT(((ck AND NOT((ck'STABLE))) XOR '1')) = '1')
+  BEGIN
+    fsm_a_a_cs (4) <= GUARDED oa2ao222_x2_5_sig;
+  END BLOCK label39;
+
+address (0) <= ((fsm_a_a_cs(1) OR not_aux1) AND o3_x2_20_sig);
+
+address (1) <= ((na2_x1_35_sig AND fsm_b_b_cs(0)) OR (
+no2_x1_47_sig AND (xr2_x1_4_sig OR fsm_b_b_cs(4))));
+
+address (2) <= NOT(((not_aux220 AND o2_x2_33_sig) AND 
+on12_x1_15_sig));
+
+address (3) <= NOT(((noa22_x1_41_sig OR o2_x2_34_sig) AND 
+o3_x2_21_sig));
+
+address (4) <= ((fsm_e_e_cs(1) OR not_aux11) AND o3_x2_22_sig);
+
+address (5) <= NOT(((a2_x2_46_sig OR o2_x2_35_sig) AND 
+na3_x1_21_sig));
+
+address (6) <= ((fsm_g_g_cs(0) OR fsm_g_g_cs(1)) AND 
+o3_x2_23_sig);
+
+address (7) <= ((na2_x1_37_sig AND fsm_h_h_cs(3)) OR (
+not_fsm_h_h_cs(3) AND (no2_x1_52_sig OR inv_x2_27_sig)));
+
+data (0) <= NOT(((noa22_x1_42_sig OR na2_x1_39_sig) AND 
+na3_x1_23_sig));
+
+data (1) <= ((na2_x1_41_sig AND a2_x2_47_sig) OR (
+fsm_b_b_cs(0) AND (a3_x2_17_sig OR noa22_x1_43_sig)));
+
+data (2) <= (no3_x1_20_sig OR a3_x2_18_sig);
+
+data (3) <= ((oa2ao222_x2_22_sig AND fsm_d_d_cs(3)) OR 
+a3_x2_19_sig);
+
+data (4) <= ((na2_x1_43_sig AND a2_x2_50_sig) OR (
+no2_x1_55_sig AND (fsm_e_e_cs(2) OR a2_x2_49_sig)));
+
+data (5) <= ((oa2a2a23_x2_4_sig AND fsm_f_f_cs(3)) OR 
+a4_x2_9_sig);
+
+data (6) <= NOT((o3_x2_24_sig AND o4_x2_8_sig));
+
+data (7) <= (((na2_x1_44_sig AND not_fsm_h_h_cs(3)) AND 
+not_aux40) OR (ao22_x2_25_sig AND ((fsm_h_h_cs(2) OR 
+a2_x2_51_sig) OR inv_x2_30_sig)));
+
+error_f <= ((not_aux21 AND not_fsm_a_a_cs(0)) AND aux165);
+END;

@@ -1,0 +1,73 @@
+
+                  @@@@@@@                             @@@@ @  
+                    @@   @@                         @@    @@  
+                    @@    @@                       @@      @  
+                    @@    @@     @@@       @@@    @@          
+                    @@   @@    @@   @@   @@   @@  @@          
+                    @@@@@@    @@     @@ @@     @@ @@     @@@@@
+                    @@    @@  @@     @@ @@     @@ @@     @ @@ 
+                    @@     @@ @@     @@ @@     @@ @@    @  @@ 
+                    @@     @@ @@     @@ @@     @@  @@      @@ 
+                    @@    @@   @@   @@   @@   @@    @@    @@  
+                  @@@@@@@@       @@@       @@@        @@@@    
+
+                         Binding and Optimizing On Gates
+
+                 Alliance CAD System 5.0, boog 5.0 [2003/01/09]
+                 Copyright (c) 2000-2015,        ASIM/LIP6/UPMC
+                 Author(s):                     François Donnet
+                 E-mail        :    alliance-users@asim.lip6.fr
+
+        MBK_VDD        : vdd
+        MBK_VSS        : vss
+        MBK_IN_LO      : vst
+        MBK_OUT_LO     : vst
+        MBK_WORK_LIB   : .
+        MBK_TARGET_LIB : /usr/share/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'fda_b.vbe'...
+Controlling file 'paramfile.lax'...
+Controlling file 'fda_b.vbe'...
+Reading lib '/usr/share/alliance/cells/sxlib'...
+Controlling lib '/usr/share/alliance/cells/sxlib'...
+Preparing file 'fda_b.vbe'...
+Capacitances on file 'fda_b.vbe'...
+Unflattening file 'fda_b.vbe'...
+Mapping file 'fda_b.vbe'...
+Saving file 'fda_b.vst'...
+Quick estimated critical path (no warranty)...2832 ps from 'fsm_c_c_cs 0' to 'fsm_c_c_cs 4'
+Quick estimated area (with over-cell routing)...1142500 lambda²
+Details...
+	inv_x2: 89
+	na2_x1: 85
+	o2_x2: 79
+	no2_x1: 77
+	a2_x2: 53
+	na3_x1: 42
+	sff1_x4: 40
+	noa22_x1: 36
+	no3_x1: 34
+	nao22_x1: 31
+	oa22_x2: 31
+	oa2ao222_x2: 28
+	on12_x1: 27
+	o3_x2: 20
+	a3_x2: 19
+	o4_x2: 19
+	na4_x1: 16
+	ao22_x2: 16
+	no4_x1: 12
+	xr2_x1: 7
+	nao2o22_x1: 6
+	a4_x2: 6
+	oa2a22_x2: 4
+	an12_x1: 4
+	nxr2_x1: 4
+	noa2a2a23_x1: 1
+	oa2a2a23_x2: 1
+	Total: 787
+Saving critical path in xsch color file 'fda_b.xsc'...
+End of boog...
+

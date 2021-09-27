@@ -1,0 +1,64 @@
+
+      @@@@@@@@@  @@@@                      @@@@@@@               @@@       
+        @@    @    @@                @       @@   @@              @@       
+        @@     @   @@               @@       @@    @@             @@       
+        @@         @@     @@@@      @@       @@    @@    @@@@@    @@ @@@   
+        @@   @     @@    @@   @   @@@@@@@@   @@   @@    @     @   @@@  @@  
+        @@@@@@     @@    @@   @@    @@       @@@@@@    @@     @@  @@    @@ 
+        @@   @     @@      @@@@@    @@       @@    @@  @@@@@@@@@  @@    @@ 
+        @@         @@    @@   @@    @@       @@     @@ @@         @@    @@ 
+        @@         @@   @@    @@    @@       @@     @@ @@      @  @@    @@ 
+        @@         @@   @@   @@@    @@   @   @@    @@   @@    @@  @@    @@ 
+      @@@@@@     @@@@@@  @@@@  @@    @@@@  @@@@@@@@       @@@@   @@@@  @@@@
+
+                              a netlist abstractor
+
+                Alliance CAD System 5.0, flatbeh 5.0 [2000/11/01]
+                Copyright (c) 1993-2015,           ASIM/LIP6/UPMC
+                Author(s):       François DONNET, Huu Nghia VUONG
+                E-mail        :       alliance-users@asim.lip6.fr
+
+     =========================  Environnement  =========================
+     MBK_WORK_LIB        = .
+     MBK_CATA_LIB        = /usr/share/alliance/cells/sxlib:/usr/share/alliance/cells/romlib:/usr/share/alliance/cells/ramlib:/usr/share/alliance/cells/rflib:/usr/share/alliance/cells/rf2lib:/usr/share/alliance/cells/pxlib:/usr/share/alliance/cells/padlib:/usr/share/alliance/cells/dp_sxlib
+     MBK_CATAL_NAME      = CATAL
+     ============================== Files ==============================
+     Netlist file        = fda_b_l.vst
+     Output  file        = fda_b_l_net.vbe
+     ===================================================================
+
+Loading './fda_b_l.vst'
+flattening figure fda_b_l 
+ loading inv_x4 
+ loading o4_x4 
+ loading inv_x8 
+ loading oa2a2a23_x2 
+ loading a4_x2 
+ loading nxr2_x1 
+ loading ao22_x2 
+ loading noa2a2a23_x1 
+ loading an12_x1 
+ loading sff1_x4 
+ loading nao2o22_x1 
+ loading noa22_x1 
+ loading oa2a22_x2 
+ loading o2_x2 
+ loading na4_x1 
+ loading xr2_x1 
+ loading a2_x2 
+ loading na2_x1 
+ loading o4_x2 
+ loading oa22_x2 
+ loading no4_x1 
+ loading no3_x1 
+ loading o3_x2 
+ loading no2_x1 
+ loading on12_x1 
+ loading na3_x1 
+ loading inv_x2 
+ loading nao22_x1 
+ loading oa2ao222_x2 
+ loading a3_x2 
+ loading buf_x2 
+Restoring array's orders 
+BEH : Saving 'fda_b_l_net' in a vhdl file (vbe)

@@ -1,0 +1,106 @@
+
+                   @@@@@@                          @@@    @@@
+                     @@                             @@     @ 
+                     @@                             @@@    @ 
+                     @@           @@@       @@@     @ @@   @ 
+                     @@         @@   @@   @@   @@   @ @@   @ 
+                     @@        @@     @@ @@     @@  @  @@  @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@      @ @@     @@ @@     @@  @    @@@ 
+                     @@     @   @@   @@   @@   @@   @     @@ 
+                   @@@@@@@@@@     @@@       @@@    @@@    @@ 
+
+                           Local optimization on Nets
+
+                 Alliance CAD System 5.0, loon 5.0 [2003/12/07]
+                 Copyright (c) 2000-2015,        ASIM/LIP6/UPMC
+                 Author(s):                     François Donnet
+                 E-mail        :    alliance-users@asim.lip6.fr
+
+	MBK_IN_LO	: vst
+	MBK_OUT_LO	: vst
+	MBK_TARGET_LIB	: /usr/share/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'fdm_b.vst'...
+Controlling file 'paramfile.lax'...
+Reading lib '/usr/share/alliance/cells/sxlib'...
+Capacitances on file 'fdm_b.vst'...
+Delays on file 'fdm_b.vst'...3796 ps
+Area on file 'fdm_b.vst'...1208000 lamda² (with over-cell routing)
+Details...
+	inv_x2: 103 (6%)
+	no2_x1: 96 (7%)
+	a2_x2: 90 (9%)
+	o2_x2: 88 (9%)
+	na2_x1: 68 (5%)
+	noa22_x1: 44 (5%)
+	sff1_x4: 40 (14%)
+	nao22_x1: 39 (4%)
+	o3_x2: 34 (4%)
+	ao22_x2: 28 (3%)
+	oa2ao222_x2: 26 (5%)
+	oa22_x2: 25 (3%)
+	no3_x1: 25 (2%)
+	na3_x1: 24 (2%)
+	a3_x2: 21 (2%)
+	on12_x1: 19 (1%)
+	no4_x1: 16 (1%)
+	an12_x1: 10 (1%)
+	o4_x2: 9 (1%)
+	a4_x2: 9 (1%)
+	na4_x1: 9 (1%)
+	xr2_x1: 7 (1%)
+	oa2a2a23_x2: 4 (0%)
+	nao2o22_x1: 4 (0%)
+	oa3ao322_x2: 1 (0%)
+	oa2a22_x2: 1 (0%)
+	noa2a2a23_x1: 1 (0%)
+	nxr2_x1: 1 (0%)
+	nmx2_x1: 1 (0%)
+	Total: 843
+Worst RC on file 'fdm_b.vst'...430 ps
+Inserting buffers on critical path for file 'fdm_b_l.vst'...5 buffers inserted -> 3692 ps
+Improving RC on critical path for file 'fdm_b_l.vst'...3649 ps
+Improving all RC for file 'fdm_b_l.vst'...
+Worst RC on file 'fdm_b_l.vst'...430 ps
+Area on file 'fdm_b_l.vst'...1213000 lamda² (with over-cell routing)
+Details...
+	inv_x2: 103 (6%)
+	no2_x1: 96 (7%)
+	a2_x2: 90 (9%)
+	o2_x2: 88 (9%)
+	na2_x1: 68 (5%)
+	noa22_x1: 44 (5%)
+	sff1_x4: 40 (14%)
+	nao22_x1: 39 (4%)
+	o3_x2: 34 (4%)
+	ao22_x2: 28 (3%)
+	oa2ao222_x2: 26 (5%)
+	oa22_x2: 25 (3%)
+	no3_x1: 25 (2%)
+	na3_x1: 24 (2%)
+	a3_x2: 21 (2%)
+	on12_x1: 19 (1%)
+	no4_x1: 16 (1%)
+	an12_x1: 10 (1%)
+	o4_x2: 9 (1%)
+	a4_x2: 9 (1%)
+	na4_x1: 9 (1%)
+	xr2_x1: 7 (1%)
+	buf_x2: 5 (0%)
+	oa2a2a23_x2: 4 (0%)
+	nao2o22_x1: 4 (0%)
+	oa3ao322_x2: 1 (0%)
+	oa2a22_x2: 1 (0%)
+	noa2a2a23_x1: 1 (0%)
+	nxr2_x1: 1 (0%)
+	nmx2_x1: 1 (0%)
+	Total: 848
+Critical path (no warranty)...3649 ps from 'fsm_e_e_cs 3' to 'fsm_e_e_cs_2_ins'
+Saving file 'fdm_b_l.vst'...
+Saving critical path in xsch color file 'fdm_b_l.xsc'...
+End of loon...
+

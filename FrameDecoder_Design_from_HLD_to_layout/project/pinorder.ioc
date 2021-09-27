@@ -1,0 +1,49 @@
+LEFT( #IOs from bottom to top 
+(IOPIN scanin.0);
+(IOPIN test.0);
+(IOPIN vdd.0);
+(IOPIN reset.0);
+(IOPIN word_in(0).0);
+(IOPIN word_in(1).0);
+(IOPIN word_in(2).0);
+(IOPIN word_in(3).0);     )
+TOP( #IOs from left to right
+(IOPIN word_in(4).0);
+(IOPIN word_in(5).0);
+(IOPIN word_in(6).0);
+(IOPIN word_in(7).0);
+(IOPIN ck.0);
+(IOPIN address(0).0);
+(IOPIN address(1).0); 		     )
+RIGHT( #IOs from bottom to top
+(IOPIN data(7).0);
+(IOPIN error_f.0);
+(IOPIN address(7).0);
+(IOPIN address(6).0);
+(IOPIN address(5).0);
+(IOPIN address(4).0);
+(IOPIN address(3).0);
+(IOPIN address(2).0);     )
+BOTTOM( #IOs from left to right
+(IOPIN data(0).0);
+(IOPIN data(1).0);
+(IOPIN data(2).0);
+(IOPIN data(3).0);
+(IOPIN vss.0);
+(IOPIN data(4).0);
+(IOPIN data(5).0);
+(IOPIN data(6).0);     
+(IOPIN scanout.0);    ) 
+
+
+
+
+
+
+
+
+
+
+
+
+
